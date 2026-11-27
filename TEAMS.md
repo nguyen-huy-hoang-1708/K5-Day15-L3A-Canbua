@@ -11,10 +11,10 @@
 
 | STT | Họ và tên | Mã học viên | Vai trò | Phần việc chính |
 |---|---|---|---|---|
-| 1 | Nguyễn Huy Hoàng | 2A202603366 | Đội trưởng | ____ |
-| 2 | Lê Hoàng Sơn | 2A202603662 | Thành viên | ____ |
-| 3 | Đỗ Hoàng Phúc | 2A202603652 | Thành viên | ____ |
-| 4 | Phạm Tuấn Anh | 2A202603503 | Thành viên | ____ |
+| 1 | Nguyễn Huy Hoàng | 2A202603366 | Đội trưởng | Đội trưởng: spec.md, đào data BTC (evidence/), nộp checkpoint |
+| 2 | Lê Hoàng Sơn | 2A202603662 | Thành viên | Giao diện web (web.py, web/index.html), phỏng vấn giảng viên |
+| 3 | Đỗ Hoàng Phúc | 2A202603652 | Thành viên | Bản chạy thử (codebase/), nối model, trò chơi Mê cung |
+| 4 | Phạm Tuấn Anh | 2A202603503 | Thành viên | Bộ câu thử & đánh giá (eval/), mô phỏng chi phí (cost/), slide |
 
 **Quy tắc điền**
 - **Lớp:** `L3A` hoặc `L3B`. **Track:** một chữ `A` (EdTech), `B` (Y tế), `C` (Du lịch), `D` (Thương mại điện tử), `E` (Tài chính) hoặc `F` (Làn khác). **Link repo:** link GitHub công khai của nhóm.

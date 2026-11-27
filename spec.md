@@ -148,7 +148,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 - Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào: học viên (bị giảng bỏ sót ý hổng) — chặn bằng kiểm số + luôn hiện x/N cho giảng viên tự đánh giá.
 
 ## §10. Phân công & changelog
-- Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"): __
+- Phân công có tên (khớp `TEAMS.md`): Nguyễn Huy Hoàng — spec, đào data, nộp checkpoint · Lê Hoàng Sơn — giao diện web, phỏng vấn giảng viên · Đỗ Hoàng Phúc — bản chạy thử, nối model, trò chơi · Phạm Tuấn Anh — bộ câu thử, đánh giá, chi phí, slide. Cặp kiểm chéo: Hoàng ↔ Tuấn Anh (số liệu bằng chứng ↔ bộ câu thử), Sơn ↔ Phúc (giao diện ↔ luồng AI).
 - Dùng AI vào việc gì (chi tiết `docs/ai-usage.md`): dùng Claude Code đọc data, viết script đếm, code bản chạy thử, bộ câu thử và bản nháp tài liệu; nhóm chạy lại script, kiểm từng số và phải giải thích được phần có tên mình.
 - Nhật ký thay đổi — **mọi thay đổi sau CP2 19:30 Thứ Sáu 27/11 phải có dòng ở đây**:
 
@@ -167,6 +167,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 | 27/11 (sau lượt 3) | Web: nút "Tải phiếu chuẩn bị buổi (.md)" — Radar + bảng mọi ý của ngày + tóm tắt video + chỗ ghi chú; tạo ngay trên trình duyệt | Giảng viên mang kết quả vào buổi học / in ra; không gửi đi đâu, không gọi model |
 | 27/11 (sau lượt 3) | Thêm trò chơi "Mê cung pre-class" (`game.py`, `web/game.html`, `/game`): nhiều học viên cùng chơi qua mạng lớp, cửa câu hỏi trắc nghiệm, hộp may mắn, gặp nhau đấu tốc độ (thua bị loại), về đích cộng điểm vào hồ sơ (`.game/profiles.json`) cho giảng viên xem; câu hỏi ưu tiên ý lớp đang hổng theo số Radar | Theo yêu cầu của nhóm: tăng tham gia pre-class (417 → 26 người). Không gọi model, không đổi `answer()` / eval. Câu hỏi `data/game_questions.json` là bản nháp chờ giảng viên duyệt. Điểm trò chơi là dữ liệu mới do học viên tự nhập tên — không dùng data BTC để xếp hạng |
 | 27/11 (sau lượt 3) | Trò chơi: thêm tài khoản giảng viên / học viên (`.game/accounts.json`, mật khẩu băm PBKDF2-SHA256 + salt, phiên token theo tab, khoá 60 giây sau 5 lần sai); tài khoản giảng viên chỉ tạo được trên máy chạy server; chỉ giảng viên điều khiển ván và xem hồ sơ điểm; điểm gắn với tài khoản; server chỉ gửi vị trí hộp quà / người khác trong tầm nhìn của học viên | Chặn học viên tự mở bảng giảng viên, chơi dưới tên người khác, xem trộm mê cung qua API |
+| 27/11 (tối) | Trò chơi: bỏ đăng nhập theo yêu cầu nhóm — chỉ chọn vai trò Giảng viên / Học viên (học viên nhập tên); vai trò Giảng viên chỉ chọn được trên máy chạy server (`TEACHER_LOCAL_ONLY`); điểm lưu theo tên; mỗi tab là một phiên riêng | Vào chơi nhanh hơn khi demo / trong lớp. Đánh đổi: hai người cùng tên sẽ chung hồ sơ điểm |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

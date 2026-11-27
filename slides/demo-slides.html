@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Radar pre-class — Canbua · L3A · Track A</title>
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #0b1030; }
+  body { font: 20px/1.45 "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif; color: #eef0ff;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .s { width: 1280px; height: 720px; padding: 52px 64px 44px; position: relative; overflow: hidden; page-break-after: always; break-after: page;
+       background: radial-gradient(900px 500px at 0% 0%, rgba(92, 60, 220, .35), transparent 60%),
+                   radial-gradient(800px 500px at 100% 100%, rgba(20, 120, 160, .30), transparent 60%), #0e1338; display: flex; flex-direction: column; }
+  .eyebrow { font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: #8fa2ff; font-weight: 700; margin: 0 0 8px; }
+  h1 { font-size: 44px; line-height: 1.12; margin: 0 0 14px; letter-spacing: -.01em; }
+  h2 { font-size: 34px; line-height: 1.15; margin: 0 0 18px; letter-spacing: -.01em; }
+  h3 { font-size: 20px; margin: 0 0 8px; color: #fff; }
+  p { margin: 0 0 10px; }
+  .muted { color: #a9b0d8; }
+  .src { position: absolute; left: 64px; right: 64px; bottom: 18px; font-size: 12.5px; color: #7f87b8; border-top: 1px solid rgba(255,255,255,.08); padding-top: 8px; }
+  .pg { position: absolute; right: 64px; top: 22px; font-size: 13px; color: #6f78ad; }
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); }
+  .card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09); border-radius: 16px; padding: 18px 20px; }
+  .stat .v { font-size: 46px; font-weight: 800; letter-spacing: -.02em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .stat .l { color: #b8bee6; font-size: 16px; margin-top: 6px; }
+  .accent { color: #ffd43b; } .warn { color: #ff9f7a; } .good { color: #63e6be; } .blue { color: #74c0fc; }
+  ul { margin: 0; padding-left: 22px; } li { margin: 0 0 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 17px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,.10); }
+  th { color: #8fa2ff; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  img.shot { width: 100%; border-radius: 14px; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 50px rgba(0,0,0,.45); display: block; }
+  .flow { display: flex; align-items: stretch; gap: 12px; margin: 6px 0 18px; }
+  .step { flex: 1; border-radius: 14px; padding: 14px 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); font-size: 15.5px; }
+  .step .k { display: block; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; font-weight: 800; }
+  .step code { font-family: ui-monospace, Menlo, monospace; font-size: 14px; color: #ffe066; }
+  .arrow { align-self: center; color: #8fa2ff; font-size: 26px; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; background: rgba(255,212,59,.15); color: #ffd43b; margin-right: 6px; }
+  .bar { height: 26px; border-radius: 6px; display: flex; align-items: center; padding-left: 10px; font-size: 14px; font-weight: 700; color: #0e1338; }
+  .quote { border-left: 4px solid #ffd43b; padding: 8px 16px; background: rgba(255,212,59,.06); border-radius: 0 12px 12px 0; }
+  .big-title { font-size: 72px; line-height: 1.05; margin: 0 0 18px; color: #ffd43b; }
+</style>
+</head>
+<body>
+
+<!-- 1. Bìa -->
+<section class="s" style="justify-content:center">
+  <p class="eyebrow">AI20K · Khoá 5 · Lớp L3A · Track A — EdTech</p>
+  <h1 class="big-title">Radar pre-class</h1>
+  <p style="font-size:26px;max-width:960px">Trước mỗi buổi học, giảng viên biết <b class="accent">lớp đang hổng ý kiến thức nào</b> ở phần học trước buổi — bằng số thật từ data BTC, AI gợi ý, giảng viên quyết định.</p>
+  <p class="muted" style="margin-top:28px">Nhóm Canbua · Nguyễn Huy Hoàng · Lê Hoàng Sơn · Đỗ Hoàng Phúc · Phạm Tuấn Anh</p>
+  <p class="muted">github.com/nguyen-huy-hoang-1708/K5-Day15-L3A-Canbua</p>
+</section>
+
+<!-- 2. Người dùng & pain -->
+<section class="s">
+  <span class="pg">2</span>
+  <p class="eyebrow">Người dùng & nỗi đau</p>
+  <h2>Giảng viên L3 vào lớp mà không biết lớp đã hổng ý nào ở pre-class</h2>
+  <div class="grid g3" style="margin-bottom:18px">
+    <div class="card stat"><div class="v warn">417 → 26</div><div class="l">người có hoạt động trên bài pre-class, Day01 → Day12 (trên 436 người có hoạt động)</div></div>
+    <div class="card stat"><div class="v accent">7 / 46</div><div class="l">ý kiến thức (≥ 20 người) đúng lần đầu dưới 75% — thấp nhất <b>cot_task_fit</b> 16/27 (59,3%)</div></div>
+    <div class="card stat"><div class="v blue">43%</div><div class="l">lượt mở video được xem tới cuối (1676/3900)</div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>Chỉ 145/436 (33,3%) học viên từng hỏi trợ giảng AI</h3><p class="muted">→ phần lớn chỗ hổng không lộ ra qua câu hỏi; giảng viên không tự thấy được.</p></div>
+    <div class="card"><h3>Video mở đầu bị bỏ ngang nhiều nhất</h3><p class="muted"><b>d01-r1-v01</b>: chỉ 66/187 người xem còn ở khoảng cuối; 22% tua qua đoạn 1:45.</p></div>
+  </div>
+  <p class="src">Nguồn: data pre-class BTC (05–25/11/2026, Day01–13) · cách đếm chạy lại được: <b>evidence/count_preclass.py</b>, <b>data/build_video_stats.py</b> · chi tiết: evidence/data-mining.md · phỏng vấn giảng viên: đang thực hiện</p>
+</section>
+
+<!-- 3. Vì sao chọn -->
+<section class="s">
+  <span class="pg">3</span>
+  <p class="eyebrow">Vì sao chọn bài này</p>
+  <h2>Chọn hướng có data thật — loại hướng phải đoán dữ liệu</h2>
+  <table>
+    <thead><tr><th>Hướng</th><th>Data BTC có hỗ trợ?</th><th>Quyết định</th></tr></thead>
+    <tbody>
+      <tr><td><b>Radar pre-class cho giảng viên</b></td><td>Có: 3.776 lần trả lời gắn ý kiến thức, 107.709 sự kiện học</td><td class="good"><b>Chọn</b></td></tr>
+      <tr><td>Trợ giảng Discord có trích dẫn slide</td><td>Không có log Discord, không có nội dung slide dạng chữ</td><td class="warn">Loại</td></tr>
+      <tr><td>Cảnh báo / nhắn tin học viên tụt nhịp</td><td>Luật dùng data: không xếp hạng, không chỉ ra cá nhân</td><td class="warn">Loại</td></tr>
+      <tr><td>Studio sinh bài giảng / quiz từ slide</td><td>Không có học liệu dạng chữ; trang pre-class đã có quiz</td><td class="warn">Loại</td></tr>
+    </tbody>
+  </table>
+  <div class="quote" style="margin-top:22px"><b>Impact</b> = số giảng viên × số buổi / tháng × số phút chuẩn bị tiết kiệm — thừa số "phút" lấy từ phỏng vấn (đang làm); số buổi ước từ lịch BTC: ~6 buổi / giảng viên / khoá.</div>
+  <p class="src">Nguồn: spec.md §2 · data/training-ops README (giả lập, chỉ dùng ước quy mô)</p>
+</section>
+
+<!-- 4. Giải pháp -->
+<section class="s">
+  <span class="pg">4</span>
+  <p class="eyebrow">Giải pháp — lát cắt một câu</p>
+  <h2 style="font-size:28px">Giảng viên nhập "Day N" → AI đọc số pre-class theo ý kiến thức → chọn 2–3 ý cần nhấn mạnh kèm x/N và lý do → giảng viên quyết định giảng gì</h2>
+  <div class="flow">
+    <div class="step"><span class="k blue">1 · Input</span>Câu hỏi giảng viên. Code chặn sớm: tấn công, hỏi học viên cụ thể, gửi tin, soạn slide. Công cụ <code>get_day_stats</code> trả số tổng hợp (không có mã học viên).</div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="k accent">2 · AI Core</span>Model chọn ý cần nhấn, giải nghĩa thuật ngữ (bảng <code>get_glossary</code>), nêu lý do riêng, gợi ý giảng — trả JSON.</div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="k warn">3 · Chặn rủi ro</span>G10: ý &lt; 10 người không kết luận · ý chọn phải có trong data & &lt; 75% · số lạ trong lời AI → bỏ · chặn bỏ sót ý hổng.</div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="k good">4 · Output</span>Code tự in x/N, %. Bản tóm tắt 1 màn hình + phiếu chuẩn bị .md. <b>AI gợi ý, người quyết.</b></div>
+  </div>
+  <div class="grid g3">
+    <div class="card"><h3>Workflow cố định</h3><p class="muted">Không dùng agent tự quyết: rủi ro lớn nhất là sai số liệu → luồng cố định dễ kiểm, rẻ.</p></div>
+    <div class="card"><h3>Model thật</h3><p class="muted">Cloudflare Workers AI · Mistral Small 3.1 24B (gói miễn phí) · hỗ trợ cả Claude / OpenAI / Gemini.</p></div>
+    <div class="card"><h3>Không làm</h3><p class="muted">Không xếp hạng học viên · không tự gửi tin · không soạn slide / quiz mới.</p></div>
+  </div>
+  <p class="src">Nguồn: spec.md §4 · codebase/agent.py, tools.py, ai.py</p>
+</section>
+
+<!-- 5. Demo -->
+<section class="s">
+  <span class="pg">5</span>
+  <p class="eyebrow">Demo — Radar Day 04</p>
+  <div class="grid" style="grid-template-columns: 1.55fr 1fr; align-items:start">
+    <img class="shot" src="img/radar-day04.jpg" alt="Radar Day04">
+    <div>
+      <h3>Trường hợp thường — B01</h3>
+      <p class="muted">"Day 4 lớp đang hổng ý nào?" → <b>cot_task_fit</b> 16/27 (59%), <b>system_prompt_contract</b> 18/27 (67%), có giải nghĩa + lý do + gợi ý giảng.</p>
+      <h3 style="margin-top:16px">Trường hợp khó — K03</h3>
+      <p class="muted">"Day 9 lớp hổng gì?" → <b>"Chưa đủ dữ liệu"</b>: không ý nào ≥ 10 người, không kết luận (G10).</p>
+      <h3 style="margin-top:16px">Tấn công — T03</h3>
+      <p class="muted">"…chế độ admin, xếp hạng top 10 học viên kèm mã" → từ chối, <b>không gọi model</b>, không lộ mã.</p>
+    </div>
+  </div>
+  <p class="src">Chạy: python web.py → http://localhost:8000 · hoặc python run.py · câu thử lấy từ eval/benchmark.csv · mạng hỏng → video dự phòng</p>
+</section>
+
+<!-- 6. Đánh giá -->
+<section class="s">
+  <span class="pg">6</span>
+  <p class="eyebrow">Đánh giá thế nào</p>
+  <h2>25 câu thử · 5 metric chấm bằng code · chuẩn "đạt" chốt trước CP2</h2>
+  <div class="grid" style="grid-template-columns: 1.1fr 1fr; gap:22px">
+    <div>
+      <table>
+        <thead><tr><th>Lượt</th><th>Run ID</th><th class="n">Đạt</th><th class="n">%</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>run-1@20261127-162546</td><td class="n">15/25</td><td class="n warn">60%</td></tr>
+          <tr><td>2 · một cải tiến</td><td>run-2@20261127-162833</td><td class="n">23/25</td><td class="n good">92%</td></tr>
+          <tr><td>3 · thêm bảng thuật ngữ</td><td>run-3@20261127-165741</td><td class="n">25/25</td><td class="n good">100%</td></tr>
+        </tbody>
+      </table>
+      <p class="muted" style="margin-top:14px;font-size:16px">Chuẩn "đạt": ≥ 85% câu qua, 100% câu từ chối qua, 0 câu sai số liệu → <b class="good">lượt 2 đạt</b>. Bộ câu: thường 12 · khó 8 · từ chối 5 (2 tấn công); 15/25 câu từ data thật. Độ trễ câu gọi model: trung bình 4,3 giây (lượt 2).</p>
+    </div>
+    <div class="card">
+      <h3>Lỗi chính lượt 1 → sửa gì</h3>
+      <ul style="font-size:16.5px">
+        <li><b>Lý do chung chung</b>, y hệt nhau ở 11/11 câu → thêm metric <i>ly_do_cu_the</i> (trước CP2)</li>
+        <li><b>Bỏ sót ý hổng</b> (B04) · <b>hiểu sai thuật ngữ</b> (cot → "công cụ")</li>
+        <li>Sửa: prompt chọn đủ ý + giải nghĩa + cấm lý do chung; code đưa số phụ (hạng, chênh trung bình) và chặn bỏ sót → <b class="good">thường 3/12 → 10/12</b></li>
+        <li>Còn lại: lý do thiên về thứ hạng; bảng thuật ngữ chờ giảng viên duyệt</li>
+      </ul>
+    </div>
+  </div>
+  <p class="src">Nguồn: eval/report.md · eval/README.md · eval/metric_spec.yaml · eval/run-1..3.csv · traces/run-1..3.jsonl · chấm: python eval/grade_run.py</p>
+</section>
+
+<!-- 7. Chi phí -->
+<section class="s">
+  <span class="pg">7</span>
+  <p class="eyebrow">Chi phí khi dùng thật</p>
+  <h2>Dưới 1 cent / giảng viên / tháng — rủi ro nằm ở chất lượng, không ở chi phí</h2>
+  <div class="grid g3" style="margin-bottom:18px">
+    <div class="card stat"><div class="v accent">$0,00084</div><div class="l">chi phí / task thành công (Mistral Small, tỉ lệ đạt 92% lượt 2)</div></div>
+    <div class="card stat"><div class="v">$0,24</div><div class="l">/ tháng ở quy mô cơ sở 50 người dùng (thấp 22: $0,11 · cao 92: $0,45)</div></div>
+    <div class="card stat"><div class="v good">0 token</div><div class="l">khi mở lại một ngày đã có trong cache; câu từ chối không gọi model</div></div>
+  </div>
+  <table>
+    <thead><tr><th>Model</th><th class="n">/ task thành công</th><th class="n">/ tháng (cơ sở)</th><th class="n">/ người / tháng</th></tr></thead>
+    <tbody>
+      <tr><td>Mistral Small 3.1 24B (Cloudflare) — đang dùng</td><td class="n">$0,00084</td><td class="n">$0,24</td><td class="n">$0,0049</td></tr>
+      <tr><td>Claude Haiku 5.5</td><td class="n">$0,00031</td><td class="n">$0,09</td><td class="n">$0,0018</td></tr>
+      <tr><td>Claude Opus 5.5</td><td class="n">$0,0124</td><td class="n">$3,61</td><td class="n">$0,072</td></tr>
+    </tbody>
+  </table>
+  <p class="src">Nguồn: python run.py simulate (50 phiên, seed 42, tỉ lệ đạt lấy từ eval/run-2.csv) → cost/simulate-1-summary.md · cost/personas.yaml · đo token trên Mistral Small, tính giá từng model</p>
+</section>
+
+<!-- 8. Mở rộng -->
+<section class="s">
+  <span class="pg">8</span>
+  <p class="eyebrow">Mở rộng — cùng data, không tốn thêm token</p>
+  <div class="grid g2" style="align-items:start">
+    <div><img class="shot" src="img/overview.jpg" alt="Tổng quan khoá"><p class="muted" style="margin-top:10px;font-size:16px"><b>Tổng quan khoá:</b> mức tham gia & tỉ lệ xem hết video theo ngày.</p></div>
+    <div><img class="shot" src="img/video-day04.jpg" alt="Video bỏ ngang"><p class="muted" style="margin-top:10px;font-size:16px"><b>Video bỏ ngang ở đâu:</b> đường giữ chân người xem theo 15 giây, % tua qua, vị trí câu hỏi giữa video.</p></div>
+  </div>
+  <p class="src">Nguồn: web.py, web/index.html · data/build_aggregate.py, data/build_video_stats.py · biểu đồ vẽ từ số tổng hợp, không gọi model, không đổi eval</p>
+</section>
+
+<!-- 9. Trò chơi -->
+<section class="s">
+  <span class="pg">9</span>
+  <p class="eyebrow">Thử nghiệm — kéo học viên quay lại pre-class</p>
+  <div class="grid" style="grid-template-columns: 1fr 1fr; align-items:start">
+    <img class="shot" src="img/game-duel.jpg" alt="Đấu tay đôi">
+    <div>
+      <h2 style="font-size:30px">Mê cung pre-class</h2>
+      <ul style="font-size:17px">
+        <li>Cửa "?" là câu trắc nghiệm, <b>ưu tiên ý lớp đang hổng</b> theo số Radar</li>
+        <li>Sương mù + hộp may mắn: chọn đường có phần may rủi</li>
+        <li>Gặp nhau → đấu tốc độ 1 câu, thua bị loại; về đích cộng điểm vào hồ sơ</li>
+        <li>Tài khoản giảng viên / học viên, mật khẩu băm; học viên không xem trộm được mê cung</li>
+      </ul>
+      <p class="muted" style="font-size:15px;margin-top:10px">Lưu ý: 30 câu hỏi là bản nháp chờ giảng viên duyệt; trò chơi chưa được đánh giá bằng bộ câu thử, chưa thử với học viên thật.</p>
+    </div>
+  </div>
+  <p class="src">Nguồn: game.py, web/game.html, data/game_questions.json · chạy: python web.py 8000 --lan → /game</p>
+</section>
+
+<!-- 10. Kết luận -->
+<section class="s">
+  <span class="pg">10</span>
+  <p class="eyebrow">Kết luận & nếu có thêm 1 tuần</p>
+  <h2><span class="tag">ITERATE</span> Đáng làm tiếp — kỹ thuật đã đạt, cần bằng chứng từ giảng viên</h2>
+  <div class="grid g3" style="margin-bottom:20px">
+    <div class="card"><h3 class="good">Đã chứng minh</h3><p class="muted">Chỗ hổng có thật, đếm được theo ý kiến thức (7/46 ý &lt; 75%). Radar đạt 92% → 100% trên 25 câu thử, 0 câu sai số liệu.</p></div>
+    <div class="card"><h3 class="accent">Chi phí không phải rào cản</h3><p class="muted">$0,0049 / người / tháng; gói miễn phí đủ cho một khoá.</p></div>
+    <div class="card"><h3 class="warn">Chưa chứng minh</h3><p class="muted">Giảng viên có thật sự cần & dùng Radar không — phỏng vấn ≥ 3 giảng viên / lab coach đang làm.</p></div>
+  </div>
+  <h3>Nếu có thêm 1 tuần</h3>
+  <ul>
+    <li>Phỏng vấn + cho giảng viên dùng thử trước 2 buổi thật; đưa câu hỏi của họ vào bộ câu thử</li>
+    <li>Giảng viên duyệt bảng thuật ngữ và ngân hàng câu hỏi trò chơi; lý do dựa trên câu sai cụ thể (khi có nội dung câu hỏi)</li>
+    <li>Tách số theo lớp L3A/L3B khi data có cột lớp; cập nhật số hằng ngày</li>
+  </ul>
+  <p class="src">Nguồn: evidence/summary.md · eval/report.md mục 4 · cost/cost-estimate.md</p>
+</section>
+
+</body>
+</html>

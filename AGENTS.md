@@ -42,4 +42,5 @@ Khung chỉ dùng thư viện chuẩn của Python. Thêm thư viện thì ghi v
 
 - Ngôn ngữ trả lời người dùng: tiếng Việt
 - Phong cách code / đặt tên: chỉ thư viện chuẩn; tên biến số liệu tiếng Việt không dấu như trong `data/preclass_day_stats.json`
-- Ai duyệt thay đổi do agent tạo trước khi commit: __
+- Ai duyệt thay đổi do agent tạo trước khi commit: đội trưởng (Nguyễn Huy Hoàng); phần nào có tên người khác trong `TEAMS.md` thì người đó duyệt
+- Công cụ chấm điểm (trò chơi Mê cung) cộng điểm thẳng vào hồ sơ theo quyết định của nhóm; điểm chỉ để giảng viên tham khảo, không phải điểm khoá học

@@ -45,7 +45,7 @@
 | Xử lý | Đáp án không gửi xuống trình duyệt; thứ tự lựa chọn xáo mỗi lần hỏi |
 | Giới hạn | Không có nội dung bài giảng trong data → câu hỏi có thể lệch với cách giảng của khoá; cần giảng viên sửa / thay |
 
-**Dữ liệu trò chơi sinh ra khi chơi** — `.game/accounts.json` (tên đăng nhập, họ tên hiển thị, vai trò, mật khẩu đã băm PBKDF2 + salt; không lưu mật khẩu gốc) và `.game/profiles.json` (điểm, lịch sử ván theo tài khoản) — là dữ liệu cá nhân mới → đã đưa vào `.gitignore`, không commit, không gửi vào model.
+**Dữ liệu trò chơi sinh ra khi chơi** — `.game/profiles.json` (tên học viên tự nhập, điểm, lịch sử ván; không có mật khẩu vì trò chơi không dùng đăng nhập) — là dữ liệu cá nhân mới → đã đưa vào `.gitignore`, không commit, không gửi vào model.
 
 ## Dataset 2 · Bộ câu thử — `eval/benchmark.csv` + luật chấm `eval/checks.json`
 

@@ -10,18 +10,15 @@ Luật:
   người thua bị loại. Trả lời sai thì mất lượt trong câu đó; cả hai sai / hết giờ → câu mới; 3 lần hoà → may rủi.
 - Về đích: hạng 1, 2, 3… được cộng POINTS_BY_RANK vào hồ sơ (.game/profiles.json). Bị loại: 0 điểm.
 
-Tài khoản (.game/accounts.json, không commit):
-- Học viên tự tạo tài khoản (tên đăng nhập + mật khẩu + họ tên hiển thị); điểm gắn với tài khoản.
-- Tài khoản giảng viên chỉ tạo được từ chính máy chạy server (localhost) — học viên trong mạng lớp không tự tạo được.
-- Mật khẩu lưu dạng băm PBKDF2-SHA256 + salt riêng; phiên đăng nhập là token ngẫu nhiên, hết hạn sau SESSION_H giờ;
-  sai mật khẩu 5 lần → khoá đăng nhập tài khoản đó 60 giây.
+Vai trò (không cần đăng nhập):
+- Học viên chọn "Học viên" + nhập tên → vào phòng; điểm lưu theo tên (.game/profiles.json, không commit).
+- Giảng viên chọn "Giảng viên" → bảng điều khiển; mặc định chỉ chọn được trên máy chạy server (TEACHER_LOCAL_ONLY).
 - Chỉ giảng viên: bắt đầu / kết thúc / ván mới, xem toàn bộ mê cung, xem hồ sơ điểm.
 - Học viên chỉ nhận vị trí hộp quà và người chơi khác trong tầm nhìn của mình (chống xem trộm qua API).
 
 Câu hỏi: data/game_questions.json (bản nháp, chờ giảng viên duyệt). Đáp án không bao giờ gửi xuống trình duyệt;
 thứ tự lựa chọn được xáo mỗi lần hỏi. Câu hỏi ưu tiên các ý kiến thức lớp đang hổng (số từ Radar).
 """
-import hashlib
 import json
 import os
 import random
@@ -35,7 +32,6 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 QUESTIONS_FILE = os.path.join(ROOT, "data", "game_questions.json")
 STATS_FILE = os.path.join(ROOT, "data", "preclass_day_stats.json")
 PROFILE_FILE = os.path.join(ROOT, ".game", "profiles.json")
-ACCOUNTS_FILE = os.path.join(ROOT, ".game", "accounts.json")
 SESSION_H = 12
 VISION = 4.5                      # bán kính tầm nhìn (ô) — khớp sương mù ở web/game.html
 
@@ -127,75 +123,33 @@ def _record(user, name, round_id, rank, points, result):
     _save_profiles(p)
 
 
-# ------------------------------------------------------------------ tài khoản & phiên đăng nhập
+# ------------------------------------------------------------------ vai trò & phiên (không cần đăng nhập)
 
-SESSIONS = {}      # token -> {"user", "role", "exp"}
-FAILS = {}         # user -> (số lần sai, khoá tới lúc)
-USER_RE = re.compile(r"^[a-z0-9_.]{3,20}$")
-
-
-def _accounts():
-    try:
-        with open(ACCOUNTS_FILE, encoding="utf-8") as f:
-            return json.load(f)
-    except (OSError, ValueError):
-        return {}
+SESSIONS = {}      # token -> {"user", "role", "ten", "exp"}
+TEACHER_LOCAL_ONLY = True   # True: chỉ máy chạy server được chọn vai trò Giảng viên (học viên trong mạng lớp không tự điều khiển ván)
 
 
-def _save_accounts(a):
-    os.makedirs(os.path.dirname(ACCOUNTS_FILE), exist_ok=True)
-    tmp = ACCOUNTS_FILE + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(a, f, ensure_ascii=False, indent=1)
-    os.replace(tmp, ACCOUNTS_FILE)
-    try:
-        os.chmod(ACCOUNTS_FILE, 0o600)
-    except OSError:
-        pass
+def _slug(text):
+    t = re.sub(r"\s+", " ", str(text or "")).strip().lower()
+    return re.sub(r"[^\w ]", "", t, flags=re.UNICODE)[:30]
 
 
-def _hash(password, salt):
-    return hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), bytes.fromhex(salt), 200_000).hex()
-
-
-def register(username, password, ten, role, local):
-    username = str(username or "").strip().lower()
-    ten = " ".join(str(ten or "").split())[:24]
-    password = str(password or "")
+def choose_role(role, ten, local):
+    """Chọn vai trò thay cho đăng nhập. Học viên cần nhập tên (hồ sơ điểm theo tên); giảng viên chỉ bấm chọn."""
     if role not in ("hoc_vien", "giang_vien"):
-        return {"error": "Vai trò không hợp lệ."}
-    if role == "giang_vien" and not local:
-        return {"error": "Tài khoản giảng viên chỉ tạo được trên máy chạy server."}
-    if not USER_RE.match(username):
-        return {"error": "Tên đăng nhập 3–20 ký tự: chữ thường không dấu, số, dấu _ hoặc ."}
-    if len(password) < 6:
-        return {"error": "Mật khẩu cần ít nhất 6 ký tự."}
-    if not ten:
-        return {"error": "Nhập họ tên hiển thị."}
-    a = _accounts()
-    if username in a:
-        return {"error": "Tên đăng nhập đã có người dùng."}
-    salt = secrets.token_hex(16)
-    a[username] = {"ten": ten, "role": role, "salt": salt, "hash": _hash(password, salt),
-                   "tao_luc": time.strftime("%H:%M %d/%m/%Y")}
-    _save_accounts(a)
-    return login(username, password)
-
-
-def login(username, password):
-    username = str(username or "").strip().lower()
-    n, until = FAILS.get(username, (0, 0))
-    if _now() < until:
-        return {"error": "Sai quá nhiều lần — thử lại sau %d giây." % int(until - _now() + 1)}
-    acc = _accounts().get(username)
-    if not acc or not secrets.compare_digest(_hash(str(password or ""), acc["salt"]), acc["hash"]):
-        n += 1
-        FAILS[username] = (0, _now() + 60) if n >= 5 else (n, 0)
-        return {"error": "Sai tên đăng nhập hoặc mật khẩu."}
-    FAILS.pop(username, None)
+        return {"error": "Chọn Giảng viên hoặc Học viên."}
+    if role == "giang_vien":
+        if TEACHER_LOCAL_ONLY and not local:
+            return {"error": "Vai trò Giảng viên chỉ chọn được trên máy chạy trò chơi."}
+        user, ten = "gv", "Giảng viên"
+    else:
+        ten = " ".join(str(ten or "").split())[:24]
+        if not ten:
+            return {"error": "Nhập tên của bạn."}
+        user = "hv:" + _slug(ten)
     token = secrets.token_urlsafe(24)
-    SESSIONS[token] = {"user": username, "role": acc["role"], "exp": _now() + SESSION_H * 3600}
-    return {"token": token, "user": {"tai_khoan": username, "ten": acc["ten"], "role": acc["role"]}}
+    SESSIONS[token] = {"sid": token, "user": user, "role": role, "ten": ten, "exp": _now() + SESSION_H * 3600}
+    return {"token": token, "user": {"ten": ten, "role": role}}
 
 
 def session(token):
@@ -205,12 +159,7 @@ def session(token):
     if _now() > s["exp"]:
         SESSIONS.pop(token, None)
         return None
-    acc = _accounts().get(s["user"])
-    return dict(s, ten=acc["ten"]) if acc else None
-
-
-def has_teacher():
-    return any(a["role"] == "giang_vien" for a in _accounts().values())
+    return s
 
 
 # ------------------------------------------------------------------ mê cung
@@ -309,12 +258,14 @@ class Game:
     # ---- vào phòng
     def join(self, sess, color=None):
         if not sess:
-            return {"error": "Đăng nhập trước khi vào phòng."}
+            return {"error": "Chọn vai trò Học viên và nhập tên trước."}
         if sess["role"] != "hoc_vien":
             return {"error": "Tài khoản giảng viên không vào chơi — dùng bảng điều khiển."}
         for p in self.players.values():
+            if p["sid"] == sess["sid"]:
+                return {"pid": p["pid"]}  # tải lại trang: vào lại đúng nhân vật
             if p["user"] == sess["user"]:
-                return {"pid": p["pid"]}  # vào lại từ tab / thiết bị khác
+                return {"error": "Tên này đang có người dùng trong phòng — thêm họ hoặc chữ cái để phân biệt."}
         if self.phase != "lobby":
             return {"error": "Ván đang chạy — chờ ván sau nhé."}
         name = sess["ten"]
@@ -322,7 +273,7 @@ class Game:
         used = {p["color"] for p in self.players.values()}
         color = color if color in COLORS and color not in used else next((c for c in COLORS if c not in used), COLORS[0])
         sp = self.maze["spawns"][len(self.players) % len(self.maze["spawns"])]
-        self.players[pid] = {"pid": pid, "user": sess["user"], "name": name, "color": color, "x": sp[0], "y": sp[1],
+        self.players[pid] = {"pid": pid, "sid": sess["sid"], "user": sess["user"], "name": name, "color": color, "x": sp[0], "y": sp[1],
                              "status": "lobby", "opened": [], "asked": [], "shield": 0, "boost_until": 0,
                              "frozen_until": 0, "last_move": 0, "q": None, "rank": None, "points": 0,
                              "seen": _now(), "correct": 0, "wrong": 0}
@@ -591,19 +542,17 @@ def handle(method, path, body, token=None, local=False):
         teacher = bool(sess and sess["role"] == "giang_vien")
         # ---- tài khoản
         if method == "GET" and path == "/game/api/auth/me":
-            return {"user": {"tai_khoan": sess["user"], "ten": sess["ten"], "role": sess["role"]} if sess else None,
-                    "can_create_teacher": local, "has_teacher": has_teacher()}
-        if method == "POST" and path == "/game/api/auth/register":
-            return register(body.get("username"), body.get("password"), body.get("ten"), body.get("role", "hoc_vien"), local)
-        if method == "POST" and path == "/game/api/auth/login":
-            return login(body.get("username"), body.get("password"))
+            return {"user": {"ten": sess["ten"], "role": sess["role"]} if sess else None,
+                    "can_teach": local or not TEACHER_LOCAL_ONLY}
+        if method == "POST" and path == "/game/api/auth/role":
+            return choose_role(body.get("role"), body.get("ten"), local)
         if method == "POST" and path == "/game/api/auth/logout":
             SESSIONS.pop(token or "", None)
             return {"ok": True}
         # ---- người chơi: pid phải thuộc tài khoản đang đăng nhập
         pid = body.get("pid")
-        owner = GAME.players.get(pid, {}).get("user") if pid else None
-        if pid and (not sess or owner != sess["user"]):
+        owner = GAME.players.get(pid, {}).get("sid") if pid else None
+        if pid and (not sess or owner != sess["sid"]):
             pid = None
         if method == "GET" and path == "/game/api/maze":
             return GAME.maze_view()
@@ -618,7 +567,7 @@ def handle(method, path, body, token=None, local=False):
             return GAME.answer(pid, body.get("qid"), body.get("choice", -1)) if pid else {"ok": False}
         # ---- chỉ giảng viên
         if path in ("/game/api/profiles", "/game/api/host/start", "/game/api/host/end", "/game/api/host/new") and not teacher:
-            return {"error": "Cần đăng nhập tài khoản giảng viên."}
+            return {"error": "Chỉ giảng viên làm được việc này."}
         if method == "GET" and path == "/game/api/profiles":
             return {"profiles": profiles_view(), "da_duyet_cau_hoi": False}
         if method == "POST" and path == "/game/api/host/start":

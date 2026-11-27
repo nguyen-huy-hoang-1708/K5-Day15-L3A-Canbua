@@ -47,6 +47,15 @@
   .big:active { transform: translateY(2px); }
   .big.alt { background: linear-gradient(90deg, #63e6be, #3bc9db); box-shadow: 0 10px 30px rgba(59, 201, 219, .3); }
   .big.danger { background: linear-gradient(90deg, #ff8787, #f06595); color: #fff; }
+  .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0 6px; }
+  .role { display: grid; justify-items: center; gap: 4px; padding: 18px 12px; border-radius: 16px; border: 2px solid var(--line);
+          background: rgba(255,255,255,.05); color: var(--ink); transition: transform .12s, border-color .15s, background .15s; }
+  .role:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.3); }
+  .role[aria-pressed="true"] { border-color: var(--gold); background: rgba(255, 212, 59, .10); box-shadow: 0 0 24px rgba(255, 212, 59, .2); }
+  .role[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+  .role .ri { font-size: 38px; } .role b { font-size: 18px; } .role small { color: var(--ink2); font-size: 12.5px; }
+  #hvForm { display: grid; gap: 10px; margin-top: 14px; }
+  #hvForm .swatches { margin: 4px 0 6px; }
   .err { color: var(--bad); min-height: 22px; margin: 10px 0 0; font-size: 14px; }
   .rules { text-align: left; margin: 18px 0 0; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.05); color: var(--ink2); font-size: 13px; }
   .rules b { color: var(--ink); }
@@ -151,41 +160,27 @@
 <body>
 <div class="stars"></div>
 
-<!-- Đăng nhập / tạo tài khoản -->
+<!-- Chọn vai trò (không cần đăng nhập) -->
 <section class="center" id="scrAuth" hidden>
-  <div class="glass join">
-    <div class="logo" id="authLogo">🧭</div>
-    <h1 class="title" id="authTitle">MÊ CUNG PRE-CLASS</h1>
-    <p class="tag" id="authTag">Đăng nhập để vào phòng chơi</p>
-    <div class="tabs" id="authTabs" style="justify-content:center"></div>
-    <form id="authForm" autocomplete="on" style="display:grid;gap:10px">
-      <input class="field" id="aUser" placeholder="Tên đăng nhập (vd: an.nguyen)" autocomplete="username" autocapitalize="off">
-      <input class="field" id="aName" placeholder="Họ tên hiển thị trong trò chơi" maxlength="24" hidden>
-      <input class="field" id="aPass" type="password" placeholder="Mật khẩu (ít nhất 6 ký tự)" autocomplete="current-password">
-      <input class="field" id="aPass2" type="password" placeholder="Nhập lại mật khẩu" autocomplete="new-password" hidden>
-      <button class="big" id="authBtn" type="submit">ĐĂNG NHẬP</button>
-    </form>
-    <p class="err" id="authErr"></p>
-    <p class="small" id="authNote"></p>
-  </div>
-</section>
-
-<!-- Vào phòng -->
-<section class="center" id="scrJoin" hidden>
-  <div class="glass join">
+  <div class="glass join" style="width:min(560px,100%)">
     <div class="logo">🧭</div>
     <h1 class="title">MÊ CUNG PRE-CLASS</h1>
     <p class="tag">Vượt cửa câu hỏi · nhặt hộp may mắn · thắng mọi cuộc đấu · về đích trước!</p>
-    <div class="field" id="hello" style="text-align:center"></div>
-    <div class="swatches" id="swatches"></div>
-    <button class="big" id="btnJoin">VÀO PHÒNG ▶</button>
-    <p class="err" id="joinErr"></p>
+    <div class="roles">
+      <button class="role" id="roleHv"><span class="ri">🧑‍🎓</span><b>Học viên</b><small>Vào mê cung, vượt câu hỏi, về đích</small></button>
+      <button class="role" id="roleGv"><span class="ri">🎓</span><b>Giảng viên</b><small id="gvNote">Điều khiển ván, xem hồ sơ điểm</small></button>
+    </div>
+    <div id="hvForm" hidden>
+      <input class="field" id="aName" maxlength="24" placeholder="Tên của bạn (hiện trong trò chơi)" autocomplete="off">
+      <div class="swatches" id="swatches"></div>
+      <button class="big" id="btnJoin">VÀO PHÒNG ▶</button>
+    </div>
+    <p class="err" id="authErr"></p>
     <div class="rules">
       <b>Luật chơi:</b> dùng phím mũi tên / WASD để đi. 🚪<b>Cửa "?"</b> — trả lời đúng mới qua, sai bị giữ 3 giây.
       🎁<b>Hộp may mắn</b> — tăng tốc, khiên, dịch chuyển… hoặc bẫy băng! ⚔️ <b>Gặp người khác</b> — đấu tốc độ 1 câu, thua bị loại.
       🏆 <b>Về đích trước</b> được cộng điểm vào hồ sơ.
     </div>
-    <p class="small"><a href="#" id="logout1">Đăng xuất</a> · Giảng viên: <a href="?host=1">mở bảng điều khiển</a></p>
   </div>
 </section>
 
@@ -200,7 +195,7 @@
       <button class="go" id="hStart">▶ Bắt đầu ván</button>
       <button id="hNew">↻ Mê cung mới</button>
       <button id="hProfiles">📒 Hồ sơ điểm</button>
-      <button id="hLogout">Đăng xuất</button>
+      <button id="hLogout">⇄ Đổi vai trò</button>
     </div>
   </div>
 </section>
@@ -235,77 +230,60 @@
 <script>
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const HOST = new URLSearchParams(location.search).get("host") === "1";
+let HOST = false;  // giảng viên = người chọn vai trò Giảng viên
 const COLORS = ["#ff6b6b", "#4dabf7", "#51cf66", "#fcc419", "#cc5de8", "#ff922b", "#22b8cf", "#f06595", "#94d82d", "#845ef7", "#20c997", "#fab005"];
 let PID = sessionStorage.getItem("maze_pid") || null, ROUND = sessionStorage.getItem("maze_round") || null;
 let MAZE = null, ST = null, myColor = COLORS[Math.floor(Math.random() * COLORS.length)];
 let lastFeedT = 0, explored = new Set(), shown = {}, answeredQ = null, resultShownFor = null;
 
-let TOKEN = sessionStorage.getItem("maze_token") || "", USER = null, AUTH = null, authMode = "login";
+let TOKEN = sessionStorage.getItem("maze_token") || "", USER = null, AUTH = null;
 const api = (p, body) => fetch(p, { method: body ? "POST" : "GET",
   headers: Object.assign({ "X-Token": TOKEN }, body ? { "Content-Type": "application/json" } : {}),
   body: body ? JSON.stringify(body) : undefined }).then((r) => r.json());
 
-/* ================= tài khoản ================= */
+/* ================= chọn vai trò ================= */
 async function loadMe() {
   AUTH = await api("/game/api/auth/me");
   USER = AUTH.user;
   if (!USER && TOKEN) { TOKEN = ""; sessionStorage.removeItem("maze_token"); }
+  HOST = !!(USER && USER.role === "giang_vien");
 }
-function authOk() { return HOST ? !!(USER && USER.role === "giang_vien") : !!(USER && USER.role === "hoc_vien"); }
+function authOk() { return !!USER && (HOST || !!PID); }
 function renderAuth() {
-  const modes = HOST ? [["login", "Đăng nhập"]].concat(AUTH && AUTH.can_create_teacher ? [["teacher", "Tạo tài khoản giảng viên"]] : [])
-                     : [["login", "Đăng nhập"], ["register", "Tạo tài khoản"]];
-  if (!modes.some((m) => m[0] === authMode)) authMode = modes[0][0];
-  $("authTabs").innerHTML = modes.length > 1 ? modes.map(([k, l]) => `<button type="button" data-m="${k}" aria-pressed="${k === authMode}">${l}</button>`).join("") : "";
-  $("authTabs").querySelectorAll("button").forEach((b) => b.onclick = () => { authMode = b.dataset.m; $("authErr").textContent = ""; renderAuth(); });
-  const reg = authMode !== "login";
-  $("aName").hidden = !reg; $("aPass2").hidden = !reg;
-  $("aPass").autocomplete = reg ? "new-password" : "current-password";
-  $("authLogo").textContent = HOST ? "🎓" : "🧭";
-  $("authTitle").textContent = HOST ? "BẢNG GIẢNG VIÊN" : "MÊ CUNG PRE-CLASS";
-  $("authTag").textContent = HOST ? "Đăng nhập tài khoản giảng viên để điều khiển ván và xem hồ sơ điểm"
-                                  : reg ? "Tạo tài khoản học viên — điểm sẽ lưu vào hồ sơ của bạn" : "Đăng nhập để vào phòng chơi";
-  $("authBtn").textContent = authMode === "login" ? "ĐĂNG NHẬP" : authMode === "teacher" ? "TẠO TÀI KHOẢN GIẢNG VIÊN" : "TẠO TÀI KHOẢN";
-  let note = "";
-  if (HOST && USER && USER.role !== "giang_vien") note = `Bạn đang đăng nhập bằng tài khoản học viên (${esc(USER.ten)}). <a href="#" id="swOut">Đăng xuất</a> để đổi tài khoản.`;
-  else if (HOST && AUTH && !AUTH.can_create_teacher && !AUTH.has_teacher) note = "Chưa có tài khoản giảng viên. Tạo tài khoản trên chính máy chạy server (mở http://localhost:8000/game?host=1).";
-  else if (HOST && authMode === "teacher") note = "Chỉ tạo được trên máy chạy server. Học viên trong mạng lớp không thấy mục này.";
-  else if (!HOST) note = `<a href="?host=1">Giảng viên đăng nhập ở đây</a>`;
-  $("authNote").innerHTML = note;
-  if ($("swOut")) $("swOut").onclick = (e) => { e.preventDefault(); logout(); };
+  $("roleGv").disabled = !(AUTH && AUTH.can_teach);
+  $("gvNote").textContent = $("roleGv").disabled ? "Chỉ chọn được trên máy chạy trò chơi" : "Điều khiển ván, xem hồ sơ điểm";
+  if (USER && USER.role === "hoc_vien") { showHv(); if (!$("aName").value) $("aName").value = USER.ten; }
 }
-$("authForm").onsubmit = async (e) => {
-  e.preventDefault(); $("authErr").textContent = "";
-  const username = $("aUser").value.trim().toLowerCase(), password = $("aPass").value;
-  let r;
-  if (authMode === "login") r = await api("/game/api/auth/login", { username, password });
-  else {
-    if (password !== $("aPass2").value) { $("authErr").textContent = "Hai lần nhập mật khẩu chưa khớp."; return; }
-    r = await api("/game/api/auth/register", { username, password, ten: $("aName").value, role: authMode === "teacher" ? "giang_vien" : "hoc_vien" });
-  }
-  if (r.error) { $("authErr").textContent = r.error; return; }
-  TOKEN = r.token; sessionStorage.setItem("maze_token", TOKEN); $("aPass").value = $("aPass2").value = "";
-  await loadMe(); route();
-};
+function showHv() { $("hvForm").hidden = false; $("roleHv").setAttribute("aria-pressed", "true"); $("roleGv").setAttribute("aria-pressed", "false"); }
+async function setRole(role, ten) {
+  const r = await api("/game/api/auth/role", { role, ten });
+  if (r.error) { $("authErr").textContent = r.error; return false; }
+  TOKEN = r.token; sessionStorage.setItem("maze_token", TOKEN); await loadMe(); return true;
+}
+$("roleHv").onclick = () => { showHv(); $("authErr").textContent = ""; setTimeout(() => $("aName").focus(), 50); };
+$("roleGv").onclick = async () => { $("authErr").textContent = ""; if (await setRole("giang_vien")) route(); };
 async function logout() {
   await api("/game/api/auth/logout", {});
-  TOKEN = ""; USER = null; PID = null; sessionStorage.removeItem("maze_token"); sessionStorage.removeItem("maze_pid");
+  TOKEN = ""; USER = null; HOST = false; PID = null; sessionStorage.removeItem("maze_token"); sessionStorage.removeItem("maze_pid");
+  $("hvForm").hidden = true; ["roleHv", "roleGv"].forEach((id) => $(id).setAttribute("aria-pressed", "false"));
   await loadMe(); route();
 }
 
-/* ================= màn vào phòng ================= */
+/* ================= vào phòng ================= */
 function initJoin() {
   $("swatches").innerHTML = COLORS.map((c) => `<button class="sw" style="background:${c};color:${c}" data-c="${c}" aria-pressed="${c === myColor}" aria-label="màu ${c}"></button>`).join("");
   $("swatches").onclick = (e) => { const b = e.target.closest(".sw"); if (!b) return; myColor = b.dataset.c;
     document.querySelectorAll(".sw").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.c === myColor))); };
-  $("btnJoin").onclick = join;
-  $("logout1").onclick = (e) => { e.preventDefault(); logout(); };
+  $("btnJoin").onclick = join; $("aName").onkeydown = (e) => { if (e.key === "Enter") join(); };
 }
 async function join() {
+  $("authErr").textContent = "";
+  const ten = $("aName").value.trim();
+  if (!ten) { $("authErr").textContent = "Nhập tên của bạn trước đã nhé!"; return; }
+  if (!USER || USER.role !== "hoc_vien" || USER.ten !== ten) { if (!(await setRole("hoc_vien", ten))) return; }
   const r = await api("/game/api/join", { color: myColor });
-  if (r.error) { $("joinErr").textContent = r.error; return; }
-  PID = r.pid; sessionStorage.setItem("maze_pid", PID);
+  if (r.error) { $("authErr").textContent = r.error; return; }
+  PID = r.pid; sessionStorage.setItem("maze_pid", PID); route();
 }
 
 /* ================= vòng lặp trạng thái ================= */
@@ -330,15 +308,11 @@ function route() {
   if (!AUTH) return;
   const ok = authOk();
   $("scrAuth").hidden = ok;
-  if (!ok) { ["scrJoin", "scrLobby", "scrGame", "mQ", "mResult"].forEach((id) => $(id).hidden = true); renderAuth(); return; }
+  if (!ok) { ["scrLobby", "scrGame", "mQ", "mResult"].forEach((id) => $(id).hidden = true); renderAuth(); return; }
   if (!ST) return;
-  if (USER && $("hello")) $("hello").innerHTML = `👋 Xin chào <b>${esc(USER.ten)}</b>`;
   const ph = ST.phase;
-  const inGame = HOST ? ph !== "lobby" : (PID && ph !== "lobby");
-  $("scrJoin").hidden = HOST || !!PID || ph !== "lobby";
-  $("scrLobby").hidden = !(ph === "lobby" && (PID || HOST));
-  $("scrGame").hidden = !(inGame || (!PID && !HOST && ph !== "lobby"));
-  if (!HOST && !PID && ph !== "lobby") { $("scrJoin").hidden = true; }
+  $("scrLobby").hidden = ph !== "lobby";
+  $("scrGame").hidden = ph === "lobby";
   if (ph === "lobby") renderLobby(); else renderGame();
 }
 

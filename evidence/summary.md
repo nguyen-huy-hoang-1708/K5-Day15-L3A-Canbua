@@ -1,6 +1,6 @@
 # Tổng hợp bằng chứng pain
 
-> Xong trước **CP3 10:00 Thứ Bảy 28/11**. Hiện mới có nguồn đào data; phỏng vấn chưa làm.
+> Xong trước **CP3 10:00 Thứ Bảy 28/11**. **Nguồn đạt ngưỡng: đào data BTC** (x/N, %, script chạy lại được, ≥5 ví dụ). Phỏng vấn là nguồn kiểm lại, đang làm.
 
 ## 1. Nguồn đã dùng
 
@@ -25,15 +25,17 @@
 | P2 | | | | | |
 | P3 | | | | | |
 
-## 3. ≥5 ví dụ (mã dòng data, không có tên)
+## 3. ≥5 ví dụ cụ thể từ data (mã dòng / mã video, không có tên học viên)
 
-1. `answers.csv` A00515 — trả lời sai lần đầu ở `cot_task_fit` (Day04)
-2. `answers.csv` A00295 — như trên
-3. `answers.csv` A00833 — như trên
-4. `answers.csv` A00616 — như trên
-5. `answers.csv` A01153 — như trên
+Nguồn đạt ngưỡng là **đào data** nên "trích dẫn" ở đây là dòng data cụ thể, kiểm lại được bằng script:
 
-*(Thêm trích dẫn nguyên văn từ phỏng vấn khi có.)*
+1. `answers.csv` **A00515**, **A00295**, **A00833**, **A00616**, **A01153** — 5 lần trả lời **sai ngay lần đầu** ở ý `cot_task_fit` (Day04, cả ý: 16/27 đúng = 59,3%). In lại: `python evidence/count_preclass.py data-btc/preclass` mục [7].
+2. Ý `chatbot_is_app_around_model` (Day01, ý nhiều người trả lời nhất của ngày đầu): 25/41 đúng lần đầu (61,0%) — gần 4/10 người hiểu sai "chatbot là ứng dụng bọc quanh model".
+3. Video **`d01-r1-v01`** (video mở đầu Day01): 187 người xem, chỉ 66/187 còn ở khoảng cuối; 22% người xem tua tới qua khoảng 1:45 (`data/preclass_video_stats.json`).
+4. **Day12**: 26/436 người có hoạt động trên bài pre-class (6,0%), so với Day01 417/436 (95,6%) — giảng viên Day12 gần như không có số pre-class để dựa vào.
+5. **Day09**: không ý kiến thức nào có từ 10 người trả lời trở lên (nhiều nhất 6 người, `llm_judge_calibration`) → Radar trả "Chưa đủ dữ liệu" thay vì đoán (câu thử K03).
+
+*(Trích dẫn nguyên văn của giảng viên / lab coach sẽ thêm vào đây sau phỏng vấn — `evidence/interviews/P1.md`…)*
 
 ## 4. Các nguồn có khớp nhau không
 
