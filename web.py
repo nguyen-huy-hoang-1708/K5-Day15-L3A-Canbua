@@ -155,6 +155,11 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
+    for _stream in (sys.stdout, sys.stderr):  # Windows: console cp1258/cp1252 không in được tiếng Việt
+        try:
+            _stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
     print("Radar pre-class: http://localhost:%d  (Ctrl+C để dừng)" % port)
     HTTPServer(("127.0.0.1", port), Handler).serve_forever()

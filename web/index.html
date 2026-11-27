@@ -3,140 +3,216 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Radar pre-class</title>
+<title>Radar — Pre-class Intelligence</title>
 <style>
   :root {
-    --bg: #f4f3ef; --surface: #fcfcfb; --border: #e3e1da;
-    --ink: #0b0b0b; --ink-2: #52514e; --ink-3: #8a8983;
-    --bar: #2a78d6; --bar-faint: #b7d3f6; --weak: #ec835a; --grid: #ebe9e3;
-    --accent: #2a78d6; --accent-ink: #fff; --chip: #ecebe6; --good: #0ca30c;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #121211; --surface: #1a1a19; --border: #2e2e2b;
-      --ink: #f0efec; --ink-2: #c3c2b7; --ink-3: #8f8e86;
-      --bar: #3987e5; --bar-faint: #1c5cab; --weak: #ec835a; --grid: #2a2a27;
-      --accent: #3987e5; --accent-ink: #fff; --chip: #262624; --good: #0ca30c;
-    }
+    color-scheme: dark;
+    --bg: #0b101b; --surface: #121a29; --border: #243044;
+    --ink: #eaf0fa; --ink-2: #91a0b7; --ink-3: #6c7a91;
+    --bar: #6b9bff; --bar-faint: #566278; --weak: #ffad72; --grid: #263246;
+    --good: #53d5b0; --chip: #1a2538;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-         font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-  header { padding: 20px 28px 8px; }
-  header h1 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
-  header p { margin: 2px 0 0; color: var(--ink-2); }
-  main { display: grid; grid-template-columns: 280px 1fr; gap: 20px; padding: 12px 28px 32px; align-items: start; }
-  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
-  .card h2 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); font-weight: 600; }
-  .days { display: grid; grid-template-columns: 1fr; gap: 6px; }
-  .day { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%;
-         padding: 8px 10px; border-radius: 8px; border: 1px solid transparent; background: var(--chip);
-         color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
-  .day:hover { border-color: var(--border); }
-  .day[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
-  .day small { color: inherit; opacity: .75; font-size: 12px; white-space: nowrap; }
-  .day .name { font-size: 12px; opacity: .8; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px; }
-  .day.all { font-weight: 600; margin-bottom: 6px; }
-  .saved { font-size: 11px; opacity: .8; }
-  form { display: flex; gap: 8px; margin-top: 16px; }
-  input[type=text] { flex: 1; min-width: 0; padding: 9px 11px; border-radius: 8px; border: 1px solid var(--border);
-                     background: var(--surface); color: var(--ink); font: inherit; }
-  button.go { padding: 9px 14px; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font: inherit; cursor: pointer; }
-  button.ghost { padding: 4px 10px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--ink-2); font: inherit; font-size: 12px; cursor: pointer; margin-left: 8px; }
-  .hint { color: var(--ink-3); font-size: 12px; margin: 6px 0 0; }
-  .col { display: grid; gap: 20px; min-width: 0; }
-  .radar .head { font-size: 18px; font-weight: 650; margin: 0 0 6px; }
-  .radar .line { margin: 2px 0; color: var(--ink-2); }
-  .radar .pick { margin: 14px 0 4px; font-weight: 600; }
-  .radar .sub { margin: 2px 0 2px 22px; color: var(--ink-2); }
-  .radar .sub b { color: var(--ink); font-weight: 600; }
-  .radar .note { margin-top: 14px; padding: 10px 12px; background: var(--chip); border-radius: 8px; color: var(--ink-2); font-size: 13px; }
-  .radar .warn { display: inline-block; margin-right: 6px; color: var(--weak); }
-  .meta { margin-top: 12px; color: var(--ink-3); font-size: 12px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.55 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  button, input { font: inherit; }
+  button { cursor: pointer; color: inherit; background: var(--chip); border: 1px solid var(--border); border-radius: 9px; padding: 10px 14px; }
+  button:hover { border-color: var(--bar); }
+  p { margin: 0; color: var(--ink-2); }
+  h1 { font-size: 30px; letter-spacing: -1px; line-height: 1.2; margin: 7px 0; overflow-wrap: anywhere; }
+  h2 { font-size: 16px; margin: 0 0 4px; }
+  a { color: var(--bar); }
+
+  /* ---- khung ---- */
+  .layout { display: grid; grid-template-columns: 252px 1fr; min-height: 100vh; }
+  aside { background: #0e1522; border-right: 1px solid var(--border); padding: 24px 16px; position: sticky; top: 0; height: 100vh; overflow: auto; }
+  main { min-width: 0; padding: 0 30px 30px; }
+  .brand { display: flex; align-items: center; gap: 12px; font-size: 21px; font-weight: 750; letter-spacing: -.6px; }
+  .logo { width: 40px; height: 40px; border-radius: 13px; background: #1e3658; display: grid; place-items: center; color: #8bb5ff; }
+  .sub { font-size: 10px; color: var(--ink-2); letter-spacing: 1.6px; font-weight: 600; }
+  .section { color: var(--ink-2); font-size: 10px; letter-spacing: 1.5px; margin: 26px 8px 10px; font-weight: 700; }
+  .nav { display: flex; width: 100%; align-items: center; gap: 10px; text-align: left; border: 1px solid transparent; background: none; margin: 3px 0; padding: 9px 10px; }
+  .nav.active { background: #203653; border-color: #36577d; color: #c9dfff; }
+  .nav small { display: block; color: var(--ink-2); font-size: 11px; max-width: 145px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nav .num { margin-left: auto; color: var(--ink-2); font-size: 12px; text-align: right; white-space: nowrap; }
+  .nav .saved { color: var(--good); font-size: 11px; display: block; }
+  .foot { margin-top: 24px; color: var(--ink-2); font-size: 11px; }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--good); margin-right: 6px; }
+  .top { height: 68px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; color: var(--ink-2); font-size: 12px; }
+
+  .hero { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 25px 0 18px; }
+  .eyebrow { color: var(--bar); font-size: 11px; letter-spacing: 1.6px; font-weight: 700; }
+  .primary { background: #82aaff; color: #0a1730; font-weight: 700; border: 0; white-space: nowrap; }
+  .primary:hover { background: #a3c0ff; }
+
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .card, .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .panel { margin-top: 16px; min-width: 0; }
+  .metric { font-size: 30px; letter-spacing: -1px; font-weight: 720; margin: 8px 0 3px; font-variant-numeric: tabular-nums; }
+  .label { color: var(--ink-2); font-size: 12px; }
+  .split { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; }
+  .head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  .chip { display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 3px 7px; font-size: 11px; color: var(--ink-2); white-space: nowrap; }
+  .notice { border-left: 3px solid #dca16d; background: #221e24; padding: 12px 16px; border-radius: 8px; color: #e8bd9e; margin-top: 16px; font-size: 12px; }
+  .insight { padding: 15px 0; border-bottom: 1px solid var(--border); }
+  .insight:last-child { border: 0; }
+  .insight b { display: block; margin-bottom: 4px; }
+  .warn { color: var(--weak); }
+
+  /* ---- AI teaching brief ---- */
+  .priorities { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .priority { border: 1px solid #634936; border-radius: 10px; padding: 15px; background: #1b202c; }
+  .priority .tag { font-size: 11px; color: var(--weak); }
+  .priority h3 { font-size: 15px; margin: 8px 0; overflow-wrap: anywhere; }
+  .priority p { font-size: 12px; margin-top: 7px; }
+  .priority p b { color: var(--ink); }
+  .big { font-size: 26px; font-weight: 700; color: var(--weak); }
+  .line { margin: 4px 0; }
+  .brief-note { margin-top: 12px; padding: 10px 12px; background: var(--chip); border-radius: 8px; font-size: 12px; }
+  .meta { margin-top: 14px; color: var(--ink-3); font-size: 12px; }
   .meta .hit { color: var(--ink-2); }
-  .err { color: #d03b3b; }
-  .loading { color: var(--ink-3); }
-  .key { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 10px; font-size: 12px; color: var(--ink-2); }
+  button.ghost { padding: 4px 10px; border-radius: 6px; background: transparent; color: var(--ink-2); font-size: 12px; margin-left: 8px; }
+  .err { color: #ff7b7b; }
+  .loading { color: var(--ink-2); }
+
+  /* ---- biểu đồ ---- */
+  .key { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 10px; font-size: 11px; color: var(--ink-2); }
   .key span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
   .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
   .chart text { fill: var(--ink-2); font-size: 12px; }
   .chart .val { fill: var(--ink); }
   .chart .hot { cursor: pointer; }
-  .tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--surface); font-size: 12px; line-height: 1.45;
+  .chart .hot:hover path { fill: #b5ccff; }
+  .tip { position: fixed; pointer-events: none; background: var(--ink); color: #0b101b; font-size: 12px; line-height: 1.45;
          padding: 8px 10px; border-radius: 8px; max-width: 320px; opacity: 0; transition: opacity .08s; z-index: 10; }
-  details { margin-top: 12px; font-size: 13px; }
-  table { border-collapse: collapse; width: 100%; margin-top: 8px; }
-  th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--border); }
+  details { margin-top: 12px; font-size: 12px; color: var(--ink-2); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 12px; color: var(--ink); }
+  th, td { text-align: left; padding: 10px 6px; border-bottom: 1px solid var(--border); }
   td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
-  .empty { color: var(--ink-3); }
-  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
-  .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
-  .tile .v { font-size: 26px; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-  .tile .l { color: var(--ink-2); font-size: 13px; }
-  .sub2 { color: var(--ink-3); font-size: 12px; margin: -4px 0 10px; }
+  .sub2 { color: var(--ink-2); font-size: 12px; margin: -10px 0 14px; }
   .vgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
-  .vid { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px 6px; }
+  .vid { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px 6px; background: #0f1623; }
   .vid h3 { margin: 0; font-size: 14px; font-weight: 600; }
   .vid p { margin: 2px 0 6px; font-size: 12px; color: var(--ink-2); }
   .vid.thin { opacity: .55; }
   .vid svg { display: block; width: 100%; height: auto; overflow: visible; }
   .vid text { fill: var(--ink-3); font-size: 10px; }
+
+  /* ---- hỏi Radar ---- */
+  .ask { display: flex; gap: 8px; margin-top: 12px; }
+  input[type=text] { flex: 1; min-width: 0; padding: 12px; border-radius: 9px; border: 1px solid var(--border); background: #0d1421; color: var(--ink); }
+  input[type=text]:focus { outline: none; border-color: var(--bar); }
+  .foot-note { font-size: 11px; margin-top: 16px; }
+
+  @media (max-width: 1050px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .split, .priorities { grid-template-columns: 1fr; }
+    .layout { grid-template-columns: 210px 1fr; }
+    main { padding: 0 18px 20px; }
+  }
+  @media (max-width: 650px) {
+    .layout { display: block; }
+    aside { position: static; height: auto; padding: 12px; }
+    #days { display: flex; overflow: auto; }
+    .nav { min-width: 95px; }
+    .nav small, .nav .num, .foot, .section { display: none; }
+    .top { height: 48px; }
+    .hero { align-items: flex-start; flex-direction: column; }
+    h1 { font-size: 25px; }
+    .card, .panel { padding: 13px; }
+    .brand { font-size: 18px; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>Radar pre-class</h1>
-  <p>Trước buổi học: lớp đang hổng ý kiến thức nào ở phần học trước buổi — số tổng hợp, giảng viên quyết định giảng gì.</p>
-</header>
-<main>
-  <aside class="card">
-    <button class="day all" id="allBtn" aria-pressed="true"><span>Tổng quan khoá</span><small>Day01–13</small></button>
-    <h2>Ngày học</h2>
-    <div class="days" id="days"></div>
-    <form id="ask">
-      <input type="text" id="q" placeholder="Hỏi tự do, vd: Day 3 cần giảng kỹ gì?" autocomplete="off">
-      <button class="go" type="submit">Hỏi</button>
-    </form>
-    <p class="hint">Câu hỏi đi qua cùng luồng với <code>python run.py</code>: chặn yêu cầu ngoài phạm vi, kiểm số, chỉ số tổng hợp.</p>
+<div class="layout">
+  <aside>
+    <div class="brand">
+      <div class="logo"><svg width="29" height="29" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="8"/><circle cx="16" cy="16" r="4"/><path d="M16 16 25 7"/><circle cx="22" cy="10" r="2" fill="currentColor"/></svg></div>
+      <div>Radar<div class="sub">PRE-CLASS INTELLIGENCE</div></div>
+    </div>
+    <div class="section">WORKSPACE · KHOÁ 5</div>
+    <button class="nav active" id="allBtn">▦ &nbsp; Tổng quan khoá</button>
+    <div class="section">NGÀY HỌC · DAY 01–13</div>
+    <div id="days"></div>
+    <div class="foot"><span class="dot"></span> Dữ liệu tổng hợp ẩn danh<br>05–25/11/2026 · Không realtime<br>Canbua · Track A</div>
   </aside>
 
-  <div class="col" id="overview">
-    <div class="tiles" id="tiles"></div>
-    <section class="card">
-      <h2>Học viên có làm pre-class, theo ngày học</h2>
-      <p class="sub2">Số người có ít nhất 1 hoạt động trên bài của ngày đó / 436 người có hoạt động trên trang. Bấm cột để mở Radar ngày đó.</p>
-      <div class="chart" id="chartPeople"></div>
-    </section>
-    <section class="card">
-      <h2>Video xem tới cuối, theo ngày học</h2>
-      <p class="sub2">Số lượt (học viên, video) xem tới cuối / số lượt mở video của ngày đó.</p>
-      <div class="chart" id="chartVideo"></div>
-      <details><summary>Xem dạng bảng</summary><div id="ovTable"></div></details>
-    </section>
-  </div>
+  <main>
+    <div class="top">
+      <span>Workspace / Radar pre-class / <b id="crumb">Tổng quan</b></span>
+      <span><span class="dot"></span> Khoá 5 · Toàn khoá</span>
+    </div>
 
-  <div class="col" id="dayview" hidden>
-    <section class="card radar" id="radar"></section>
-    <section class="card" id="chartCard" hidden>
-      <h2 id="chartTitle">Tỉ lệ đúng lần đầu theo ý kiến thức</h2>
-      <div class="key" id="key"></div>
-      <div class="chart" id="chart"></div>
-      <details><summary>Xem dạng bảng</summary><div id="table"></div></details>
-    </section>
-    <section class="card" id="videoCard" hidden>
-      <h2 id="videoTitle">Video của ngày: học viên bỏ ngang và tua qua ở đâu</h2>
-      <p class="sub2" id="videoSub"></p>
-      <div class="key">
-        <span style="--c:var(--bar)">% người xem còn xem khoảng 15 giây đó</span>
-        <span style="--c:var(--weak)">% người xem tua tới qua khoảng đó</span>
-        <span style="--c:var(--ink-3)">┆ câu hỏi bật lên giữa video</span>
+    <!-- Tổng quan khoá -->
+    <div id="overview">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">LEARNING ANALYTICS / OVERVIEW</div>
+          <h1>Tổng quan pre-class</h1>
+          <p>Hiểu mức độ chuẩn bị của học viên trước mỗi buổi học.</p>
+        </div>
+        <button class="primary" id="openTop"></button>
       </div>
-      <div class="vgrid" id="videos"></div>
-    </section>
-  </div>
-</main>
+      <div class="cards" id="tiles"></div>
+      <div class="split">
+        <div class="panel">
+          <div class="head"><div><h2>Mức độ tham gia theo ngày</h2><p>Số học viên có ít nhất một hoạt động trên bài của ngày đó</p></div><span class="chip" id="chipDays"></span></div>
+          <div class="chart" id="chartPeople"></div>
+          <p style="font-size:11px">Chọn một cột để mở Radar của ngày học.</p>
+        </div>
+        <div class="panel" id="insights"></div>
+      </div>
+      <div class="panel">
+        <div class="head"><div><h2>Tỷ lệ xem video tới cuối</h2><p>Theo từng ngày học · trên các lượt (học viên, video) đã mở</p></div><span class="chip">%</span></div>
+        <div class="chart" id="chartVideo"></div>
+        <details><summary>Xem dạng bảng</summary><div id="ovTable"></div></details>
+      </div>
+      <div class="notice">Phạm vi dữ liệu: toàn khoá 5, không tách lớp. Số liệu lịch sử, không cập nhật theo thời gian thực.</div>
+    </div>
+
+    <!-- Radar một ngày / kết quả hỏi tự do -->
+    <div id="dayview" hidden>
+      <div id="dayhead"></div>
+      <div class="panel" id="radar">
+        <div class="head">
+          <div><div class="eyebrow">✦ AI TEACHING BRIEF</div><h2>Nội dung nên nhấn mạnh trong buổi học</h2><p>Gợi ý từ AI trên số tổng hợp · giảng viên quyết định giảng gì</p></div>
+          <span class="chip" id="pickchip" hidden></span>
+        </div>
+        <div id="radarBody"></div>
+      </div>
+      <div class="panel" id="chartCard" hidden>
+        <div class="head"><div><h2 id="chartTitle">Tỉ lệ đúng lần đầu theo ý kiến thức</h2><p>Vạch đứt là ngưỡng đang hổng</p></div></div>
+        <div class="key" id="key"></div>
+        <div class="chart" id="chart"></div>
+        <details><summary>Xem dạng bảng</summary><div id="table"></div></details>
+      </div>
+      <div class="panel" id="videoCard" hidden>
+        <div class="head"><div><h2 id="videoTitle">Video của ngày</h2></div></div>
+        <p class="sub2" id="videoSub"></p>
+        <div class="key">
+          <span style="--c:var(--bar)">% người xem còn xem khoảng 15 giây đó</span>
+          <span style="--c:var(--weak)">% người xem tua tới qua khoảng đó</span>
+          <span style="--c:var(--ink-3)">┆ câu hỏi bật lên giữa video</span>
+        </div>
+        <div class="vgrid" id="videos"></div>
+      </div>
+      <div class="notice">Chỉ tính các câu trả lời lần đầu. Mẫu số lượt trả lời có thể khác số người trả lời. Ý có dưới 10 người không dùng để kết luận.</div>
+    </div>
+
+    <!-- Hỏi Radar -->
+    <div class="panel">
+      <div class="head"><div><h2>✦ Hỏi Radar</h2><p>Tra cứu một ngày học hoặc một ý kiến thức cụ thể.</p></div><span class="chip">Cùng luồng với run.py</span></div>
+      <form class="ask" id="ask">
+        <input type="text" id="q" placeholder="Ví dụ: Day 3 cần nhấn mạnh kiến thức nào?" autocomplete="off" required>
+        <button class="primary" type="submit">Hỏi Radar ↗</button>
+      </form>
+      <p style="margin-top:10px;font-size:12px">Câu hỏi được chặn yêu cầu ngoài phạm vi, kiểm số và chỉ dùng số tổng hợp — giống bản dòng lệnh.</p>
+    </div>
+    <p class="foot-note">Chỉ sử dụng số tổng hợp toàn khoá, không tách L3A/L3B. AI hỗ trợ; giảng viên quyết định nội dung giảng.</p>
+  </main>
+</div>
 <div class="tip" id="tip" role="tooltip"></div>
 <script>
 const $ = (id) => document.getElementById(id);
@@ -158,8 +234,9 @@ async function init() {
   OV = await fetch("/api/overview").then((x) => x.json());
   CFG = OV;
   renderDays();
-  $("days").addEventListener("click", (e) => { const b = e.target.closest(".day"); if (b) loadDay(+b.dataset.day); });
+  $("days").addEventListener("click", (e) => { const b = e.target.closest(".nav"); if (b) loadDay(+b.dataset.day); });
   $("allBtn").addEventListener("click", showOverview);
+  $("dayhead").addEventListener("click", (e) => { if (e.target.closest("#sheet")) downloadSheet(); });
   $("ask").addEventListener("submit", (e) => { e.preventDefault(); const t = $("q").value.trim(); if (t) ask(t); });
   $("key").innerHTML =
     `<span style="--c:var(--weak)">⚠ dưới ${CFG.weak_pct}% đúng, từ ${CFG.min_people} người — cần nhấn</span>` +
@@ -171,14 +248,14 @@ async function init() {
 
 function renderDays() {
   $("days").innerHTML = OV.days.map((d) =>
-    `<button class="day" data-day="${d.ngay}" aria-pressed="false">
-       <span>${dd(d.ngay)}<span class="name">${esc(d.bai.join(", "))}</span></span>
-       <small>${d.hoc_vien} người${d.cached ? '<br><span class="saved">✓ đã lưu</span>' : ""}</small></button>`).join("");
+    `<button class="nav" data-day="${d.ngay}"><div>${dd(d.ngay).replace("Day", "Day ")}<small>${esc(d.bai.join(", "))}</small></div>` +
+    `<span class="num">${d.hoc_vien}${d.cached ? '<span class="saved">✓ đã lưu</span>' : ""}</span></button>`).join("");
 }
 
-function setActive(day) {
-  $("allBtn").setAttribute("aria-pressed", String(day === null));
-  document.querySelectorAll("#days .day").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.day === day)));
+function setActive(day, crumb) {
+  $("allBtn").classList.toggle("active", day === null && crumb === undefined);
+  document.querySelectorAll("#days .nav").forEach((b) => b.classList.toggle("active", +b.dataset.day === day));
+  $("crumb").textContent = crumb || (day ? dd(day) : "Tổng quan");
 }
 
 function showOverview() {
@@ -188,16 +265,28 @@ function showOverview() {
 }
 
 /* ---------- Tổng quan khoá ---------- */
+function metric(label, value, note) {
+  return `<div class="card"><div class="label">${label}</div><div class="metric">${value}</div><div class="label">${note}</div></div>`;
+}
+
 function drawOverview() {
   const d = OV.days, first = d[0], last = d[d.length - 1];
   const hong = d.reduce((a, x) => a + x.so_y_hong, 0), thin = d.filter((x) => x.so_y_du_nguoi === 0).length;
   const vOpen = d.reduce((a, x) => a + x.video_mo, 0), vEnd = d.reduce((a, x) => a + x.video_xem_het, 0);
-  $("tiles").innerHTML = [
-    [`${first.hoc_vien} → ${last.hoc_vien}`, `người làm pre-class, ${dd(first.ngay)} → ${dd(last.ngay)} (trên ${first.tong})`],
-    [`${Math.round(pct(vEnd, vOpen))}%`, `lượt mở video xem tới cuối (${vEnd}/${vOpen})`],
-    [`${hong}`, `ý kiến thức dưới ${CFG.weak_pct}% đúng lần đầu, đủ ${CFG.min_people} người`],
-    [`${thin}/${d.length}`, `ngày chưa đủ dữ liệu để kết luận (không ý nào ≥ ${CFG.min_people} người)`],
-  ].map(([v, l]) => `<div class="tile"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+  const worst = d.reduce((a, x) => (x.so_y_hong > a.so_y_hong ? x : a), d[0]);
+  $("openTop").textContent = `Mở Radar ${dd(worst.ngay)} ↗`;
+  $("openTop").onclick = () => loadDay(worst.ngay);
+  $("chipDays").textContent = `${d.length} ngày`;
+  $("tiles").innerHTML =
+    metric(`Tham gia · ${dd(first.ngay)} → ${dd(last.ngay)}`,`${first.hoc_vien} → ${last.hoc_vien}`, `Trên ${first.tong} học viên có hoạt động`) +
+    metric("Video xem tới cuối", `${Math.round(pct(vEnd, vOpen))}%`, `${vEnd} / ${vOpen} lượt mở video`) +
+    metric("Ý kiến thức cần nhấn", hong, `Dưới ${CFG.weak_pct}% đúng · từ ${CFG.min_people} người`) +
+    metric("Ngày chưa đủ dữ liệu", `${thin} / ${d.length}`, `Không ý nào đạt ${CFG.min_people} người`);
+  $("insights").innerHTML =
+    `<h2>Điểm đáng chú ý</h2><p>Tóm tắt từ số liệu tổng hợp</p>` +
+    `<div class="insight"><b class="warn">Mức tham gia giảm rõ rệt</b><p>${dd(first.ngay)} có ${first.hoc_vien} người, ${dd(last.ngay)} chỉ có ${last.hoc_vien} người.</p></div>` +
+    `<div class="insight"><b>Video chưa được xem hết</b><p>Chỉ ${Math.round(pct(vEnd, vOpen))}% lượt mở video được xem tới cuối (${vEnd}/${vOpen}).</p></div>` +
+    `<div class="insight"><b>Không đồng nghĩa với mức độ hiểu bài</b><p>Cần đọc tỷ lệ đúng cùng số người trả lời; ý dưới ${CFG.min_people} người không dùng để kết luận.</p></div>`;
 
   columns($("chartPeople"), d.map((x) => ({
     day: x.ngay, v: pct(x.hoc_vien, x.tong), lab: `${x.hoc_vien}`,
@@ -214,19 +303,19 @@ function drawOverview() {
 }
 
 function columns(el, rows, clickable) {
-  const W = Math.max(480, el.clientWidth || 700), H = 220, L = 36, R = 6, T = 18, B = 26;
+  const W = Math.max(420, el.clientWidth || 700), H = 220, L = 36, R = 6, T = 18, B = 26;
   const plot = W - L - R, step = plot / rows.length, bw = Math.min(36, step * 0.62);
   const y = (p) => T + (1 - p / 100) * (H - T - B);
-  let g = "";
+  let g = `<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#83abff"/><stop offset="1" stop-color="#3765b3"/></linearGradient></defs>`;
   [0, 25, 50, 75, 100].forEach((p) => {
     g += `<line x1="${L}" x2="${W - R}" y1="${y(p)}" y2="${y(p)}" stroke="var(--grid)"/>`;
     g += `<text x="${L - 6}" y="${y(p) + 4}" text-anchor="end">${p}%</text>`;
   });
   rows.forEach((r, i) => {
-    const cx = L + step * i + step / 2, top = y(r.v), h = Math.max(2, y(0) - top);
+    const cx = L + step * i + step / 2, top = y(r.v), h = Math.max(3, y(0) - top);
     g += `<g class="${clickable ? "hot" : ""}" data-day="${r.day}" data-tip="${esc(r.tip)}">
       <rect x="${cx - step / 2}" y="${T}" width="${step}" height="${H - T}" fill="transparent"/>
-      <path d="M${cx - bw / 2},${y(0)} v-${h - 4} a4,4 0 0 1 4,-4 h${bw - 8} a4,4 0 0 1 4,4 v${h - 4} z" fill="var(--bar)"/>
+      <path d="M${cx - bw / 2},${y(0)} v-${h - 4} a4,4 0 0 1 4,-4 h${bw - 8} a4,4 0 0 1 4,4 v${h - 4} z" fill="url(#bg)"/>
       <text class="val" x="${cx}" y="${top - 5}" text-anchor="middle">${r.lab}</text>
       <text x="${cx}" y="${H - 8}" text-anchor="middle">${String(r.day).padStart(2, "0")}</text>
     </g>`;
@@ -236,38 +325,77 @@ function columns(el, rows, clickable) {
   if (clickable) el.querySelectorAll(".hot").forEach((n) => n.addEventListener("click", () => loadDay(+n.dataset.day)));
 }
 
+/* ---------- Tiêu đề + 4 thẻ số của một ngày (đọc từ /api/overview, không gọi model) ---------- */
+function dayHead(day) {
+  const d = day ? OV.days.find((x) => x.ngay === day) : null;
+  if (!d) {
+    $("dayhead").innerHTML = `<div class="hero"><div><div class="eyebrow">RADAR / HỎI TỰ DO</div><h1>Kết quả Radar</h1><p>Trả lời cho câu hỏi của bạn · số tổng hợp toàn khoá</p></div></div>`;
+    return;
+  }
+  const notEnough = d.so_y_du_nguoi === 0;
+  $("dayhead").innerHTML =
+    `<div class="hero"><div><div class="eyebrow">RADAR / ${dd(d.ngay).toUpperCase().replace("DAY", "DAY ")}</div><h1>${esc(d.bai.join(", "))}</h1>` +
+    `<p>Phiếu chuẩn bị buổi học · ${dd(d.ngay)} · Toàn khoá</p></div>` +
+    `<button class="primary" id="sheet" hidden>↓ Tải phiếu chuẩn bị (.md)</button></div>` +
+    `<div class="cards">` +
+    metric("Học viên có hoạt động", `${d.hoc_vien} / ${d.tong}`, `${pct(d.hoc_vien, d.tong).toFixed(1)}% toàn khoá`) +
+    metric("Chưa có hoạt động", d.tong - d.hoc_vien, `Trong nhóm ${d.tong} học viên`) +
+    metric("Video xem tới cuối", `${Math.round(pct(d.video_xem_het, d.video_mo))}%`, `${d.video_xem_het} / ${d.video_mo} lượt mở`) +
+    metric("Ý cần nhấn mạnh", notEnough ? "—" : d.so_y_hong, notEnough ? `Chưa đủ dữ liệu (G10, < ${CFG.min_people} người)` : `Ngưỡng ${CFG.weak_pct}% · từ ${CFG.min_people} người`) +
+    `</div>`;
+}
+
 /* ---------- Radar một ngày ---------- */
 async function loadDay(day, refresh) {
   setActive(day); CURRENT = day;
   $("overview").hidden = true; $("dayview").hidden = false;
+  dayHead(day);
+  scrollTo({ top: 0, behavior: "smooth" });
   show(await call(`/api/radar?day=${day}${refresh ? "&refresh=1" : ""}`));
   const d = OV.days.find((x) => x.ngay === day);
   if (d && !d.cached) { d.cached = true; renderDays(); setActive(day); }
 }
 async function ask(text) {
-  setActive(null); CURRENT = null;
+  setActive(null, "Hỏi Radar"); CURRENT = null;
   $("overview").hidden = true; $("dayview").hidden = false;
+  dayHead(null);
+  scrollTo({ top: 0, behavior: "smooth" });
   show(await call("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) }));
 }
 async function call(url, opt) {
-  $("radar").innerHTML = '<p class="loading">Đang đọc số và hỏi AI…</p>';
+  $("radarBody").innerHTML = '<p class="loading">Đang đọc số và hỏi AI…</p>';
+  $("pickchip").hidden = true;
   $("chartCard").hidden = true; $("videoCard").hidden = true;
   try { return await fetch(url, opt).then((x) => x.json()); }
   catch (e) { return { output: "", error: String(e), stats: {}, meta: {} }; }
 }
 
+/* Biến văn bản Radar (do agent.py in) thành thẻ "ưu tiên"; dòng nào không nhận ra thì giữ nguyên chữ. */
 function renderOutput(text) {
+  const picks = [], rest = []; let cur = null;
+  text.split("\n").map((s) => s.trim()).filter(Boolean).forEach((t) => {
+    if (t.startsWith("Radar pre-class Day") || t.startsWith("- Học viên có làm") || t.startsWith("- Video xem tới")) return;
+    const m = t.match(/^(\d+)\.\s+(\S+) \(bài ([^)]*)\) — đúng lần đầu (\d+)\/(\d+) \(([\d.]+)%\), (\d+) người trả lời/);
+    if (m) { cur = { kc: m[2], a: m[4], b: m[5], p: m[6], n: m[7], what: "", why: "", how: "" }; picks.push(cur); return; }
+    const s = t.match(/^(Ý này là|Vì sao|Gợi ý):\s*(.*)/);
+    if (s && cur) { if (s[1] === "Vì sao") cur.why = s[2]; else if (s[1] === "Gợi ý") cur.how = s[2]; else cur.what = s[2]; return; }
+    rest.push(t);
+  });
   let html = "";
-  text.split("\n").forEach((ln, i) => {
-    const t = ln.trim();
-    if (!t) return;
-    if (i === 0 && t.startsWith("Radar")) html += `<p class="head">${esc(t)}</p>`;
-    else if (/^\d+\.\s/.test(t)) html += `<p class="pick"><span class="warn">⚠</span>${esc(t)}</p>`;
-    else if (/^(Ý này là|Vì sao|Gợi ý):/.test(t)) { const [k, ...rest] = t.split(":"); html += `<p class="sub"><b>${esc(k)}:</b>${esc(rest.join(":"))}</p>`; }
-    else if (t.startsWith("Lưu ý:")) html += `<p class="note">${esc(t)}</p>`;
+  const before = rest.filter((t) => t.startsWith("Nên nhấn mạnh"));
+  if (picks.length) {
+    html += before.map((t) => `<p class="line" style="margin-bottom:12px">${esc(t)}</p>`).join("");
+    html += `<div class="priorities">` + picks.map((k, i) =>
+      `<div class="priority"><div class="tag">ƯU TIÊN ${String(i + 1).padStart(2, "0")}</div><h3>${esc(k.kc)}</h3>` +
+      `<div class="big">${Math.round(k.p)}%</div><div class="label">${k.a}/${k.b} đúng lần đầu · ${k.n} người</div>` +
+      (k.what ? `<p><b>Ý này là:</b> ${esc(k.what)}</p>` : "") + (k.why ? `<p><b>Vì sao:</b> ${esc(k.why)}</p>` : "") + (k.how ? `<p><b>Gợi ý:</b> ${esc(k.how)}</p>` : "") + `</div>`).join("") + `</div>`;
+  }
+  rest.filter((t) => !t.startsWith("Nên nhấn mạnh")).forEach((t) => {
+    if (t.startsWith("Lưu ý:")) html += `<div class="notice">${esc(t)}</div>`;
+    else if (t.startsWith("(")) html += `<div class="brief-note">${esc(t)}</div>`;
     else html += `<p class="line">${esc(t)}</p>`;
   });
-  return html;
+  return { html, count: picks.length };
 }
 
 function show(r) {
@@ -278,12 +406,16 @@ function show(r) {
   else if (m.models) meta = `model: ${esc(m.models.join(", ") || "—")} · gọi model ${m.model_calls} lần · token vào ${m.tokens_in} / ra ${m.tokens_out}`;
   const s0 = r.stats || {};
   SHEET = { output: r.output || "", stats: s0.ngay ? s0 : null, videos: [] };
-  const dl = s0.ngay && !r.error ? `<button class="ghost" id="sheet" style="margin-left:0">⬇ Tải phiếu chuẩn bị buổi (.md)</button>` : "";
-  $("radar").innerHTML = r.error ? `<p class="err">Lỗi: ${esc(r.error)}</p>` : renderOutput(r.output || "") + `<p class="meta">${meta}</p>` + dl;
-  if ($("sheet")) $("sheet").addEventListener("click", downloadSheet);
+  if (s0.ngay && CURRENT === null) { dayHead(s0.ngay); setActive(s0.ngay); }
+  if ($("sheet")) $("sheet").hidden = !(s0.ngay && !r.error);
+  if (r.error) $("radarBody").innerHTML = `<p class="err">Lỗi: ${esc(r.error)}</p>`;
+  else {
+    const o = renderOutput(r.output || "");
+    $("radarBody").innerHTML = o.html + `<p class="meta">${meta}</p>`;
+    $("pickchip").hidden = !o.count; $("pickchip").textContent = `${o.count} ưu tiên`;
+  }
   if ($("refresh")) $("refresh").addEventListener("click", () => loadDay(CURRENT, true));
-  const s = r.stats || {};
-  if (s.ngay) { if (CURRENT === null) setActive(s.ngay); drawChart(s); loadVideos(s.ngay); }
+  if (s0.ngay) { drawChart(s0); loadVideos(s0.ngay); }
 }
 
 /* ---------- Phiếu chuẩn bị buổi (.md) — tạo ngay trên trình duyệt, không gửi đi đâu ---------- */
@@ -322,8 +454,8 @@ ${rows}
 ${SHEET.videos.length ? SHEET.videos.map((v) => `- ${v}`).join("\n") : "- (không có số video)"}
 
 ## Ghi chú của giảng viên
-- 
-- 
+-
+-
 
 ---
 ${note}
@@ -344,7 +476,7 @@ async function loadVideos(day) {
   if (!vids.length) return;
   const MIN = r.nguoi_xem_toi_thieu, B = r.khoang_giay;
   $("videoTitle").textContent = `Video ${dd(day)}: học viên bỏ ngang và tua qua ở đâu · ${vids.length} video`;
-  $("videoSub").textContent = `Trên trục ngang là thời gian trong video (mỗi khoảng ${B} giây). Video dưới ${MIN} người xem tô mờ — chưa đủ để kết luận. "Rơi mạnh nhất" không tính khoảng cuối (tắt khi gần hết).`;
+  $("videoSub").textContent = `Trục ngang là thời gian trong video (mỗi khoảng ${B} giây). Video dưới ${MIN} người xem tô mờ — chưa đủ để kết luận. "Rơi mạnh nhất" không tính khoảng cuối (tắt khi gần hết).`;
   $("videos").innerHTML = vids.map((v, idx) => videoCardHtml(v, idx, MIN, B)).join("");
   SHEET.videos = [...$("videos").querySelectorAll(".vid")].map((el) => `${el.querySelector("h3").textContent}: ${el.querySelector("p").textContent}`);
   bindTips($("videos"));
@@ -390,7 +522,7 @@ function drawChart(s) {
     g += `<line x1="${x(p)}" x2="${x(p)}" y1="${TOP - 6}" y2="${H}" stroke="var(--grid)" stroke-width="1"/>`;
     g += `<text x="${x(p)}" y="${TOP - 10}" text-anchor="middle">${p}%</text>`;
   });
-  g += `<line x1="${x(CFG.weak_pct)}" x2="${x(CFG.weak_pct)}" y1="${TOP - 6}" y2="${H}" stroke="var(--ink-2)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  g += `<line x1="${x(CFG.weak_pct)}" x2="${x(CFG.weak_pct)}" y1="${TOP - 6}" y2="${H}" stroke="#eaf0fa" stroke-width="1.5" stroke-dasharray="4 3"/>`;
   rows.forEach((k, i) => {
     const y = TOP + i * ROW + (ROW - BAR) / 2;
     const few = k.so_nguoi < CFG.min_people, weak = !few && k.ti_le_dung_pct < CFG.weak_pct;
