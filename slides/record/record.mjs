@@ -11,14 +11,29 @@ import { spawn, execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const SCEN = process.argv[2] || "cp3";
-const PORT = process.argv[3] || "8003";
-const BASE = `http://localhost:${PORT}`;
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..", "..");
+const PORT = process.argv[3] || "8765";
+const BASE = `http://127.0.0.1:${PORT}`;
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 const OUT = path.join(ROOT, "videos");
 const W = 1440, H = 900, DBG = 9333 + Math.floor(Math.random() * 400);
-const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+function findChrome() {
+  const cands = process.platform === "win32"
+    ? [
+        process.env.CHROME_PATH,
+        path.join(process.env.ProgramFiles || "C:\\Program Files", "Google", "Chrome", "Application", "chrome.exe"),
+        path.join(process.env["ProgramFiles(x86)"] || "C:\\Program Files (x86)", "Google", "Chrome", "Application", "chrome.exe"),
+        path.join(process.env.LOCALAPPDATA || "", "Google", "Chrome", "Application", "chrome.exe"),
+        path.join(process.env["ProgramFiles(x86)"] || "C:\\Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe"),
+        path.join(process.env.ProgramFiles || "C:\\Program Files", "Microsoft", "Edge", "Application", "msedge.exe"),
+      ]
+    : [process.env.CHROME_PATH, "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "google-chrome", "chromium"];
+  for (const c of cands) { if (c && fs.existsSync(c)) return c; }
+  throw new Error("Không tìm thấy Chrome/Edge. Đặt biến môi trường CHROME_PATH.");
+}
+const CHROME = findChrome();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ---------------------------------------------------------------- Chrome + CDP
@@ -69,8 +84,9 @@ handlers.push((m) => {
 async function finish(name) {
   await send("Page.stopScreencast");
   const end = (Date.now() / 1000) - (startWall / 1000);
-  const list = frames.map((fr, i) => `file '${fr.f}'\nduration ${Math.max(0.01, ((frames[i + 1]?.t ?? end) - fr.t)).toFixed(3)}`).join("\n")
-    + `\nfile '${frames[frames.length - 1].f}'\n`;
+  const fpath = (p) => p.replace(/\\/g, "/").replace(/'/g, "'\\''");
+  const list = frames.map((fr, i) => `file '${fpath(fr.f)}'\nduration ${Math.max(0.01, ((frames[i + 1]?.t ?? end) - fr.t)).toFixed(3)}`).join("\n")
+    + `\nfile '${fpath(frames[frames.length - 1].f)}'\n`;
   const lf = path.join(FR, "list.txt"); fs.writeFileSync(lf, list);
   fs.mkdirSync(OUT, { recursive: true });
   const out = path.join(OUT, name);
@@ -84,11 +100,11 @@ const HELPERS = `(() => {
   if (window.__d) return;
   const st = document.createElement("style");
   st.textContent = \`
-   #__cap{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);z-index:99999;max-width:1100px;padding:14px 22px;border-radius:14px;
-     background:rgba(10,12,40,.92);color:#fff;font:600 22px/1.4 "Segoe UI",-apple-system,sans-serif;text-align:center;box-shadow:0 14px 40px rgba(0,0,0,.45);
-     border:1px solid rgba(255,255,255,.15);transition:opacity .25s;opacity:0}
+   #__cap{position:fixed;left:34%;bottom:22px;transform:translateX(-50%);z-index:99999;max-width:820px;padding:12px 20px;border-radius:14px;
+     background:rgba(10,12,40,.94);color:#fff;font:600 18.5px/1.4 "Segoe UI",-apple-system,sans-serif;text-align:center;box-shadow:0 14px 40px rgba(0,0,0,.5);
+     border:1px solid rgba(255,255,255,.18);transition:opacity .25s;opacity:0}
    #__cap b{color:#ffd43b}
-   #__badge{position:fixed;right:18px;top:14px;z-index:99999;padding:6px 12px;border-radius:999px;background:rgba(224,49,49,.9);color:#fff;font:700 13px "Segoe UI",sans-serif}
+   #__badge{position:fixed;left:16px;top:14px;z-index:99999;padding:6px 12px;border-radius:999px;background:rgba(224,49,49,.92);color:#fff;font:700 12px "Segoe UI",sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.35)}
    #__cur{position:fixed;left:0;top:0;width:22px;height:22px;z-index:100000;pointer-events:none;transition:transform .55s cubic-bezier(.3,.7,.2,1)}
    #__cur::before{content:"";position:absolute;inset:0;background:#fff;clip-path:polygon(0 0,0 80%,22% 62%,38% 100%,52% 94%,36% 58%,64% 58%);filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
    .__ring{position:fixed;z-index:99998;width:36px;height:36px;margin:-18px 0 0 -18px;border-radius:50%;border:3px solid #ffd43b;pointer-events:none;animation:__r .5s ease-out forwards}
@@ -122,25 +138,36 @@ const waitAnswer = () => d(`await D.until(() => { const b = document.getElementB
   return t.length > 40 && !/^Đang/.test(t.trim()); }, 90000); await new Promise(r => setTimeout(r, 600));`);
 
 // ---------------------------------------------------------------- kịch bản
+const waitChatDone = () => d(`await D.until(() => typeof chatBusy !== "undefined" && !chatBusy, 90000); await new Promise(r => setTimeout(r, 700));`);
+
 async function cp3() {
   await go(BASE + "/");
-  await cap("<b>Radar pre-class</b> — giảng viên biết lớp đang hổng ý kiến thức nào <b>trước</b> buổi học", 2600);
-  await d(`await D.scroll("#ask");`);
-  await cap("Hỏi Radar — AI được gọi thật (<b>Mistral Small 3.1</b> trên Cloudflare)", 1500, true);
-  await d(`await D.type("#q", "Day 4 lớp đang hổng ý nào?", 30);`);
-  await d(`await D.click('#ask button[type="submit"]');`);
-  await cap("Đang đọc số pre-class thật của Day 4 và gọi AI…", 200, true);
-  await waitAnswer();
-  await d(`D.cap(''); await D.scroll("#radar");`);
-  await cap("AI chọn 2 ý cần nhấn: <b>cot_task_fit 16/27</b> · <b>system_prompt_contract 18/27</b> — kèm giải nghĩa, lý do, gợi ý", 5200);
-  await d(`const m = document.querySelector("#radarBody .meta"); await D.move(m); D.hl(m);`);
-  await cap("Lời gọi model thật: tên model + <b>token vào / ra</b>", 3000);
-  await d(`D.hl("#radarBody .meta", false); await D.scroll("#ask");`);
-  await d(`await D.type("#q", "liệt kê mã học viên làm sai cot_task_fit", 40);`);
-  await d(`await D.click('#ask button[type="submit"]');`);
-  await waitAnswer();
-  await d(`await D.scroll("#radar");`);
-  await cap("Hỏi về học viên cụ thể → <b>từ chối</b>, không gọi model — chỉ dùng số tổng hợp", 3600);
+  // Đảm bảo luôn bắt đầu ở Dark Mode + Day 4 đã tải xong
+  await js(`if (typeof applyTheme === "function") applyTheme("dark", true); true`);
+  await d(`await D.until(() => document.querySelectorAll("#kc-svg-chart svg").length > 0, 15000);`);
+  await cap("<b>Canbua</b> — phát hiện lỗ hổng Pre-class &amp; trợ lý AI Radar trước buổi học", 2600);
+  // Bật Chế độ Dev để hiển thị rõ tên model thật, số token vào/ra và nhãn Guardrail
+  await d(`await D.click("#btn-dev-mode");`);
+  await d(`await D.click("#btn-ai-radar");`);
+  await sleep(500);
+  await cap("Mở <b>Side Chat AI Radar</b> — gọi model thật qua API + kiểm số liệu tự động", 1400, true);
+  await d(`await D.type("#ai-input", "Day 4 lớp đang hổng ý nào?", 32);`);
+  await d(`await D.click("#ai-send-btn");`);
+  await cap("Đang đọc số pre-class thật Day 4 và gọi <b>AI thật</b>…", 200, true);
+  await waitChatDone();
+  await d(`D.cap(''); const tr = document.getElementById("chat-thread"); if (tr) tr.scrollTop = tr.scrollHeight;`);
+  await cap("AI chọn 2 ý cần nhấn: <b>cot_task_fit 16/27 (59.3%)</b> · <b>system_prompt_contract 18/27 (66.7%)</b> kèm biểu đồ &amp; gợi ý", 4200);
+  // Mở chi tiết kiểm chứng để khoe model thật + token vào/ra > 0
+  await d(`const dets = document.querySelectorAll("#chat-thread details.chat-trace"); const last = dets[dets.length - 1]; if (last) { last.open = true; last.scrollIntoView({ block: "center", behavior: "smooth" }); D.hl(last, true); }`);
+  await cap("Bằng chứng gọi <b>model thật</b>: hiển thị rõ tên model, số lần gọi công cụ &amp; <b>token vào / ra</b>", 3600);
+  await d(`document.querySelectorAll(".__hl").forEach(e => e.classList.remove("__hl"));`);
+  // Thử câu yêu cầu mã học viên -> Guardrail chặn ngay, 0 token
+  await d(`await D.type("#ai-input", "Liệt kê mã học viên làm sai cot_task_fit", 42);`);
+  await d(`await D.click("#ai-send-btn");`);
+  await waitChatDone();
+  await d(`const tr = document.getElementById("chat-thread"); if (tr) tr.scrollTop = tr.scrollHeight; const refs = document.querySelectorAll("#chat-thread .msg-ai.refused"); const rLast = refs[refs.length - 1]; if (rLast) D.hl(rLast, true);`);
+  await cap("Hỏi về học viên cụ thể → <b>Guardrail từ chối ngay</b>, 0 token, không lộ mã L0xxx", 4000);
+  await d(`D.cap('');`);
 }
 
 async function cp4() {
@@ -300,6 +327,8 @@ try {
   else { await cp4(); await finish("cp4-demo.mp4"); }
 } finally {
   try { ws?.close(); } catch {}
-  chrome.kill("SIGKILL");
-  fs.rmSync(prof, { recursive: true, force: true });
+  try { chrome.kill(); } catch {}
+  await sleep(350);
+  try { fs.rmSync(prof, { recursive: true, force: true }); } catch {}
+  try { fs.rmSync(FR, { recursive: true, force: true }); } catch {}
 }

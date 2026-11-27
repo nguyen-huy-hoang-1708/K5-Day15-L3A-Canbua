@@ -7,7 +7,7 @@
 | Bằng chứng pain đạt ngưỡng ≥ 1 nguồn + ≥ 5 ví dụ | ✅ Đào data BTC: x/N, %, script chạy lại được, 5 ví dụ có mã dòng / mã video | `evidence/summary.md`, `evidence/data-mining.md`, `evidence/count_preclass.py` |
 | 20–30 câu thử, ≥ 5 khó, ≥ 2 từ chối / tấn công | ✅ 25 câu: thường 12 · khó 8 · từ chối 5 (T02, T03 là tấn công) | `eval/benchmark.csv` · `python run.py check` |
 | Kết quả lượt 1 (x/N + Run ID) | ✅ 15/25 (60%) · `run-1@20261127-162546` | `eval/run-1.csv`, `traces/run-1.jsonl`, `eval/report.md` |
-| Video 30 giây gọi AI thật | ✅ https://youtu.be/0FNQXeRnsoI | `README.md` mục 7 |
+| Video 30 giây gọi AI thật | ✅ https://youtu.be/GWSuMvQU-PU | `README.md` mục 7 |
 
 ## CP4 — trạng thái
 

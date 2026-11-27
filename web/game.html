@@ -254,10 +254,114 @@
   .mini-prog-track { position: relative; height: 6px; background: rgba(255,255,255,.1); border-radius: 99px; overflow: hidden; }
   .mini-prog-fill { height: 100%; border-radius: 99px; transition: width .3s ease; }
   .mini-prog-mark { position: absolute; left: 75%; top: 0; bottom: 0; width: 2px; background: rgba(255,212,59,.85); }
+
+  /* Nút chuyển chế độ Sáng / Tối đồng bộ với web */
+  .theme-fab {
+    position: fixed; top: 14px; right: 16px; z-index: 25;
+    padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--panel); color: var(--ink); font-size: 13px; font-weight: 650;
+    backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(0,0,0,.22);
+    transition: background .15s, border-color .15s, transform .08s;
+  }
+  .theme-fab:hover { filter: brightness(1.12); }
+  .pill.theme-pill { cursor: pointer; color: var(--ink); transition: background .15s, border-color .15s; }
+  .pill.theme-pill:hover { border-color: rgba(255,255,255,.32); }
+
+  /* ==================== LIGHT MODE (Tối giản sáng đồng bộ Web) ==================== */
+  html[data-theme="light"] {
+    --bg1: #f8fafc; --bg2: #f1f5f9; --panel: #ffffff; --line: #e2e8f0;
+    --ink: #0f172a; --ink2: #334155; --ink3: #64748b; --gold: #d97706; --cyan: #2563eb; --pink: #db2777;
+    --good: #15803d; --bad: #dc2626; --violet: #2563eb;
+  }
+  html[data-theme="light"] body { background: #f8fafc; color: var(--ink); }
+  html[data-theme="light"] .stars { display: none; }
+  html[data-theme="light"] .glass {
+    background: #ffffff; border: 1px solid #e2e8f0; backdrop-filter: none;
+    box-shadow: 0 10px 30px rgba(15,23,42,.07);
+  }
+  html[data-theme="light"] .theme-fab { background: #ffffff; color: #0f172a; border-color: #cbd5e1; box-shadow: 0 2px 10px rgba(15,23,42,.08); }
+  html[data-theme="light"] .theme-fab:hover { background: #f1f5f9; filter: none; }
+  html[data-theme="light"] .pill { background: #ffffff; border-color: #e2e8f0; color: #0f172a; box-shadow: 0 1px 2px rgba(15,23,42,.04); }
+  html[data-theme="light"] .pill.theme-pill:hover { background: #f1f5f9; border-color: #94a3b8; }
+  html[data-theme="light"] .logo {
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    box-shadow: 0 10px 26px rgba(37,99,235,.22);
+  }
+  html[data-theme="light"] h1.title { background: none; -webkit-background-clip: initial; background-clip: initial; color: #0f172a; }
+  html[data-theme="light"] .field { background: #ffffff; border-color: #cbd5e1; color: #0f172a; }
+  html[data-theme="light"] .field:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+  html[data-theme="light"] .sw[aria-pressed="true"] { border-color: #0f172a; box-shadow: 0 0 0 2px #fff, 0 0 12px currentColor; }
+  html[data-theme="light"] button.big { background: #2563eb; color: #ffffff; box-shadow: 0 6px 18px rgba(37,99,235,.22); }
+  html[data-theme="light"] button.big:hover { background: #1d4ed8; }
+  html[data-theme="light"] .role { background: #f8fafc; border-color: #e2e8f0; color: #0f172a; }
+  html[data-theme="light"] .role:hover { border-color: #94a3b8; background: #f1f5f9; }
+  html[data-theme="light"] .role[aria-pressed="true"] { border-color: #2563eb; background: #eff6ff; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+  html[data-theme="light"] .rules { background: #f8fafc; border-color: #e2e8f0; }
+  html[data-theme="light"] .kbd { background: #ffffff; border-color: #cbd5e1; color: #0f172a; }
+  html[data-theme="light"] .rule-item { background: #ffffff; border-color: #e2e8f0; }
+  html[data-theme="light"] .rule-item.r-fog .rule-ic { background: #e0f2fe; }
+  html[data-theme="light"] .rule-item.r-gate .rule-ic { background: #f3e8ff; }
+  html[data-theme="light"] .rule-item.r-box .rule-ic { background: #fef3c7; }
+  html[data-theme="light"] .rule-item.r-duel .rule-ic { background: #fce7f3; }
+  html[data-theme="light"] .map-badge { background: #f1f5f9; border-color: #e2e8f0; color: #334155; }
+  html[data-theme="light"] .map-btn { background: #f8fafc; border-color: #e2e8f0; color: #334155; }
+  html[data-theme="light"] .map-btn:hover { background: #f1f5f9; color: #0f172a; }
+  html[data-theme="light"] .map-btn[aria-pressed="true"] { background: #eff6ff; border-color: #2563eb; color: #1d4ed8; }
+  html[data-theme="light"] #lobbyFocus { color: #15803d !important; }
+  html[data-theme="light"] #lobbyShare { background: #f8fafc !important; border-color: #e2e8f0 !important; }
+  html[data-theme="light"] #lobbyShareUrl { color: #1d4ed8 !important; }
+  html[data-theme="light"] #hCopyGame { background: #ffffff !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
+  html[data-theme="light"] .card-badge { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
+  html[data-theme="light"] .card-badge.live { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+  html[data-theme="light"] .card-badge.live::before { background: #16a34a; }
+  html[data-theme="light"] .host-grid button { background: #f8fafc; border-color: #e2e8f0; color: #0f172a; }
+  html[data-theme="light"] .host-grid button:hover { background: #f1f5f9; border-color: #cbd5e1; }
+  html[data-theme="light"] .host-grid button.btn-end { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
+  html[data-theme="light"] .host-grid button.btn-end:hover { background: #fee2e2; }
+  html[data-theme="light"] .host-grid button.btn-chart { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+  html[data-theme="light"] .host-grid button.btn-chart:hover { background: #dbeafe; filter: none; }
+  html[data-theme="light"] .hostbar button { background: #ffffff; border-color: #cbd5e1; color: #0f172a; }
+  html[data-theme="light"] .hostbar button:hover { background: #f1f5f9; }
+  html[data-theme="light"] .hostbar button.go { background: #2563eb; color: #ffffff; }
+  html[data-theme="light"] .hostbar button.go:hover { background: #1d4ed8; }
+  html[data-theme="light"] .pr { background: #f8fafc; border-color: #e2e8f0; }
+  html[data-theme="light"] .pr .st { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
+  html[data-theme="light"] .pr .st.st-playing { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+  html[data-theme="light"] .pr .st.st-question { background: #ede9fe; color: #6d28d9; border-color: #ddd6fe; }
+  html[data-theme="light"] .pr .st.st-duel { background: #fce7f3; color: #be185d; border-color: #fbcfe8; }
+  html[data-theme="light"] .pr .st.st-finished { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+  html[data-theme="light"] .pr .st.st-out { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+  html[data-theme="light"] .pr .acc { color: #15803d; }
+  html[data-theme="light"] .feed div { background: #f8fafc; border-color: #e2e8f0; border-left-color: #94a3b8; color: #334155; }
+  html[data-theme="light"] .feed .luck { background: #fffbeb; border-left-color: #d97706; color: #92400e; }
+  html[data-theme="light"] .feed .duel { background: #fdf2f8; border-left-color: #db2777; color: #9d174d; }
+  html[data-theme="light"] .feed .big { background: #eff6ff; border-left-color: #2563eb; color: #0f172a; }
+  html[data-theme="light"] .feed .bad { background: #fef2f2; border-left-color: #dc2626; color: #991b1b; }
+  html[data-theme="light"] .plist::-webkit-scrollbar-thumb, html[data-theme="light"] .feed::-webkit-scrollbar-thumb { background: #cbd5e1; }
+  html[data-theme="light"] .dpad button { background: rgba(255,255,255,.92); border-color: #cbd5e1; color: #0f172a; box-shadow: 0 2px 8px rgba(15,23,42,.12); }
+  html[data-theme="light"] .modal { background: rgba(15,23,42,.42); }
+  html[data-theme="light"] .timer { background: #e2e8f0; }
+  html[data-theme="light"] .opt { background: #f8fafc; border-color: #e2e8f0; color: #0f172a; }
+  html[data-theme="light"] .opt:hover { background: #eff6ff; border-color: #93c5fd; }
+  html[data-theme="light"] .toast div { background: #0f172a; color: #ffffff; border-color: #1e293b; }
+  html[data-theme="light"] .tabs button { border-color: #e2e8f0; color: #475569; }
+  html[data-theme="light"] .tabs button[aria-pressed="true"] { background: #eff6ff; border-color: #93c5fd; color: #1d4ed8; }
+  html[data-theme="light"] .an-kpi, html[data-theme="light"] .an-box, html[data-theme="light"] .mini-kpi { background: #f8fafc; border-color: #e2e8f0; }
+  html[data-theme="light"] .qbar-track, html[data-theme="light"] .mini-prog-track { background: #e2e8f0; }
+  html[data-theme="light"] .mini-prog-mark { background: #d97706; }
+  html[data-theme="light"] .av .dot { border-color: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,.15); }
 </style>
+<script>
+  (function(){
+    var t = "dark";
+    try { t = localStorage.getItem("canbua_theme") || "dark"; } catch(e) {}
+    document.documentElement.dataset.theme = (t === "light") ? "light" : "dark";
+  })();
+</script>
 </head>
 <body>
 <div class="stars"></div>
+<button class="theme-fab" id="themeFab" onclick="toggleTheme()" title="Chuyển chế độ Sáng (tối giản) / Tối (vũ trụ) — đồng bộ cả Web">☀ Sáng</button>
 
 <!-- Chọn vai trò -->
 <section class="center" id="scrAuth" hidden>
@@ -383,6 +487,23 @@
 <script>
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function isLightTheme() { return document.documentElement.dataset.theme === "light"; }
+function applyTheme(mode, save = true) {
+  const m = (mode === "light") ? "light" : "dark";
+  document.documentElement.dataset.theme = m;
+  if (save) { try { localStorage.setItem("canbua_theme", m); } catch (_) {} }
+  const lbl = m === "light" ? "🌙 Tối" : "☀ Sáng";
+  const fab = $("themeFab");
+  if (fab) fab.textContent = lbl;
+  const hudEl = $("hud");
+  if (hudEl) hudEl.dataset.h = "";
+  const mini = $("hostMiniStats");
+  if (mini) mini.dataset.h = "";
+  if (ST && ST.phase && !$("scrGame").hidden) renderGame();
+  if (ST && !$("mResult").hidden && ST.phase === "ended") showResult(true);
+}
+function toggleTheme() { applyTheme(isLightTheme() ? "dark" : "light", true); }
+window.addEventListener("storage", (e) => { if (e.key === "canbua_theme") applyTheme(e.newValue || "dark", false); });
 let HOST = false;
 const COLORS = ["#ff6b6b", "#4dabf7", "#51cf66", "#fcc419", "#cc5de8", "#ff922b", "#22b8cf", "#f06595", "#94d82d", "#845ef7", "#20c997", "#fab005"];
 let PID = sessionStorage.getItem("maze_pid") || null, ROUND = sessionStorage.getItem("maze_round") || null;
@@ -464,11 +585,17 @@ function route() {
   if (!AUTH) return;
   const ok = authOk();
   $("scrAuth").hidden = ok;
-  if (!ok) { ["scrLobby", "scrGame", "mQ", "mResult"].forEach((id) => $(id).hidden = true); renderAuth(); return; }
+  if (!ok) {
+    ["scrLobby", "scrGame", "mQ", "mResult"].forEach((id) => $(id).hidden = true);
+    if ($("themeFab")) $("themeFab").hidden = false;
+    renderAuth();
+    return;
+  }
   if (!ST) return;
   const ph = ST.phase;
   $("scrLobby").hidden = ph !== "lobby";
   $("scrGame").hidden = ph === "lobby";
+  if ($("themeFab")) $("themeFab").hidden = ph !== "lobby";
   if (ph === "lobby") renderLobby(); else renderGame();
 }
 
@@ -549,7 +676,7 @@ function renderGame() {
   } else if (HOST) hud += `<span class="pill">👁 Chế độ giảng viên — thấy toàn bộ mê cung</span>`;
   else hud += `<span class="pill">👁 Đang xem</span>`;
   const alive = ST.players.filter((p) => ["playing", "question", "duel"].includes(p.status)).length;
-  hud += `<span class="grow"></span><span class="pill">🧍 ${alive} còn trong mê cung</span>`;
+  hud += `<span class="grow"></span><span class="pill">🧍 ${alive} còn trong mê cung</span><button class="pill theme-pill" onclick="toggleTheme()" title="Chuyển chế độ Sáng / Tối">${isLightTheme() ? "🌙 Tối" : "☀ Sáng"}</button>`;
   if ($("hud").dataset.h !== hud) { $("hud").innerHTML = hud; $("hud").dataset.h = hud; }
   $("hostCard").hidden = !HOST;
   if (HOST && ST.analytics) renderHostMiniStats(ST.analytics);
@@ -630,19 +757,29 @@ async function choose(i) {
 }
 
 /* ---------- biểu đồ mức độ hiểu (thống kê mới cho Giảng viên) ---------- */
+function gameChartPal() {
+  if (isLightTheme()) {
+    return { gold: "#d97706", good: "#15803d", blue: "#2563eb", bad: "#dc2626", mint: "#0f766e",
+             axis: "#cbd5e1", track: "#e2e8f0", muted: "#64748b", ink: "#0f172a", ink2: "#334155", gray: "#94a3b8" };
+  }
+  return { gold: "#fcc419", good: "#51cf66", blue: "#4dabf7", bad: "#ff6b6b", mint: "#63e6be",
+           axis: "rgba(255,255,255,.22)", track: "rgba(255,255,255,.12)", muted: "#8e97b8", ink: "#eef1ff", ink2: "#b8c0e0", gray: "#64748b" };
+}
+
 function renderHostMiniStats(a) {
   const box = $("hostMiniStats");
   if (!box || !a) return;
+  const P = gameChartPal();
   const gVal = a.game_pct == null ? "—" : a.game_pct + "%";
   const pVal = a.pre_test_pct == null ? "—" : a.pre_test_pct + "%";
-  const gColor = a.game_pct == null ? "var(--ink2)" : (a.game_pct >= 75 ? "#51cf66" : "#4dabf7");
+  const gColor = a.game_pct == null ? "var(--ink2)" : (a.game_pct >= 75 ? P.good : P.blue);
   const fillPct = a.game_pct == null ? 0 : Math.min(100, Math.max(0, a.game_pct));
-  const progColor = a.game_pct != null && a.game_pct >= 75 ? "#51cf66" : "#4dabf7";
+  const progColor = a.game_pct != null && a.game_pct >= 75 ? P.good : P.blue;
   const html = `
     <div class="mini-kpis">
-      <div class="mini-kpi"><small>Pre-test</small><strong style="color:#fcc419">${pVal}</strong></div>
+      <div class="mini-kpi"><small>Pre-test</small><strong style="color:${P.gold}">${pVal}</strong></div>
       <div class="mini-kpi"><small>Trong game</small><strong style="color:${gColor}">${gVal}</strong></div>
-      <div class="mini-kpi"><small>Hiểu vững</small><strong style="color:#63e6be">${a.mastered_count}/${a.total_players}</strong></div>
+      <div class="mini-kpi"><small>Hiểu vững</small><strong style="color:${P.mint}">${a.mastered_count}/${a.total_players}</strong></div>
     </div>
     <div class="mini-prog">
       <div class="mini-prog-head"><span>Tiến độ đạt chuẩn lớp</span><span>Mốc 75%</span></div>
@@ -653,22 +790,23 @@ function renderHostMiniStats(a) {
 
 function buildMasteryChartsHtml(a, qs) {
   if (!a) return "";
+  const P = gameChartPal();
   const deltaTxt = a.delta_pct == null ? "Chưa có lượt trả lời" : ((a.delta_pct >= 0 ? "+" : "") + a.delta_pct + "% so với trước buổi");
   const kpis = `
     <div class="an-kpis">
       <div class="an-kpi">
         <small>Trước buổi học</small>
-        <strong style="color:#fcc419">${a.pre_test_pct == null ? "—" : a.pre_test_pct + "%"}</strong>
+        <strong style="color:${P.gold}">${a.pre_test_pct == null ? "—" : a.pre_test_pct + "%"}</strong>
         <span>Tỉ lệ đúng Pre-class</span>
       </div>
       <div class="an-kpi">
         <small>Đúng trong Game</small>
-        <strong style="color:${a.game_pct != null && a.game_pct >= 75 ? '#51cf66' : '#4dabf7'}">${a.game_pct == null ? "—" : a.game_pct + "%"}</strong>
+        <strong style="color:${a.game_pct != null && a.game_pct >= 75 ? P.good : P.blue}">${a.game_pct == null ? "—" : a.game_pct + "%"}</strong>
         <span>${a.total_answers ? `${a.total_correct}/${a.total_answers} lượt · ${deltaTxt}` : "Chờ học viên trả lời"}</span>
       </div>
       <div class="an-kpi">
         <small>Hiểu vững (≥75%)</small>
-        <strong style="color:#63e6be">${a.mastered_count}/${a.total_players}</strong>
+        <strong style="color:${P.mint}">${a.mastered_count}/${a.total_players}</strong>
         <span>${a.finished_count} học viên về đích</span>
       </div>
     </div>`;
@@ -677,9 +815,9 @@ function buildMasteryChartsHtml(a, qs) {
   const plotW = bw - padL - padR, plotH = bh - padT - padB;
   const y75 = padT + plotH * 0.25;
   const items = [
-    { label: "Pre-test", val: a.pre_test_pct, color: "#fcc419" },
-    { label: "Trong Game", val: a.game_pct, color: "#4dabf7" },
-    { label: "Hiểu vững", val: a.total_players ? Math.round((a.mastered_count / a.total_players) * 100) : null, color: "#51cf66" },
+    { label: "Pre-test", val: a.pre_test_pct, color: P.gold },
+    { label: "Trong Game", val: a.game_pct, color: P.blue },
+    { label: "Hiểu vững", val: a.total_players ? Math.round((a.mastered_count / a.total_players) * 100) : null, color: P.good },
   ];
   const slot = plotW / items.length, barW = 44;
   const cols = items.map((it, i) => {
@@ -688,16 +826,16 @@ function buildMasteryChartsHtml(a, qs) {
     const h = Math.max(it.val == null ? 2 : 5, plotH * (pct / 100));
     const y = padT + plotH - h;
     return `
-      <rect x="${cx - barW / 2}" y="${y}" width="${barW}" height="${h}" rx="6" fill="${it.val == null ? 'rgba(255,255,255,.15)' : it.color}" />
-      <text x="${cx}" y="${y - 6}" text-anchor="middle" font-size="11.5" font-weight="800" fill="${it.val == null ? '#8e97b8' : it.color}">${it.val == null ? '—' : pct + '%'}</text>
-      <text x="${cx}" y="${bh - 9}" text-anchor="middle" font-size="11" font-weight="600" fill="#b8c0e0">${it.label}</text>`;
+      <rect x="${cx - barW / 2}" y="${y}" width="${barW}" height="${h}" rx="6" fill="${it.val == null ? P.track : it.color}" />
+      <text x="${cx}" y="${y - 6}" text-anchor="middle" font-size="11.5" font-weight="800" fill="${it.val == null ? P.muted : it.color}">${it.val == null ? '—' : pct + '%'}</text>
+      <text x="${cx}" y="${bh - 9}" text-anchor="middle" font-size="11" font-weight="600" fill="${P.ink2}">${it.label}</text>`;
   }).join("");
   const barSvg = `
     <svg viewBox="0 0 ${bw} ${bh}" style="width:100%; height:auto; display:block;">
-      <line x1="${padL}" y1="${padT + plotH}" x2="${bw - padR}" y2="${padT + plotH}" stroke="rgba(255,255,255,.22)" />
-      <line x1="${padL}" y1="${y75}" x2="${bw - padR}" y2="${y75}" stroke="#fcc419" stroke-dasharray="4 3" stroke-width="1.2" />
-      <text x="${padL - 5}" y="${y75 + 3}" text-anchor="end" font-size="9.5" fill="#fcc419">75%</text>
-      <text x="${padL - 5}" y="${padT + plotH + 3}" text-anchor="end" font-size="9.5" fill="#8e97b8">0%</text>
+      <line x1="${padL}" y1="${padT + plotH}" x2="${bw - padR}" y2="${padT + plotH}" stroke="${P.axis}" />
+      <line x1="${padL}" y1="${y75}" x2="${bw - padR}" y2="${y75}" stroke="${P.gold}" stroke-dasharray="4 3" stroke-width="1.2" />
+      <text x="${padL - 5}" y="${y75 + 3}" text-anchor="end" font-size="9.5" fill="${P.gold}">75%</text>
+      <text x="${padL - 5}" y="${padT + plotH + 3}" text-anchor="end" font-size="9.5" fill="${P.muted}">0%</text>
       ${cols}
     </svg>`;
 
@@ -705,10 +843,10 @@ function buildMasteryChartsHtml(a, qs) {
   let donutHtml = `<div style="text-align:center; padding:36px 0; font-size:12.5px; color:var(--ink3);">Chưa có học viên trong ván.</div>`;
   if (tot > 0) {
     const slices = [
-      { label: "Hiểu vững (≥75%)", val: a.mastered_count || 0, color: "#51cf66" },
-      { label: "Đang nắm (50–74%)", val: a.developing_count || 0, color: "#fcc419" },
-      { label: "Cần ôn thêm (<50%)", val: a.struggling_count || 0, color: "#ff6b6b" },
-      { label: "Chưa trả lời", val: a.unanswered_count || 0, color: "#64748b" },
+      { label: "Hiểu vững (≥75%)", val: a.mastered_count || 0, color: P.good },
+      { label: "Đang nắm (50–74%)", val: a.developing_count || 0, color: P.gold },
+      { label: "Cần ôn thêm (<50%)", val: a.struggling_count || 0, color: P.bad },
+      { label: "Chưa trả lời", val: a.unanswered_count || 0, color: P.gray },
     ];
     const r = 42, circ = 2 * Math.PI * r;
     let off = 0;
@@ -721,13 +859,13 @@ function buildMasteryChartsHtml(a, qs) {
     donutHtml = `
       <div class="donut-wrap">
         <svg width="112" height="112" viewBox="0 0 112 112">
-          <circle cx="56" cy="56" r="${r}" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="15" />
+          <circle cx="56" cy="56" r="${r}" fill="none" stroke="${P.track}" stroke-width="15" />
           ${segs}
-          <text x="56" y="54" text-anchor="middle" font-size="16" font-weight="800" fill="#eef1ff">${tot}</text>
-          <text x="56" y="68" text-anchor="middle" font-size="9.5" fill="#b8c0e0">học viên</text>
+          <text x="56" y="54" text-anchor="middle" font-size="16" font-weight="800" fill="${P.ink}">${tot}</text>
+          <text x="56" y="68" text-anchor="middle" font-size="9.5" fill="${P.muted}">học viên</text>
         </svg>
         <div class="legend">
-          ${slices.map((s) => `<div class="legend-item"><span class="dot" style="background:${s.color}"></span><span>${s.label}: <strong style="color:#eef1ff">${s.val}</strong></span></div>`).join("")}
+          ${slices.map((s) => `<div class="legend-item"><span class="dot" style="background:${s.color}"></span><span>${s.label}: <strong style="color:${P.ink}">${s.val}</strong></span></div>`).join("")}
         </div>
       </div>`;
   }
@@ -737,7 +875,7 @@ function buildMasteryChartsHtml(a, qs) {
       <div class="an-title"><span>Tỉ lệ đúng theo từng câu hỏi trong ván</span><span>Đỏ: &lt;75% · Xanh: ≥75%</span></div>
       ${qs.map((q, i) => {
         const pct = q.hoi ? Math.round((q.dung / q.hoi) * 100) : 0;
-        const color = pct >= 75 ? "#51cf66" : (pct >= 50 ? "#fcc419" : "#ff6b6b");
+        const color = pct >= 75 ? P.good : (pct >= 50 ? P.gold : P.bad);
         const shortQ = q.cau.length > 76 ? q.cau.slice(0, 75) + "…" : q.cau;
         return `<div class="qbar-item">
           <div class="qbar-head"><span>Câu ${i + 1}: ${esc(shortQ)}</span><strong style="color:${color};white-space:nowrap">${q.dung}/${q.hoi} (${pct}%)</strong></div>
@@ -960,10 +1098,20 @@ function draw(ts) {
   const inView = (x, y) => !fogOn || (meR && Math.hypot(x - meR.x, y - meR.y) <= VISR);
   const seenTile = (x, y) => !fogOn || explored.has(x + "," + y) || inView(x, y);
 
-  const th = MAZE.theme || { bg: "#151a45", f1: "#232a66", f2: "#262e70", wS1: "#5f3dc4", wS2: "#3b2a8f", wT1: "#b197fc", wT2: "#7950f2" };
+  const LIGHT_MAP_THEMES = {
+    classic:   { bg: "#e2e8f0", f1: "#ffffff", f2: "#f8fafc", wS1: "#4338ca", wS2: "#312e81", wT1: "#818cf8", wT2: "#4f46e5" },
+    corridor:  { bg: "#dcfce7", f1: "#ffffff", f2: "#f0fdf4", wS1: "#047857", wS2: "#065f46", wT1: "#34d399", wT2: "#059669" },
+    chambers:  { bg: "#fef3c7", f1: "#ffffff", f2: "#fffbeb", wS1: "#b45309", wS2: "#92400e", wT1: "#fbbf24", wT2: "#d97706" },
+    fortress:  { bg: "#e0f2fe", f1: "#ffffff", f2: "#f0f9ff", wS1: "#0369a1", wS2: "#075985", wT1: "#38bdf8", wT2: "#0284c7" },
+    labyrinth: { bg: "#ffe4e6", f1: "#ffffff", f2: "#fff1f2", wS1: "#be123c", wS2: "#9f1239", wT1: "#fb7185", wT2: "#e11d48" },
+  };
+  const lightMode = isLightTheme();
+  const th = lightMode
+    ? (LIGHT_MAP_THEMES[MAZE.map_id] || LIGHT_MAP_THEMES.classic)
+    : (MAZE.theme || { bg: "#151a45", f1: "#232a66", f2: "#262e70", wS1: "#5f3dc4", wS2: "#3b2a8f", wT1: "#b197fc", wT2: "#7950f2" });
 
   // Nền khung mê cung: đen kịt khi bật sương mù để vùng chưa tới hoàn toàn không lộ cấu trúc
-  ctx.fillStyle = fogOn ? "#040611" : th.bg;
+  ctx.fillStyle = fogOn ? (lightMode ? "#0f172a" : "#040611") : th.bg;
   rr(OX - 6, OY - 6, TS * MAZE.w + 12, TS * MAZE.h + 12, 18); ctx.fill();
 
   // CHỈ vẽ sàn ở các ô đã nhìn thấy / khám phá (ô chưa tới để đen hoàn toàn)
@@ -977,7 +1125,7 @@ function draw(ts) {
   for (let y = 0; y < MAZE.h; y++) for (let x = 0; x < MAZE.w; x++) {
     if (MAZE.tiles[y][x] !== 1 || !seenTile(x, y)) continue;
     const X = OX + x * TS, Y = OY + y * TS;
-    ctx.fillStyle = "rgba(0,0,0,.35)"; ctx.fillRect(X + 2, Y + 4, TS, TS);
+    ctx.fillStyle = lightMode ? "rgba(15,23,42,.16)" : "rgba(0,0,0,.35)"; ctx.fillRect(X + 2, Y + 4, TS, TS);
     const gS = ctx.createLinearGradient(0, Y, 0, Y + TS); gS.addColorStop(0, th.wS1); gS.addColorStop(1, th.wS2);
     ctx.fillStyle = gS; rr(X + .5, Y + .5, TS - 1, TS - 1, TS * .18); ctx.fill();
     const gT = ctx.createLinearGradient(0, Y - lift, 0, Y + TS - lift); gT.addColorStop(0, th.wT1); gT.addColorStop(1, th.wT2);
@@ -1087,6 +1235,7 @@ function shade(hex) { const n = parseInt(hex.slice(1), 16); const f = (v) => Mat
   return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`; }
 
 /* ================= khởi động ================= */
+applyTheme(document.documentElement.dataset.theme || "dark", false);
 initJoin();
 loadMe().then(async () => {
   if (WANT_HOST && AUTH && AUTH.can_teach && (!USER || USER.role !== "giang_vien")) {
