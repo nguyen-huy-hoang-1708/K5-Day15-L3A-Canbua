@@ -69,16 +69,27 @@ def call_model(system: str, user: str) -> dict:
 SHOW_RAW = False   # True: in nguyên phản hồi API khi cần tìm tên trường
 
 
-def post_json(url, headers, body, timeout=120):
-    """POST JSON, trả JSON phản hồi. Chỉ dùng thư viện chuẩn (theo docs/connect-model.md)."""
-    req = urllib.request.Request(
-        url, data=json.dumps(body).encode("utf-8"), method="POST",
-        headers=dict({"Content-Type": "application/json"}, **headers))
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            data = json.loads(r.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        raise RuntimeError("HTTP %d: %s" % (e.code, e.read().decode("utf-8", "replace")[:300]))
+def post_json(url, headers, body, timeout=90, retries=3):
+    """POST JSON, trả JSON phản hồi. Chỉ dùng thư viện chuẩn (theo docs/connect-model.md).
+    Tự thử lại khi nhà cung cấp quá tải (HTTP 429 / 500 / 503) hoặc hết thời gian chờ: chờ 5s, 15s, 30s."""
+    import time
+    waits = [5, 15, 30][:retries]
+    for attempt in range(len(waits) + 1):
+        req = urllib.request.Request(
+            url, data=json.dumps(body).encode("utf-8"), method="POST",
+            headers=dict({"Content-Type": "application/json"}, **headers))
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                data = json.loads(r.read().decode("utf-8"))
+            break
+        except urllib.error.HTTPError as e:
+            msg = "HTTP %d: %s" % (e.code, e.read().decode("utf-8", "replace")[:300])
+            if e.code not in (429, 500, 503) or attempt == len(waits):
+                raise RuntimeError(msg)
+        except (TimeoutError, urllib.error.URLError) as e:
+            if attempt == len(waits):
+                raise
+        time.sleep(waits[attempt])
     if SHOW_RAW:
         print(json.dumps(data, ensure_ascii=False, indent=2)[:3000])
     return data

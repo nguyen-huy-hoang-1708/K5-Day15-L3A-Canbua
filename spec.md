@@ -57,11 +57,27 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 
   ```mermaid
   flowchart LR
-    GV[Giảng viên nhập 'Day N'] --> T1[get_day_stats\nđếm từ answers/events]
-    T1 -->|đủ dữ liệu| M[Model: chọn 2-3 KC cần nhấn\n+ lý do, chỉ dùng số từ công cụ]
-    T1 -->|quá ít người làm| G10[Thu hẹp: báo 'chưa đủ dữ liệu'\n+ chỉ nêu số người đã làm]
-    M --> C[Kiểm: mọi số trong câu trả lời\nkhớp số công cụ trả về]
-    C --> OUT[Bản tóm tắt cho giảng viên\nngười quyết định giảng gì]
+    subgraph IN["1 · Input"]
+      GV["Giảng viên gõ<br/>'Day 4 lớp đang hổng ý nào?'"]
+      P["Đọc yêu cầu (code)<br/>tìm ngày học · chặn sớm:<br/>tấn công / hỏi học viên cụ thể /<br/>gửi tin / soạn slide / lịch"]
+      T["Công cụ get_day_stats(day)<br/>số tổng hợp, không có mã học viên"]
+      GV --> P --> T
+    end
+    subgraph CORE["2 · AI Core"]
+      M["Model (Gemini / Claude)<br/>chọn 2–3 ý kiến thức cần nhấn<br/>+ lý do + gợi ý giảng → JSON"]
+    end
+    subgraph GUARD["3 · Chặn rủi ro"]
+      G10["G10: bỏ ý < 10 người<br/>không còn ý nào → 'Chưa đủ dữ liệu'"]
+      K1["Ý được chọn phải có trong data<br/>và đúng lần đầu < 75%"]
+      K2["Kiểm số: lời model có số lạ → bỏ câu đó"]
+      FB["JSON hỏng → dự phòng:<br/>xếp theo tỉ lệ đúng, ghi rõ"]
+    end
+    subgraph OUT["4 · Output"]
+      O["Bản tóm tắt 1 màn hình<br/>code tự in x/N, %<br/>giảng viên quyết định giảng gì"]
+    end
+    T --> G10 --> M --> K1 --> K2 --> O
+    M -.-> FB --> O
+    P -->|từ chối / hỏi lại| O
   ```
 
 - **Hình dạng:** [x] workflow cố định · [ ] một agent · [ ] nhiều agent — luồng luôn là "đếm → model diễn giải → kiểm số", không cần model tự chọn công cụ. Không dùng agent vì sai số liệu là rủi ro lớn nhất, workflow cố định dễ kiểm và rẻ hơn.
