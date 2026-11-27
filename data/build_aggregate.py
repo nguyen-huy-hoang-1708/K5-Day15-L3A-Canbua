@@ -1,6 +1,6 @@
 """Dựng file số tổng hợp cho bản chạy thử từ data pre-class BTC cấp. Chỉ dùng thư viện chuẩn.
 
-Chạy:  python data/build_aggregate.py ../data/preclass
+Chạy:  python data/build_aggregate.py data-btc/preclass
 Ghi:   data/preclass_day_stats.json — CHỈ số tổng hợp theo ngày học và ý kiến thức (KC),
        không có mã học viên, mã dòng hay chữ học viên viết → được commit (xem data/DATA_CARD.md).
 
@@ -18,7 +18,7 @@ import re
 import sys
 from collections import defaultdict
 
-SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join("..", "data", "preclass")
+SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join("data-btc", "preclass")
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "preclass_day_stats.json")
 
 

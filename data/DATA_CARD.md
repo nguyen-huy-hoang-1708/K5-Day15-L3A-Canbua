@@ -8,7 +8,7 @@
 |---|---|
 | Dùng để làm gì | Nguồn cho công cụ `get_day_stats`, `list_days` (`codebase/tools.py`) · nguồn đáp án cho câu thử `data_that` (`eval/benchmark.csv`) · nguồn để `eval/grade_run.py` kiểm số |
 | Từ đâu | Data BTC cấp `data/preclass/` của repo đề: `events.csv`, `answers.csv`, `chat.csv` (AI20K khoá 5) |
-| Xử lý những bước gì | Script `data/build_aggregate.py` (chỉ thư viện chuẩn). Lọc: sự kiện `actor = learner`; câu trả lời `lan_thu = 1` và `was_correct` là True/False. Gom: theo ngày học (số trong `lesson_id`) và `kc_code`. Ẩn danh: chỉ giữ số đếm, **không giữ mã học viên, mã dòng, thời gian từng lần**. Chạy lại: `python data/build_aggregate.py ../data/preclass` |
+| Xử lý những bước gì | Script `data/build_aggregate.py` (chỉ thư viện chuẩn). Lọc: sự kiện `actor = learner`; câu trả lời `lan_thu = 1` và `was_correct` là True/False. Gom: theo ngày học (số trong `lesson_id`) và `kc_code`. Ẩn danh: chỉ giữ số đếm, **không giữ mã học viên, mã dòng, thời gian từng lần**. Chạy lại: `python data/build_aggregate.py data-btc/preclass` |
 | Số dòng / số đoạn | 13 ngày học · 160 cặp (ngày, KC) · 1 file JSON ~35 KB |
 | Phiên bản / ngày lấy | Data BTC 05/11/2026 → 25/11/2026 (Day01–Day13) · dựng ngày 27/11/2026 |
 | Nhãn | thật (số tổng hợp từ log thật, không sinh thêm) |

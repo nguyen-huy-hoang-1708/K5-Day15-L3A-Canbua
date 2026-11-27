@@ -9,7 +9,7 @@
 
 ```bash
 python run.py                      # gõ: Day 4 lớp đang hổng ý nào?
-python data/build_aggregate.py ../data/preclass   # (tuỳ chọn) dựng lại số tổng hợp từ data BTC
+python data/build_aggregate.py data-btc/preclass   # (tuỳ chọn) dựng lại số tổng hợp từ data BTC
 python eval/grade_run.py eval/run-1.csv           # chấm bằng code sau khi chạy eval
 ```
 

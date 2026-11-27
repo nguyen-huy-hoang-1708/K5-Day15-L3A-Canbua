@@ -12,7 +12,7 @@
   4. Dùng trợ giảng AI: số `hv` riêng trong `chat.csv`.
   5. Mini lab: `lab_completed` có `skipped = true` trên tổng `lab_completed`.
 - **Mẫu số:** 436 học viên có hoạt động (không dùng 721 tài khoản); với KC là số lần trả lời đầu của KC đó.
-- Script: `python evidence/count_preclass.py ../data/preclass` (chỉ dùng thư viện chuẩn, không in mã học viên).
+- Script: `python evidence/count_preclass.py data-btc/preclass` (chỉ dùng thư viện chuẩn, không in mã học viên).
 - Ghi chú trung thực: nhóm đã đếm thử vài số trước khi viết mục này, sau đó mới viết script cố định. Script trên là cách đếm chính thức.
 
 ## 2. Đọc trước, đếm sau

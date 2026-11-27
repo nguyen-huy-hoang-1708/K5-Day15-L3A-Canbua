@@ -1,6 +1,6 @@
 """Đếm bằng chứng từ data pre-class BTC cấp. Chỉ dùng thư viện chuẩn.
 
-Chạy:  python evidence/count_preclass.py ../data/preclass
+Chạy:  python evidence/count_preclass.py data-btc/preclass
 In ra các số dùng trong evidence/data-mining.md và spec.md §1–§2.
 Không ghi file, không in mã học viên (luật dùng data: không xếp hạng, không đoán ai là ai).
 """
@@ -11,7 +11,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-DATA = Path(sys.argv[1] if len(sys.argv) > 1 else "../data/preclass")
+DATA = Path(sys.argv[1] if len(sys.argv) > 1 else "data-btc/preclass")
 
 
 def read(name):

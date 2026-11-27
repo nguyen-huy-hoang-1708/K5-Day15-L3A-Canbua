@@ -20,7 +20,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 - Việc họ cố làm xong: chuẩn bị nội dung nhấn mạnh cho buổi học ngày N, dựa trên việc lớp đã hiểu gì ở pre-class.
 - Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ: *(chưa kiểm — giả thuyết)* giảng theo slide cố định, đoán chỗ khó theo kinh nghiệm hoặc hỏi nhanh đầu buổi; hỏng vì không biết số liệu cụ thể của lớp mình; chưa bỏ được vì không có chỗ nào gom sẵn kết quả pre-class theo ý kiến thức.
 - Pain: giảng viên L3 — đang chuẩn bị buổi học — không biết lớp đã hổng ý nào ở pre-class và bao nhiêu người chưa làm pre-class — giảng lại dàn trải hoặc bỏ sót ý đang hổng, học viên hổng tiếp sang ngày sau.
-- Bằng chứng — số chính (chi tiết: `evidence/data-mining.md`, chạy lại: `python evidence/count_preclass.py ../data/preclass`):
+- Bằng chứng — số chính (chi tiết: `evidence/data-mining.md`, chạy lại: `python evidence/count_preclass.py data-btc/preclass`):
   - **Pre-class tụt mạnh:** học viên có hoạt động trên bài Day01 là 417/436 (95,6%), Day05 134/436 (30,7%), Day10 44/436 (10,1%), Day12 26/436 (6,0%) → giảng viên không thể giả định lớp "đã học pre-class".
   - **Có ý kiến thức hổng rõ:** lần đầu trả lời đúng 2054/2478 (82,9%) tính chung, nhưng 7/46 KC (có ≥20 người trả lời) đúng < 75%, ví dụ `cot_task_fit` 16/27 (59,3%), `chatbot_is_app_around_model` 25/41 (61,0%), `system_prompt_contract` 18/27 (66,7%).
   - **Học viên ít tự hỏi:** 145/436 (33,3%) từng nhắn trợ giảng AI → phần lớn chỗ hổng không lộ ra qua câu hỏi.
