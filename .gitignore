@@ -12,6 +12,8 @@ __pycache__/
 venv/
 node_modules/
 .DS_Store
+data/*.db*
+data/*.sqlite*
 # Lượt KHÔNG được tính (không nộp). eval/run-1.csv, run-2.csv…, cost/simulate-N.csv, traces/run-N.jsonl PHẢI commit.
 eval/run-fake.csv
 eval/run-try.csv

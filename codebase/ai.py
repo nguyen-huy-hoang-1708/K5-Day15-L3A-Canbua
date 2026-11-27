@@ -56,12 +56,14 @@ def call_model(system: str, user: str) -> dict:
         r = call_claude(system, user)
     elif MODEL_PROVIDER == "openai":
         r = call_openai(system, user)
+    elif MODEL_PROVIDER == "openrouter":
+        r = call_openrouter(system, user)
     elif MODEL_PROVIDER == "gemini":
         r = call_gemini(system, user)
     elif MODEL_PROVIDER == "ollama":
         r = call_ollama(system, user)
     else:
-        raise NotImplementedError("MODEL_PROVIDER=%s chưa hỗ trợ — dùng anthropic / openai / gemini / ollama" % MODEL_PROVIDER)
+        raise NotImplementedError("MODEL_PROVIDER=%s chưa hỗ trợ — dùng anthropic / openai / openrouter / gemini / ollama" % MODEL_PROVIDER)
     return {"text": r["text"], "model": MODEL_NAME,
             "tokens_in": int(r["tokens_in"]), "tokens_out": int(r["tokens_out"])}
 
@@ -116,6 +118,17 @@ def call_openai(system, user):
     u = data["usage"]
     return {"text": data["choices"][0]["message"]["content"],
             "tokens_in": u["prompt_tokens"], "tokens_out": u["completion_tokens"]}
+
+
+def call_openrouter(system, user):
+    messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
+    data = post_json("https://openrouter.ai/api/v1/chat/completions",
+                     {"Authorization": "Bearer " + API_KEY},
+                     {"model": MODEL_NAME, "messages": messages})
+    u = data.get("usage") or {}
+    return {"text": data["choices"][0]["message"]["content"] or "",
+            "tokens_in": int(u.get("prompt_tokens") or 0),
+            "tokens_out": int(u.get("completion_tokens") or 0)}
 
 
 def call_gemini(system, user):
