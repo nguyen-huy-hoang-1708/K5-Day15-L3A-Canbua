@@ -12,6 +12,7 @@
 | Chấm cột `pass` | Không dùng LLM — chấm bằng code (`eval/grade_run.py`) | — | Người thứ hai chấm tay 5 output, ghi ở `eval/README.md` mục 3 | __ |
 | Bảng thuật ngữ (`data/glossary.json`) | Claude Code | Viết nghĩa 47 cụm thuật ngữ từ tên ý kiến thức | **Cần giảng viên duyệt** trước khi dùng thật | __ |
 | Giao diện web (`web.py`, `web/index.html`) | Claude Code | Viết trang, biểu đồ, cache, phiếu chuẩn bị | Thử trên trình duyệt: Day 1, 4, 9, câu tấn công | __ |
+| Trò chơi Mê cung (`game.py`, `web/game.html`) và 30 câu hỏi nháp | Claude Code | Viết logic trò chơi, đồ hoạ, soạn câu hỏi | Thử nhiều người chơi trên trình duyệt; **câu hỏi cần giảng viên duyệt** | __ |
 | Văn bản (`spec.md`, `canvas.md`, `evidence/*.md`, `data/DATA_CARD.md`) | Claude Code | Bản nháp từ data | Nhóm sửa, điền phần phỏng vấn | __ |
 
 **Không dùng AI để:** tạo người được phỏng vấn, trích dẫn, câu trả lời khảo sát; sửa kết quả các lượt đã chạy.

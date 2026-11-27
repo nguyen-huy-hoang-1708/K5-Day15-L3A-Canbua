@@ -36,6 +36,17 @@
 | Nhãn | tự viết — **chưa được giảng viên duyệt** (`da_duyet: false`) |
 | Giới hạn | Chỉ phủ các cụm nhóm nghĩ ra; cụm ngoài bảng vẫn có thể bị dịch sai. Cần giảng viên sửa / duyệt trước khi dùng thật |
 
+## Dataset 1d · Ngân hàng câu hỏi trò chơi — `data/game_questions.json`
+
+| | |
+|---|---|
+| Dùng để làm gì | Câu trắc nghiệm ở cửa và khi đấu trong trò chơi Mê cung (`game.py`). Ưu tiên câu thuộc ý lớp đang hổng (tỉ lệ đúng lấy từ Dataset 1) |
+| Từ đâu | Nhóm tự soạn 30 câu theo tên ý kiến thức của khoá — **chưa được giảng viên duyệt** (`da_duyet: false`) |
+| Xử lý | Đáp án không gửi xuống trình duyệt; thứ tự lựa chọn xáo mỗi lần hỏi |
+| Giới hạn | Không có nội dung bài giảng trong data → câu hỏi có thể lệch với cách giảng của khoá; cần giảng viên sửa / thay |
+
+**Dữ liệu trò chơi sinh ra khi chơi** (`.game/profiles.json`: tên học viên tự nhập, điểm, lịch sử ván) là dữ liệu cá nhân mới → đã đưa vào `.gitignore`, không commit, không gửi vào model.
+
 ## Dataset 2 · Bộ câu thử — `eval/benchmark.csv` + luật chấm `eval/checks.json`
 
 | | |

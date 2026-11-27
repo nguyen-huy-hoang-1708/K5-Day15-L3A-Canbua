@@ -10,6 +10,7 @@
 ```bash
 python run.py                      # gõ: Day 4 lớp đang hổng ý nào?
 python web.py                      # giao diện web: http://localhost:8000 — tổng quan khoá + Radar từng ngày (có cache)
+python web.py 8000 --lan           # mở cho cả lớp: trò chơi Mê cung pre-class ở http://<IP máy>:8000/game (giảng viên: /game?host=1)
 python data/build_aggregate.py data-btc/preclass   # (tuỳ chọn) dựng lại số tổng hợp từ data BTC
 python data/build_video_stats.py data-btc/preclass # (tuỳ chọn) dựng lại số xem video cho web
 python eval/grade_run.py eval/run-1.csv           # chấm bằng code sau khi chạy eval

@@ -36,3 +36,4 @@ evidence/**/raw-*
 data-btc
 data-btc/
 .cache/
+.game/

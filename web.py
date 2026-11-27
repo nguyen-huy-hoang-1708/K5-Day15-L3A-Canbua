@@ -16,7 +16,8 @@ import json
 import os
 import sys
 import time
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -25,6 +26,11 @@ sys.path.insert(0, os.path.join(ROOT, "codebase"))
 import tracing  # noqa: E402
 from agent import MIN_KC_PEOPLE, WEAK_PCT, _find_days, answer  # noqa: E402
 from tools import get_day_stats, list_days  # noqa: E402
+
+import game  # noqa: E402  (trò chơi Mê cung pre-class, /game)
+
+GAME_PAGE = os.path.join(ROOT, "web", "game.html")
+ANSWER_LOCK = threading.Lock()  # tracing dùng trạng thái chung → mỗi lúc chỉ chạy 1 answer()
 
 PAGE = os.path.join(ROOT, "web", "index.html")
 CACHE_FILE = os.path.join(ROOT, ".cache", "radar.json")
@@ -96,6 +102,11 @@ def overview():
 
 
 def run_answer(text):
+    with ANSWER_LOCK:
+        return _run_answer(text)
+
+
+def _run_answer(text):
     tracing.begin("web")
     try:
         out = answer(text)["output"]
@@ -125,6 +136,13 @@ class Handler(BaseHTTPRequestHandler):
         if u.path in ("/", "/index.html"):
             with open(PAGE, "rb") as f:
                 return self._send(200, f.read(), "text/html; charset=utf-8")
+        if u.path in ("/game", "/game/"):
+            with open(GAME_PAGE, "rb") as f:
+                return self._send(200, f.read(), "text/html; charset=utf-8")
+        if u.path.startswith("/game/api/"):
+            q = {k: v[0] for k, v in parse_qs(u.query).items()}
+            r = game.handle("GET", u.path, q)
+            return self._send(200 if r is not None else 404, r if r is not None else {"error": "không có"})
         if u.path == "/api/days":
             return self._send(200, {"days": list_days(), "min_people": MIN_KC_PEOPLE, "weak_pct": WEAK_PCT})
         if u.path == "/api/radar":
@@ -141,7 +159,16 @@ class Handler(BaseHTTPRequestHandler):
         return self._send(404, {"error": "không có trang này"})
 
     def do_POST(self):
-        if urlparse(self.path).path != "/api/ask":
+        path = urlparse(self.path).path
+        if path.startswith("/game/api/"):
+            n = int(self.headers.get("Content-Length") or 0)
+            try:
+                body = json.loads(self.rfile.read(n) or b"{}")
+            except ValueError:
+                return self._send(400, {"error": "JSON không hợp lệ"})
+            r = game.handle("POST", path, body if isinstance(body, dict) else {})
+            return self._send(200 if r is not None else 404, r if r is not None else {"error": "không có"})
+        if path != "/api/ask":
             return self._send(404, {"error": "không có trang này"})
         n = int(self.headers.get("Content-Length") or 0)
         try:
@@ -150,8 +177,10 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(400, {"error": "JSON không hợp lệ"})
         return self._send(200, run_answer(text))
 
-    def log_message(self, fmt, *args):  # gọn log: chỉ in đường dẫn
-        sys.stderr.write("%s\n" % (fmt % args))
+    def log_message(self, fmt, *args):  # gọn log: bỏ các lượt hỏi trạng thái trò chơi (gọi liên tục)
+        line = fmt % args
+        if "/game/api/state" not in line and "/game/api/move" not in line:
+            sys.stderr.write("%s\n" % line)
 
 
 def main():
@@ -160,9 +189,22 @@ def main():
             _stream.reconfigure(encoding="utf-8", errors="replace")
         except Exception:
             pass
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
-    print("Radar pre-class: http://localhost:%d  (Ctrl+C để dừng)" % port)
-    HTTPServer(("127.0.0.1", port), Handler).serve_forever()
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    port = int(args[0]) if args else 8000
+    lan = "--lan" in sys.argv  # cho máy khác trong cùng mạng (lớp học) vào chơi
+    host = "0.0.0.0" if lan else "127.0.0.1"
+    print("Radar pre-class: http://localhost:%d  ·  Trò chơi: http://localhost:%d/game  (Ctrl+C để dừng)" % (port, port))
+    if lan:
+        import socket
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("10.255.255.255", 1))
+            ip = s.getsockname()[0]
+            s.close()
+        except OSError:
+            ip = "<IP máy này>"
+        print("Học viên cùng mạng vào: http://%s:%d/game" % (ip, port))
+    ThreadingHTTPServer((host, port), Handler).serve_forever()
 
 
 if __name__ == "__main__":
