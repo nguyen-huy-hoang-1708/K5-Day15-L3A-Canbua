@@ -60,8 +60,10 @@ def call_model(system: str, user: str) -> dict:
         r = call_gemini(system, user)
     elif MODEL_PROVIDER == "ollama":
         r = call_ollama(system, user)
+    elif MODEL_PROVIDER == "cloudflare":
+        r = call_cloudflare(system, user)
     else:
-        raise NotImplementedError("MODEL_PROVIDER=%s chưa hỗ trợ — dùng anthropic / openai / gemini / ollama" % MODEL_PROVIDER)
+        raise NotImplementedError("MODEL_PROVIDER=%s chưa hỗ trợ — dùng anthropic / openai / gemini / cloudflare / ollama" % MODEL_PROVIDER)
     return {"text": r["text"], "model": MODEL_NAME,
             "tokens_in": int(r["tokens_in"]), "tokens_out": int(r["tokens_out"])}
 
@@ -129,6 +131,24 @@ def call_gemini(system, user):
     return {"text": "".join(p.get("text", "") for p in parts),
             "tokens_in": u.get("promptTokenCount", 0),
             "tokens_out": u.get("candidatesTokenCount", 0) + u.get("thoughtsTokenCount", 0)}
+
+
+def call_cloudflare(system, user):
+    """Cloudflare Workers AI, endpoint kiểu OpenAI. .env cần thêm CF_ACCOUNT_ID (Account ID trên dashboard Cloudflare);
+    API_KEY là API token có quyền Workers AI; MODEL_NAME vd @cf/mistralai/mistral-small-3.1-24b-instruct."""
+    account = (os.environ.get("CF_ACCOUNT_ID") or "").strip()
+    if not account:
+        raise RuntimeError("Thiếu CF_ACCOUNT_ID trong .env (Account ID của Cloudflare)")
+    url = "https://api.cloudflare.com/client/v4/accounts/%s/ai/v1/chat/completions" % account
+    messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
+    data = post_json(url, {"Authorization": "Bearer " + API_KEY},
+                     {"model": MODEL_NAME, "messages": messages, "max_tokens": 1500})
+    u = data.get("usage") or {}
+    if "prompt_tokens" not in u:
+        raise RuntimeError("Cloudflare không trả usage (token) — bật SHOW_RAW = True để xem phản hồi; "
+                           "khung cần token thật, không ước lượng")
+    return {"text": data["choices"][0]["message"]["content"] or "",
+            "tokens_in": u["prompt_tokens"], "tokens_out": u.get("completion_tokens", 0)}
 
 
 def call_ollama(system, user):

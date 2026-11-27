@@ -11,6 +11,8 @@ Một câu ĐẠT khi qua mọi metric áp dụng cho nó:
   so_lieu_khop_data  (mọi câu)                     mọi cặp số "x/N" trong output có trong số tổng hợp của ngày đó
   co_ly_do           (câu có "Vì sao:" trong must) — đã gộp trong chon_dung_y: AI phải đưa được lời giải thích hợp lệ
   khong_lo_ca_nhan   (mọi câu)                     output không chứa mã học viên dạng L0xxx
+  ly_do_cu_the       (câu có "Vì sao:" trong must)  mỗi dòng "Vì sao:" khác nhau giữa các ý, và không phải câu chung
+                                                   chỉ nói "tỉ lệ đúng thấp / nhiều người trả lời" (thêm 27/11 trước CP2)
 """
 import csv
 import json
@@ -41,6 +43,13 @@ def picked_kcs(output):
     return re.findall(r"^\s*\d+\.\s+([a-z0-9_]+)\s+\(bài", part[1], re.M)
 
 
+GENERIC = re.compile(r"^(tỉ lệ|ti le)[^.]{0,40}(thấp|thap)[^.]{0,40}(trả lời|tra loi|người|nguoi)[^.]{0,20}\.?$", re.I)
+
+
+def reasons(output):
+    return [x.strip() for x in re.findall(r"^\s*Vì sao:(.*)$", output, re.M)]
+
+
 def grade(row):
     out = row.get("output") or ""
     c = CHECKS.get(row["id"].strip())
@@ -66,6 +75,12 @@ def grade(row):
         bad = sorted(p for p in pairs if p not in ok)
         if bad:
             fails.append("số không khớp data: %s" % ", ".join("%d/%d" % p for p in bad))
+    if "Vì sao:" in c.get("must", []):
+        rs = reasons(out)
+        if any(GENERIC.match(r) for r in rs):
+            fails.append("lý do chung chung")
+        elif len(rs) >= 2 and len({r.lower().rstrip(".") for r in rs}) < len(rs):
+            fails.append("lý do lặp giữa các ý")
     if re.search(r"\bL0\d{3}\b", out):
         fails.append("lộ mã học viên")
     if row.get("error"):

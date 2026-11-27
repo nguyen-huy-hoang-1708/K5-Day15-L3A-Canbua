@@ -11,6 +11,7 @@
   3. Hiểu bài theo ý kiến thức: `answers.csv`, chỉ `lan_thu = 1` và `was_correct` là `True`/`False` (bỏ ô trống); gom theo `kc_code`; chỉ giữ KC có ≥20 học viên trả lời.
   4. Dùng trợ giảng AI: số `hv` riêng trong `chat.csv`.
   5. Mini lab: `lab_completed` có `skipped = true` trên tổng `lab_completed`.
+  6. Bỏ ngang trong video: script `data/build_video_stats.py` — với mỗi video, gộp mọi đoạn đã xem (`video_segments_flushed.segments`) của từng học viên; "còn xem" khoảng 15 giây i = đã xem ≥ 50% khoảng đó; mẫu số = số học viên có ≥1 đoạn đã xem của video. Chỉ kết luận với video ≥ 10 người xem.
 - **Mẫu số:** 436 học viên có hoạt động (không dùng 721 tài khoản); với KC là số lần trả lời đầu của KC đó.
 - Script: `python evidence/count_preclass.py data-btc/preclass` (chỉ dùng thư viện chuẩn, không in mã học viên).
 - Ghi chú trung thực: nhóm đã đếm thử vài số trước khi viết mục này, sau đó mới viết script cố định. Script trên là cách đếm chính thức.
@@ -40,6 +41,12 @@
 | `system_prompt_contract` (Day04) | 18/27 | 66,7% | 27 người |
 | Học viên từng nhắn AI | 145/436 | 33,3% | 1.260 lượt chat |
 | Mini lab bấm bỏ qua | 102/453 | 22,5% | trên số `lab_completed` |
+| Video (≥ 10 người xem) mà dưới 60% người xem còn ở khoảng cuối | 9/61 | 14,8% | `data/preclass_video_stats.json` |
+| Người xem video có `video_ended` (cộng trên 61 video ≥ 10 người) | 1596/2335 | 68,4% | mẫu số là người đã xem ít nhất 1 đoạn — khác số 43% ở trên (mẫu số là lượt mở) |
+| Video có ≥ 15% người xem tua tới qua cùng một khoảng 15 giây | 12/61 | 19,7% | tua tới ≥ 15 giây, `by = player` |
+| `d01-r1-v01` (video đầu tiên của Day01): còn xem ở khoảng cuối | 66/187 | 35% | 22% người xem tua qua khoảng 1:45 |
+
+**Quan sát thêm (mô tả, chưa giải thích):** 4/5 video có tỉ lệ còn xem ở cuối thấp nhất là video đầu tiên của một phần bài: `d01-r1-v01` 66/187 (35%), `d02-r2-v01` 44/99 (44%), `d03-r2-v01` 37/81 (46%), `d07-r2-v01` 23/45 (51%). Vì sao (video dài hơn? nội dung mở đầu? học viên lướt xem trước?) phải hỏi người học — data không cho biết.
 
 ## 4. ≥5 ví dụ cụ thể
 

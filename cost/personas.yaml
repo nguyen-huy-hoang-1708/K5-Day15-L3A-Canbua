@@ -42,6 +42,14 @@ prices:             # USD / 1 triệu token
     input: 4.00
     output: 20.00
     source: "Bảng giá Claude API (Anthropic), Claude Opus 5.5, bảng giá lưu ngày 03/11/2026 · xem 27/11/2026"
+  - model: "@cf/mistralai/mistral-small-3.1-24b-instruct"
+    input: 0.351
+    output: 0.555
+    source: "https://developers.cloudflare.com/workers-ai/platform/pricing/ (trang cập nhật 18/11/2026) · xem 27/11/2026"
+  - model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+    input: 0.293
+    output: 2.253
+    source: "https://developers.cloudflare.com/workers-ai/platform/pricing/ (trang cập nhật 18/11/2026) · xem 27/11/2026"
 
 usd_to_vnd:
   rate:

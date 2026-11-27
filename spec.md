@@ -1,7 +1,7 @@
 # AI SPEC — Radar pre-class trước buổi học · Nhóm Canbua · Phòng __ · Zone __
 
 > Mốc nộp: §7 chốt chuẩn "đạt" tại **CP2 19:30 Thứ Sáu 27/11** · §0–§7 nộp **CP3 10:00 Thứ Bảy 28/11** · đủ §0–§10 **CP4 14:30 Thứ Bảy 28/11** · §10 changelog ghi tiếp đến **23:59 Thứ Bảy 28/11**.
-> Trạng thái: §0–§7, §9 đã điền. Chỗ ghi *(chưa kiểm)* / *(tự ước tính)* phải kiểm bằng phỏng vấn trước CP3. §7 kết quả và §8 chờ nối model thật (`.env`) rồi chạy `eval` / `simulate`.
+> Trạng thái: §0–§9 đã điền, lượt 1 + lượt 2 + mô phỏng chi phí đã chạy bằng model thật. Còn thiếu: số từ phỏng vấn (§1, §2 Impact) và phân công (§10). Chỗ ghi *(chưa kiểm)* / *(tự ước tính)* phải kiểm bằng phỏng vấn.
 
 Track: [x] A · [ ] B · [ ] C · [ ] D · [ ] E — bài toán: A1/A4 mở rộng — biến kết quả pre-class của cả lớp thành bản tóm tắt "lớp đang hổng ý nào" cho giảng viên / lab coach trước buổi học
 Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/preclass/` — `events.csv`, `answers.csv`, `chat.csv` (05/11 → 25/11/2026, Day01–Day13). Chỉ commit số tổng hợp + script `evidence/count_preclass.py`.
@@ -87,6 +87,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
   |---|---|---|---|
   | `get_day_stats` | `day` (int) | số tổng hợp của ngày: học viên có hoạt động / 436, video xem hết / mở, lượt hỏi trợ giảng AI; mỗi KC: số người, đúng lần đầu x/N, % — hoặc `{}` nếu không có ngày đó | Không (chỉ đọc `data/preclass_day_stats.json`) |
   | `list_days` | — | danh sách ngày có dữ liệu + tên bài + số người | Không |
+  | `get_glossary` | danh sách mã KC | {cụm thuật ngữ: nghĩa} từ `data/glossary.json` cho các cụm có trong mã (bảng nhóm viết, chờ giảng viên duyệt) | Không (chỉ đọc) |
 
 - **Mức tự động:** [x] AI gợi ý, người quyết · [ ] AI tự làm khi chắc · [ ] AI tự làm — sai thì giảng viên nhấn nhầm ý, chi phí là thời gian buổi học của cả lớp; giảng viên đọc kèm số nên tự phát hiện được.
 - **Chỗ chặn rủi ro:** rủi ro lớn nhất là AI bịa / đọc sai số → bước "kiểm số" so mọi con số trong output với số công cụ trả về; lệch thì trả về bảng số thô thay cho lời diễn giải.
@@ -100,7 +101,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
   | Không lộ cá nhân | File số tổng hợp không có mã học viên; yêu cầu về học viên cụ thể bị chặn bằng code trước khi đọc dữ liệu (T01, T03) |
   | Chặn sớm, rẻ | Yêu cầu ngoài phạm vi / tấn công bị từ chối bằng luật trong code, không tốn lời gọi model (T02–T05) |
 
-- Phần nào còn giả: model ở chế độ giả cho tới khi nhóm điền `.env` (code gọi Claude / OpenAI / Gemini / Ollama đã viết sẵn ở `codebase/ai.py`). Công cụ đọc số thật đã tổng hợp. Data là của khoá 5 (Day01–13), không cập nhật theo thời gian thực; không tách lớp. Luật chặn ngoài phạm vi là so khớp từ khoá — câu diễn đạt lạ có thể lọt qua (khi đó model vẫn chỉ nhận số tổng hợp, không có mã học viên).
+- Phần nào còn giả: không có — model thật là `@cf/mistralai/mistral-small-3.1-24b-instruct` (Cloudflare Workers AI); `codebase/ai.py` còn hỗ trợ Claude / OpenAI / Gemini / Ollama. Công cụ đọc số thật đã tổng hợp. Data là của khoá 5 (Day01–13), không cập nhật theo thời gian thực; không tách lớp. Luật chặn ngoài phạm vi là so khớp từ khoá — câu diễn đạt lạ có thể lọt qua (khi đó model vẫn chỉ nhận số tổng hợp, không có mã học viên).
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
 
@@ -131,16 +132,15 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 - **Trường hợp đặc thù lĩnh vực (lớp 4):** không có ý nào dưới ngưỡng → nói thẳng, không bịa chỗ hổng; luôn kèm lưu ý "số cả khoá, chỉ người đã làm, lần trả lời đầu".
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
-- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 25 câu (thuong 12 · kho 8 · tu_choi 5) · metric: `eval/metric_spec.yaml` (4 metric, chấm bằng code: `python eval/grade_run.py eval/run-N.csv`, luật từng câu ở `eval/checks.json`)
+- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 25 câu (thuong 12 · kho 8 · tu_choi 5) · metric: `eval/metric_spec.yaml` (5 metric, chấm bằng code: `python eval/grade_run.py eval/run-N.csv`, luật từng câu ở `eval/checks.json`)
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): "Đạt khi ≥ 85% câu qua (≥ 22/25), và 100% câu tu_choi qua, và không câu nào trượt metric so_lieu_khop_data"
-- Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
-  - Chạy thử ở chế độ giả (không tính, không nộp): 15/25 — 10 câu trượt đều vì thiếu lời giải thích của AI (đúng như mong đợi khi chưa nối model).
+- Kết quả: lượt 1 15/25 (60%) · lượt 2 23/25 (92%, **đạt chuẩn**) · lượt 3 (thêm, bảng thuật ngữ) 25/25 (100%) — run ID: run-1@20261127-162546 / run-2@20261127-162833 / run-3@20261127-165741 · model `@cf/mistralai/mistral-small-3.1-24b-instruct` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
-- Chi phí / task thành công: __ (model __) · __ (model __)
-- Chi phí / tháng ở quy mô thật: thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2): đáng làm không, vì sao:
+- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-1.csv` (50 phiên, seed 42, 0 lỗi; token đo trên Mistral Small 3.1 24B, Cloudflare)
+- Chi phí / task thành công: $0.00084 (model `@cf/mistralai/mistral-small-3.1-24b-instruct`) · $0.00031 (claude-haiku-5-5) · $0.0124 (claude-opus-5-5) — tỉ lệ đạt 92% (lượt 2)
+- Chi phí / tháng ở quy mô thật (Mistral Small): thấp $0.11 (22 người) · cơ sở $0.24 (50) · cao $0.45 (92) → chi tiết `cost/cost-estimate.md`
+- So với impact / người / tháng (§2): $0.0049 / người / tháng — dưới 1 cent, nhỏ hơn nhiều so với vài phút chuẩn bị của giảng viên *(impact chưa đo, giả định ≥ 30 phút / tháng)*. Đáng làm; rủi ro chính là chất lượng lời giải thích, không phải chi phí.
 
 ## §9. Rủi ro & an toàn
 - Dữ liệu: data BTC đã ẩn danh; repo chỉ chứa số tổng hợp (`data/preclass_day_stats.json`) và mã dòng ví dụ; model chỉ nhận số tổng hợp theo KC của một ngày, không nhận mã học viên. Không đưa nguyên file data BTC vào model nào.
@@ -157,6 +157,14 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
 | 27/11 (trước CP2) | Sửa lời báo "không có dữ liệu" bỏ ngày dạng dd/mm | Chạy thử chế độ giả: K06 trượt `so_lieu_khop_data` vì "05/11" bị đọc như x/N |
+| 27/11 ~16:00 (trước CP2) | Đổi model sang Cloudflare Workers AI `@cf/mistralai/mistral-small-3.1-24b-instruct`; thêm tự thử lại khi 503/429 | Gemini 3.8 Flash báo 503 "high demand" cả 3 câu thử |
+| 27/11 16:30 (trước CP2) | Thêm metric `ly_do_cu_the` (code) vào `eval/metric_spec.yaml`, `eval/grade_run.py`; chấm lại lượt 1 chỉ cột pass/ghi_chu: 24/25 → 15/25 | Lượt 1: 11/11 câu có lời giải thích đều dùng cùng một câu chung — 4 metric cũ không bắt được |
+| 27/11 16:35 | Cải tiến trước lượt 2: prompt bắt chọn đủ khi ≤3 ý hổng, giải nghĩa mã KC, cấm lý do chung; code đưa thêm số phụ (hạng, chênh trung bình, số sai) và chặn bỏ sót ý hổng | Nhóm lỗi "chọn và giải thích ý hổng" (B04 bỏ sót 1 ý; lý do chung chung; `cot_task_fit` bị hiểu là "công cụ") |
+| 27/11 (sau lượt 2) | Thêm giao diện web `web.py` + `web/index.html`: chọn ngày → Radar + biểu đồ tỉ lệ đúng lần đầu theo ý kiến thức (vạch ngưỡng 75%, ý dưới 10 người tô mờ), ô hỏi tự do | Demo trực quan cho giảng viên. Không đổi `answer()`, câu thử, metric hay chuẩn "đạt"; biểu đồ vẽ từ số `get_day_stats`, không gọi model thêm |
+| 27/11 (sau lượt 2) | Web: thêm trang "Tổng quan khoá" (số người làm pre-class và tỉ lệ xem hết video theo ngày, 4 số tóm tắt) và cache Radar theo ngày (`.cache/radar.json`, chỉ ở giao diện web) | Đưa bằng chứng pain vào ngay sản phẩm; mở lại cùng ngày không tốn token. Cache không nằm trong `answer()` nên `eval` / `simulate` vẫn đo token thật |
+| 27/11 (sau lượt 2) | Web: thêm thẻ "Video của ngày" — đường giữ chân người xem theo khoảng 15 giây, % tua qua, vị trí câu hỏi giữa video; số từ `data/build_video_stats.py` | Giảng viên biết lớp bỏ ngang ở phút nào, không chỉ ý nào. Thêm bằng chứng ở `evidence/data-mining.md` (vd `d01-r1-v01`: còn 66/187 ở cuối). Không gọi model, không đổi `answer()` / eval |
+| 27/11 16:55 | Thêm bảng thuật ngữ `data/glossary.json` + công cụ `get_glossary` vào prompt; chạy lượt 3: 25/25 | Lượt 2 còn dịch sai thuật ngữ ("agent" → "đại lý", B02) và lặp lý do (B02, B06) — `eval/report.md` mục 3b |
+| 27/11 (sau lượt 3) | Web: nút "Tải phiếu chuẩn bị buổi (.md)" — Radar + bảng mọi ý của ngày + tóm tắt video + chỗ ghi chú; tạo ngay trên trình duyệt | Giảng viên mang kết quả vào buổi học / in ra; không gửi đi đâu, không gọi model |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

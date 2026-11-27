@@ -10,6 +10,8 @@
 | Rà câu hỏi phỏng vấn (`evidence/interviews/GUIDE-radar.md`) | Claude Code | Gợi ý câu hỏi theo kiểu "lần gần nhất" | Rà câu dẫn dắt | __ |
 | Viết câu thử (`eval/benchmark.csv`, `eval/checks.json`) | Claude Code | Viết 25 câu; đáp án câu `data_that` lấy từ số tổng hợp | Mỗi câu có `source`; kiểm đáp án bằng `data/preclass_day_stats.json` | __ |
 | Chấm cột `pass` | Không dùng LLM — chấm bằng code (`eval/grade_run.py`) | — | Người thứ hai chấm tay 5 output, ghi ở `eval/README.md` mục 3 | __ |
+| Bảng thuật ngữ (`data/glossary.json`) | Claude Code | Viết nghĩa 47 cụm thuật ngữ từ tên ý kiến thức | **Cần giảng viên duyệt** trước khi dùng thật | __ |
+| Giao diện web (`web.py`, `web/index.html`) | Claude Code | Viết trang, biểu đồ, cache, phiếu chuẩn bị | Thử trên trình duyệt: Day 1, 4, 9, câu tấn công | __ |
 | Văn bản (`spec.md`, `canvas.md`, `evidence/*.md`, `data/DATA_CARD.md`) | Claude Code | Bản nháp từ data | Nhóm sửa, điền phần phỏng vấn | __ |
 
 **Không dùng AI để:** tạo người được phỏng vấn, trích dẫn, câu trả lời khảo sát; sửa kết quả các lượt đã chạy.

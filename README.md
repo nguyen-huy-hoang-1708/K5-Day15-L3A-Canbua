@@ -9,7 +9,9 @@
 
 ```bash
 python run.py                      # gõ: Day 4 lớp đang hổng ý nào?
+python web.py                      # giao diện web: http://localhost:8000 — tổng quan khoá + Radar từng ngày (có cache)
 python data/build_aggregate.py data-btc/preclass   # (tuỳ chọn) dựng lại số tổng hợp từ data BTC
+python data/build_video_stats.py data-btc/preclass # (tuỳ chọn) dựng lại số xem video cho web
 python eval/grade_run.py eval/run-1.csv           # chấm bằng code sau khi chạy eval
 ```
 
@@ -114,7 +116,7 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm (chọn ý + lý do) | **Thật** khi `.env` có `MODEL_PROVIDER` (anthropic / openai / gemini / ollama) | Model: ____ |
+| Lời gọi AI ở quyết định trung tâm (chọn ý + lý do) | **Thật** | Model: `@cf/mistralai/mistral-small-3.1-24b-instruct` (Cloudflare Workers AI) — lượt 2: 23/25 (92%) |
 | Số liệu pre-class | **Thật** (tổng hợp từ data BTC, `data/preclass_day_stats.json`) | Không tách lớp; Day01–13 khoá 5 |
 | Luật chặn ngoài phạm vi / tấn công | Thật (so khớp từ khoá trong code) | Câu diễn đạt lạ có thể lọt |
 | Gửi tin / sửa dữ liệu | Không có | Ngoài phạm vi |

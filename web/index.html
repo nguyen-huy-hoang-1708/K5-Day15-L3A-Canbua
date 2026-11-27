@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar pre-class</title>
+<style>
+  :root {
+    --bg: #f4f3ef; --surface: #fcfcfb; --border: #e3e1da;
+    --ink: #0b0b0b; --ink-2: #52514e; --ink-3: #8a8983;
+    --bar: #2a78d6; --bar-faint: #b7d3f6; --weak: #ec835a; --grid: #ebe9e3;
+    --accent: #2a78d6; --accent-ink: #fff; --chip: #ecebe6; --good: #0ca30c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121211; --surface: #1a1a19; --border: #2e2e2b;
+      --ink: #f0efec; --ink-2: #c3c2b7; --ink-3: #8f8e86;
+      --bar: #3987e5; --bar-faint: #1c5cab; --weak: #ec835a; --grid: #2a2a27;
+      --accent: #3987e5; --accent-ink: #fff; --chip: #262624; --good: #0ca30c;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  header { padding: 20px 28px 8px; }
+  header h1 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
+  header p { margin: 2px 0 0; color: var(--ink-2); }
+  main { display: grid; grid-template-columns: 280px 1fr; gap: 20px; padding: 12px 28px 32px; align-items: start; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .card h2 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); font-weight: 600; }
+  .days { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .day { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%;
+         padding: 8px 10px; border-radius: 8px; border: 1px solid transparent; background: var(--chip);
+         color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+  .day:hover { border-color: var(--border); }
+  .day[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .day small { color: inherit; opacity: .75; font-size: 12px; white-space: nowrap; }
+  .day .name { font-size: 12px; opacity: .8; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px; }
+  .day.all { font-weight: 600; margin-bottom: 6px; }
+  .saved { font-size: 11px; opacity: .8; }
+  form { display: flex; gap: 8px; margin-top: 16px; }
+  input[type=text] { flex: 1; min-width: 0; padding: 9px 11px; border-radius: 8px; border: 1px solid var(--border);
+                     background: var(--surface); color: var(--ink); font: inherit; }
+  button.go { padding: 9px 14px; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font: inherit; cursor: pointer; }
+  button.ghost { padding: 4px 10px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--ink-2); font: inherit; font-size: 12px; cursor: pointer; margin-left: 8px; }
+  .hint { color: var(--ink-3); font-size: 12px; margin: 6px 0 0; }
+  .col { display: grid; gap: 20px; min-width: 0; }
+  .radar .head { font-size: 18px; font-weight: 650; margin: 0 0 6px; }
+  .radar .line { margin: 2px 0; color: var(--ink-2); }
+  .radar .pick { margin: 14px 0 4px; font-weight: 600; }
+  .radar .sub { margin: 2px 0 2px 22px; color: var(--ink-2); }
+  .radar .sub b { color: var(--ink); font-weight: 600; }
+  .radar .note { margin-top: 14px; padding: 10px 12px; background: var(--chip); border-radius: 8px; color: var(--ink-2); font-size: 13px; }
+  .radar .warn { display: inline-block; margin-right: 6px; color: var(--weak); }
+  .meta { margin-top: 12px; color: var(--ink-3); font-size: 12px; }
+  .meta .hit { color: var(--ink-2); }
+  .err { color: #d03b3b; }
+  .loading { color: var(--ink-3); }
+  .key { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 10px; font-size: 12px; color: var(--ink-2); }
+  .key span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+  .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .chart text { fill: var(--ink-2); font-size: 12px; }
+  .chart .val { fill: var(--ink); }
+  .chart .hot { cursor: pointer; }
+  .tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--surface); font-size: 12px; line-height: 1.45;
+         padding: 8px 10px; border-radius: 8px; max-width: 320px; opacity: 0; transition: opacity .08s; z-index: 10; }
+  details { margin-top: 12px; font-size: 13px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+  th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--border); }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .empty { color: var(--ink-3); }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .tile .v { font-size: 26px; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .tile .l { color: var(--ink-2); font-size: 13px; }
+  .sub2 { color: var(--ink-3); font-size: 12px; margin: -4px 0 10px; }
+  .vgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .vid { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px 6px; }
+  .vid h3 { margin: 0; font-size: 14px; font-weight: 600; }
+  .vid p { margin: 2px 0 6px; font-size: 12px; color: var(--ink-2); }
+  .vid.thin { opacity: .55; }
+  .vid svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .vid text { fill: var(--ink-3); font-size: 10px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Radar pre-class</h1>
+  <p>Trước buổi học: lớp đang hổng ý kiến thức nào ở phần học trước buổi — số tổng hợp, giảng viên quyết định giảng gì.</p>
+</header>
+<main>
+  <aside class="card">
+    <button class="day all" id="allBtn" aria-pressed="true"><span>Tổng quan khoá</span><small>Day01–13</small></button>
+    <h2>Ngày học</h2>
+    <div class="days" id="days"></div>
+    <form id="ask">
+      <input type="text" id="q" placeholder="Hỏi tự do, vd: Day 3 cần giảng kỹ gì?" autocomplete="off">
+      <button class="go" type="submit">Hỏi</button>
+    </form>
+    <p class="hint">Câu hỏi đi qua cùng luồng với <code>python run.py</code>: chặn yêu cầu ngoài phạm vi, kiểm số, chỉ số tổng hợp.</p>
+  </aside>
+
+  <div class="col" id="overview">
+    <div class="tiles" id="tiles"></div>
+    <section class="card">
+      <h2>Học viên có làm pre-class, theo ngày học</h2>
+      <p class="sub2">Số người có ít nhất 1 hoạt động trên bài của ngày đó / 436 người có hoạt động trên trang. Bấm cột để mở Radar ngày đó.</p>
+      <div class="chart" id="chartPeople"></div>
+    </section>
+    <section class="card">
+      <h2>Video xem tới cuối, theo ngày học</h2>
+      <p class="sub2">Số lượt (học viên, video) xem tới cuối / số lượt mở video của ngày đó.</p>
+      <div class="chart" id="chartVideo"></div>
+      <details><summary>Xem dạng bảng</summary><div id="ovTable"></div></details>
+    </section>
+  </div>
+
+  <div class="col" id="dayview" hidden>
+    <section class="card radar" id="radar"></section>
+    <section class="card" id="chartCard" hidden>
+      <h2 id="chartTitle">Tỉ lệ đúng lần đầu theo ý kiến thức</h2>
+      <div class="key" id="key"></div>
+      <div class="chart" id="chart"></div>
+      <details><summary>Xem dạng bảng</summary><div id="table"></div></details>
+    </section>
+    <section class="card" id="videoCard" hidden>
+      <h2 id="videoTitle">Video của ngày: học viên bỏ ngang và tua qua ở đâu</h2>
+      <p class="sub2" id="videoSub"></p>
+      <div class="key">
+        <span style="--c:var(--bar)">% người xem còn xem khoảng 15 giây đó</span>
+        <span style="--c:var(--weak)">% người xem tua tới qua khoảng đó</span>
+        <span style="--c:var(--ink-3)">┆ câu hỏi bật lên giữa video</span>
+      </div>
+      <div class="vgrid" id="videos"></div>
+    </section>
+  </div>
+</main>
+<div class="tip" id="tip" role="tooltip"></div>
+<script>
+const $ = (id) => document.getElementById(id);
+let CFG = { min_people: 10, weak_pct: 75 }, OV = null, CURRENT = null;
+let SHEET = { output: "", stats: null, videos: [] };
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const dd = (n) => "Day" + String(n).padStart(2, "0");
+const pct = (a, b) => (b ? (a / b) * 100 : 0);
+
+function bindTips(root) {
+  root.querySelectorAll("[data-tip]").forEach((el) => {
+    el.addEventListener("mousemove", (e) => { const t = $("tip"); t.innerHTML = el.dataset.tip; t.style.opacity = 1;
+      t.style.left = Math.min(e.clientX + 14, innerWidth - 330) + "px"; t.style.top = e.clientY + 14 + "px"; });
+    el.addEventListener("mouseleave", () => { $("tip").style.opacity = 0; });
+  });
+}
+
+async function init() {
+  OV = await fetch("/api/overview").then((x) => x.json());
+  CFG = OV;
+  renderDays();
+  $("days").addEventListener("click", (e) => { const b = e.target.closest(".day"); if (b) loadDay(+b.dataset.day); });
+  $("allBtn").addEventListener("click", showOverview);
+  $("ask").addEventListener("submit", (e) => { e.preventDefault(); const t = $("q").value.trim(); if (t) ask(t); });
+  $("key").innerHTML =
+    `<span style="--c:var(--weak)">⚠ dưới ${CFG.weak_pct}% đúng, từ ${CFG.min_people} người — cần nhấn</span>` +
+    `<span style="--c:var(--bar)">từ ${CFG.weak_pct}% trở lên</span>` +
+    `<span style="--c:var(--bar-faint)">dưới ${CFG.min_people} người — chưa đủ để kết luận</span>`;
+  showOverview();
+  addEventListener("resize", () => { if (!$("overview").hidden) drawOverview(); });
+}
+
+function renderDays() {
+  $("days").innerHTML = OV.days.map((d) =>
+    `<button class="day" data-day="${d.ngay}" aria-pressed="false">
+       <span>${dd(d.ngay)}<span class="name">${esc(d.bai.join(", "))}</span></span>
+       <small>${d.hoc_vien} người${d.cached ? '<br><span class="saved">✓ đã lưu</span>' : ""}</small></button>`).join("");
+}
+
+function setActive(day) {
+  $("allBtn").setAttribute("aria-pressed", String(day === null));
+  document.querySelectorAll("#days .day").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.day === day)));
+}
+
+function showOverview() {
+  setActive(null); CURRENT = null;
+  $("overview").hidden = false; $("dayview").hidden = true;
+  drawOverview();
+}
+
+/* ---------- Tổng quan khoá ---------- */
+function drawOverview() {
+  const d = OV.days, first = d[0], last = d[d.length - 1];
+  const hong = d.reduce((a, x) => a + x.so_y_hong, 0), thin = d.filter((x) => x.so_y_du_nguoi === 0).length;
+  const vOpen = d.reduce((a, x) => a + x.video_mo, 0), vEnd = d.reduce((a, x) => a + x.video_xem_het, 0);
+  $("tiles").innerHTML = [
+    [`${first.hoc_vien} → ${last.hoc_vien}`, `người làm pre-class, ${dd(first.ngay)} → ${dd(last.ngay)} (trên ${first.tong})`],
+    [`${Math.round(pct(vEnd, vOpen))}%`, `lượt mở video xem tới cuối (${vEnd}/${vOpen})`],
+    [`${hong}`, `ý kiến thức dưới ${CFG.weak_pct}% đúng lần đầu, đủ ${CFG.min_people} người`],
+    [`${thin}/${d.length}`, `ngày chưa đủ dữ liệu để kết luận (không ý nào ≥ ${CFG.min_people} người)`],
+  ].map(([v, l]) => `<div class="tile"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+
+  columns($("chartPeople"), d.map((x) => ({
+    day: x.ngay, v: pct(x.hoc_vien, x.tong), lab: `${x.hoc_vien}`,
+    tip: `<b>${dd(x.ngay)} · ${esc(x.bai.join(", "))}</b><br>${x.hoc_vien}/${x.tong} người (${pct(x.hoc_vien, x.tong).toFixed(1)}%)<br>` +
+         `${x.so_y_hong} ý dưới ${CFG.weak_pct}% · ${x.so_y_du_nguoi}/${x.so_y} ý đủ ${CFG.min_people} người<br>${x.luot_hoi_ai} lượt hỏi trợ giảng AI`,
+  })), true);
+  columns($("chartVideo"), d.map((x) => ({
+    day: x.ngay, v: pct(x.video_xem_het, x.video_mo), lab: `${Math.round(pct(x.video_xem_het, x.video_mo))}%`,
+    tip: `<b>${dd(x.ngay)}</b><br>${x.video_xem_het}/${x.video_mo} lượt mở xem tới cuối (${pct(x.video_xem_het, x.video_mo).toFixed(1)}%)`,
+  })), false);
+  $("ovTable").innerHTML = `<table><thead><tr><th>Ngày</th><th class="n">Người làm</th><th class="n">Video xem hết</th><th class="n">Ý hổng</th><th class="n">Ý đủ người</th><th class="n">Hỏi AI</th></tr></thead><tbody>` +
+    d.map((x) => `<tr><td>${dd(x.ngay)}</td><td class="n">${x.hoc_vien}/${x.tong}</td><td class="n">${x.video_xem_het}/${x.video_mo}</td><td class="n">${x.so_y_hong}</td><td class="n">${x.so_y_du_nguoi}/${x.so_y}</td><td class="n">${x.luot_hoi_ai}</td></tr>`).join("") +
+    `</tbody></table>`;
+}
+
+function columns(el, rows, clickable) {
+  const W = Math.max(480, el.clientWidth || 700), H = 220, L = 36, R = 6, T = 18, B = 26;
+  const plot = W - L - R, step = plot / rows.length, bw = Math.min(36, step * 0.62);
+  const y = (p) => T + (1 - p / 100) * (H - T - B);
+  let g = "";
+  [0, 25, 50, 75, 100].forEach((p) => {
+    g += `<line x1="${L}" x2="${W - R}" y1="${y(p)}" y2="${y(p)}" stroke="var(--grid)"/>`;
+    g += `<text x="${L - 6}" y="${y(p) + 4}" text-anchor="end">${p}%</text>`;
+  });
+  rows.forEach((r, i) => {
+    const cx = L + step * i + step / 2, top = y(r.v), h = Math.max(2, y(0) - top);
+    g += `<g class="${clickable ? "hot" : ""}" data-day="${r.day}" data-tip="${esc(r.tip)}">
+      <rect x="${cx - step / 2}" y="${T}" width="${step}" height="${H - T}" fill="transparent"/>
+      <path d="M${cx - bw / 2},${y(0)} v-${h - 4} a4,4 0 0 1 4,-4 h${bw - 8} a4,4 0 0 1 4,4 v${h - 4} z" fill="var(--bar)"/>
+      <text class="val" x="${cx}" y="${top - 5}" text-anchor="middle">${r.lab}</text>
+      <text x="${cx}" y="${H - 8}" text-anchor="middle">${String(r.day).padStart(2, "0")}</text>
+    </g>`;
+  });
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img">${g}</svg>`;
+  bindTips(el);
+  if (clickable) el.querySelectorAll(".hot").forEach((n) => n.addEventListener("click", () => loadDay(+n.dataset.day)));
+}
+
+/* ---------- Radar một ngày ---------- */
+async function loadDay(day, refresh) {
+  setActive(day); CURRENT = day;
+  $("overview").hidden = true; $("dayview").hidden = false;
+  show(await call(`/api/radar?day=${day}${refresh ? "&refresh=1" : ""}`));
+  const d = OV.days.find((x) => x.ngay === day);
+  if (d && !d.cached) { d.cached = true; renderDays(); setActive(day); }
+}
+async function ask(text) {
+  setActive(null); CURRENT = null;
+  $("overview").hidden = true; $("dayview").hidden = false;
+  show(await call("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) }));
+}
+async function call(url, opt) {
+  $("radar").innerHTML = '<p class="loading">Đang đọc số và hỏi AI…</p>';
+  $("chartCard").hidden = true; $("videoCard").hidden = true;
+  try { return await fetch(url, opt).then((x) => x.json()); }
+  catch (e) { return { output: "", error: String(e), stats: {}, meta: {} }; }
+}
+
+function renderOutput(text) {
+  let html = "";
+  text.split("\n").forEach((ln, i) => {
+    const t = ln.trim();
+    if (!t) return;
+    if (i === 0 && t.startsWith("Radar")) html += `<p class="head">${esc(t)}</p>`;
+    else if (/^\d+\.\s/.test(t)) html += `<p class="pick"><span class="warn">⚠</span>${esc(t)}</p>`;
+    else if (/^(Ý này là|Vì sao|Gợi ý):/.test(t)) { const [k, ...rest] = t.split(":"); html += `<p class="sub"><b>${esc(k)}:</b>${esc(rest.join(":"))}</p>`; }
+    else if (t.startsWith("Lưu ý:")) html += `<p class="note">${esc(t)}</p>`;
+    else html += `<p class="line">${esc(t)}</p>`;
+  });
+  return html;
+}
+
+function show(r) {
+  const m = r.meta || {}, c = r.cache || {};
+  let meta = "";
+  if (c.hit) meta = `<span class="hit">⚡ Kết quả đã lưu lúc ${esc(c.saved_at)} · không gọi model lần này (0 token)</span>` +
+                    `<button class="ghost" id="refresh">Hỏi lại AI</button>`;
+  else if (m.models) meta = `model: ${esc(m.models.join(", ") || "—")} · gọi model ${m.model_calls} lần · token vào ${m.tokens_in} / ra ${m.tokens_out}`;
+  const s0 = r.stats || {};
+  SHEET = { output: r.output || "", stats: s0.ngay ? s0 : null, videos: [] };
+  const dl = s0.ngay && !r.error ? `<button class="ghost" id="sheet" style="margin-left:0">⬇ Tải phiếu chuẩn bị buổi (.md)</button>` : "";
+  $("radar").innerHTML = r.error ? `<p class="err">Lỗi: ${esc(r.error)}</p>` : renderOutput(r.output || "") + `<p class="meta">${meta}</p>` + dl;
+  if ($("sheet")) $("sheet").addEventListener("click", downloadSheet);
+  if ($("refresh")) $("refresh").addEventListener("click", () => loadDay(CURRENT, true));
+  const s = r.stats || {};
+  if (s.ngay) { if (CURRENT === null) setActive(s.ngay); drawChart(s); loadVideos(s.ngay); }
+}
+
+/* ---------- Phiếu chuẩn bị buổi (.md) — tạo ngay trên trình duyệt, không gửi đi đâu ---------- */
+function downloadSheet() {
+  const s = SHEET.stats; if (!s) return;
+  const now = new Date().toLocaleString("vi-VN");
+  const lines = SHEET.output.split("\n");
+  const note = lines.find((l) => l.startsWith("Lưu ý:")) || "";
+  const body = lines.filter((l) => !l.startsWith("Lưu ý:") && l.trim()).map((l) => {
+    const t = l.trim();
+    if (t.startsWith("Radar pre-class")) return null;
+    if (/^\d+\.\s/.test(t)) return `\n### ${t}`;
+    if (/^(Ý này là|Vì sao|Gợi ý):/.test(t)) { const [k, ...r] = t.split(":"); return `- **${k}:**${r.join(":")}`; }
+    return t.startsWith("- ") ? t : `\n${t}`;
+  }).filter((x) => x !== null).join("\n");
+  const rows = [...s.kc].sort((a, b) => a.ti_le_dung_pct - b.ti_le_dung_pct).map((k) => {
+    const few = k.so_nguoi < CFG.min_people, weak = !few && k.ti_le_dung_pct < CFG.weak_pct;
+    return `| ${weak ? "⚠ " : ""}${k.kc} | ${k.so_dung_lan_dau}/${k.so_lan_tra_loi_dau} | ${k.ti_le_dung_pct}% | ${k.so_nguoi}${few ? " (chưa đủ)" : ""} |`;
+  }).join("\n");
+  const md = `# Phiếu chuẩn bị buổi — ${dd(s.ngay)} (${s.bai.join(", ")})
+
+Tạo lúc ${now} từ Radar pre-class. Giảng viên là người quyết định giảng gì.
+
+## Radar
+${body}
+
+## Tất cả ý kiến thức của ngày (đúng lần đầu)
+
+| Ý kiến thức | Đúng / trả lời | % | Số người |
+|---|---|---|---|
+${rows}
+
+⚠ = dưới ${CFG.weak_pct}% và từ ${CFG.min_people} người trả lời. "(chưa đủ)" = dưới ${CFG.min_people} người, không kết luận.
+
+## Video của ngày
+${SHEET.videos.length ? SHEET.videos.map((v) => `- ${v}`).join("\n") : "- (không có số video)"}
+
+## Ghi chú của giảng viên
+- 
+- 
+
+---
+${note}
+`;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([md], { type: "text/markdown;charset=utf-8" }));
+  a.download = `phieu-chuan-bi-${dd(s.ngay)}.md`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+/* ---------- Video: bỏ ngang / tua qua (số tổng hợp, không gọi model) ---------- */
+const mmss = (t) => `${Math.floor(t / 60)}:${String(Math.round(t % 60)).padStart(2, "0")}`;
+async function loadVideos(day) {
+  const r = await fetch(`/api/videos?day=${day}`).then((x) => x.json());
+  if (CURRENT !== null && CURRENT !== day) return;
+  const vids = r.video || [];
+  $("videoCard").hidden = !vids.length;
+  if (!vids.length) return;
+  const MIN = r.nguoi_xem_toi_thieu, B = r.khoang_giay;
+  $("videoTitle").textContent = `Video ${dd(day)}: học viên bỏ ngang và tua qua ở đâu · ${vids.length} video`;
+  $("videoSub").textContent = `Trên trục ngang là thời gian trong video (mỗi khoảng ${B} giây). Video dưới ${MIN} người xem tô mờ — chưa đủ để kết luận. "Rơi mạnh nhất" không tính khoảng cuối (tắt khi gần hết).`;
+  $("videos").innerHTML = vids.map((v, idx) => videoCardHtml(v, idx, MIN, B)).join("");
+  SHEET.videos = [...$("videos").querySelectorAll(".vid")].map((el) => `${el.querySelector("h3").textContent}: ${el.querySelector("p").textContent}`);
+  bindTips($("videos"));
+}
+function videoCardHtml(v, idx, MIN, B) {
+  const n = v.nguoi_xem, keep = v.giu_chan.map((x) => (x / n) * 100), skip = v.tua_qua.map((x) => (x / n) * 100);
+  let drop = { d: 0, i: -1 };
+  // bỏ khoảng cuối: người xem hay tắt khi gần hết video, không phải bỏ ngang giữa chừng
+  for (let i = 1; i < keep.length - 1; i++) if (keep[i - 1] - keep[i] > drop.d) drop = { d: keep[i - 1] - keep[i], i };
+  let skipTop = { p: 0, i: -1 };
+  skip.forEach((p, i) => { if (p > skipTop.p) skipTop = { p, i }; });
+  const thin = n < MIN, end = keep[keep.length - 1] || 0;
+  const W = 330, H = 120, L = 28, R = 6, T = 8, Bm = 18, pw = W - L - R, ph = H - T - Bm;
+  const bw = pw / keep.length, x = (i) => L + i * bw, y = (p) => T + (1 - p / 100) * ph;
+  let g = "";
+  [0, 50, 100].forEach((p) => { g += `<line x1="${L}" x2="${W - R}" y1="${y(p)}" y2="${y(p)}" stroke="var(--grid)"/><text x="${L - 4}" y="${y(p) + 3}" text-anchor="end">${p}%</text>`; });
+  skip.forEach((p, i) => { if (p > 0) g += `<rect x="${x(i) + 1}" y="${y(p)}" width="${Math.max(1, bw - 2)}" height="${y(0) - y(p)}" rx="2" fill="var(--weak)" opacity=".85"/>`; });
+  (v.cau_hoi || []).forEach((t) => { const qx = L + (t / v.do_dai) * pw; g += `<line x1="${qx}" x2="${qx}" y1="${T}" y2="${y(0)}" stroke="var(--ink-3)" stroke-dasharray="2 2"/>`; });
+  const pts = keep.map((p, i) => `${x(i) + bw / 2},${y(p)}`).join(" ");
+  g += `<polyline points="${pts}" fill="none" stroke="var(--bar)" stroke-width="2" stroke-linejoin="round"/>`;
+  if (drop.i > 0 && !thin) g += `<circle cx="${x(drop.i) + bw / 2}" cy="${y(keep[drop.i])}" r="4" fill="var(--bar)" stroke="var(--surface)" stroke-width="2"/>`;
+  g += `<text x="${L}" y="${H - 4}">0:00</text><text x="${W - R}" y="${H - 4}" text-anchor="end">${mmss(v.do_dai)}</text>`;
+  keep.forEach((p, i) => {
+    const tip = `<b>${mmss(i * B)}–${mmss(Math.min(v.do_dai, (i + 1) * B))}</b><br>Còn xem: ${v.giu_chan[i]}/${n} (${Math.round(p)}%)<br>Tua tới qua: ${v.tua_qua[i]}/${n} (${Math.round(skip[i])}%)`;
+    g += `<rect x="${x(i)}" y="${T}" width="${bw}" height="${ph}" fill="transparent" data-tip="${esc(tip)}"/>`;
+  });
+  const facts = thin ? `${n} người xem — chưa đủ để kết luận` :
+    `${n} người xem · ${v.xem_het}/${n} xem hết · còn ${Math.round(end)}% ở khoảng cuối` +
+    (drop.i > 0 ? ` · rơi mạnh nhất ${mmss((drop.i - 1) * B)}→${mmss(drop.i * B)} (−${Math.round(drop.d)} điểm)` : "") +
+    (skipTop.p >= 10 ? ` · tua qua nhiều nhất ở ${mmss(skipTop.i * B)} (${Math.round(skipTop.p)}%)` : "");
+  return `<div class="vid${thin ? " thin" : ""}"><h3>${esc(v.video)}</h3><p>${facts}</p><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Đường giữ chân người xem của video ${esc(v.video)}">${g}</svg></div>`;
+}
+
+function drawChart(s) {
+  const rows = [...s.kc].sort((a, b) => a.ti_le_dung_pct - b.ti_le_dung_pct || b.so_nguoi - a.so_nguoi);
+  $("chartCard").hidden = false;
+  $("chartTitle").textContent = `Tỉ lệ đúng lần đầu theo ý kiến thức · ${dd(s.ngay)} · ${rows.length} ý`;
+  const W = Math.max(520, $("chart").clientWidth || 700), LABEL = Math.min(270, W * 0.38), RIGHT = 92;
+  const ROW = 26, BAR = 14, TOP = 22, H = TOP + rows.length * ROW + 6;
+  const plot = W - LABEL - RIGHT, x = (p) => LABEL + (p / 100) * plot;
+  let g = "";
+  [0, 25, 50, 75, 100].forEach((p) => {
+    g += `<line x1="${x(p)}" x2="${x(p)}" y1="${TOP - 6}" y2="${H}" stroke="var(--grid)" stroke-width="1"/>`;
+    g += `<text x="${x(p)}" y="${TOP - 10}" text-anchor="middle">${p}%</text>`;
+  });
+  g += `<line x1="${x(CFG.weak_pct)}" x2="${x(CFG.weak_pct)}" y1="${TOP - 6}" y2="${H}" stroke="var(--ink-2)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  rows.forEach((k, i) => {
+    const y = TOP + i * ROW + (ROW - BAR) / 2;
+    const few = k.so_nguoi < CFG.min_people, weak = !few && k.ti_le_dung_pct < CFG.weak_pct;
+    const fill = few ? "var(--bar-faint)" : weak ? "var(--weak)" : "var(--bar)";
+    const w = Math.max(2, x(k.ti_le_dung_pct) - LABEL);
+    const label = k.kc.length > 34 ? k.kc.slice(0, 33) + "…" : k.kc;
+    const tip = `<b>${esc(k.kc)}</b><br>Đúng lần đầu: ${k.so_dung_lan_dau}/${k.so_lan_tra_loi_dau} (${k.ti_le_dung_pct}%)<br>` +
+      `${k.so_nguoi} người trả lời${few ? " — dưới " + CFG.min_people + " người, chưa đủ để kết luận" : ""}` +
+      `${weak ? "<br>⚠ Dưới ngưỡng " + CFG.weak_pct + "%" : ""}`;
+    g += `<g data-tip="${esc(tip)}">
+      <rect x="0" y="${TOP + i * ROW}" width="${W}" height="${ROW}" fill="transparent"/>
+      <text x="${LABEL - 10}" y="${y + BAR - 3}" text-anchor="end">${weak ? "⚠ " : ""}${esc(label)}</text>
+      <path d="M${LABEL},${y} h${w - 4} a4,4 0 0 1 4,4 v${BAR - 8} a4,4 0 0 1 -4,4 h-${w - 4} z" fill="${fill}"/>
+      <text class="val" x="${LABEL + w + 6}" y="${y + BAR - 3}" paint-order="stroke" stroke="var(--surface)" stroke-width="4">${Math.round(k.ti_le_dung_pct)}% · ${k.so_dung_lan_dau}/${k.so_lan_tra_loi_dau}</text>
+    </g>`;
+  });
+  $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Tỉ lệ đúng lần đầu của ${rows.length} ý kiến thức, ${dd(s.ngay)}">${g}</svg>`;
+  bindTips($("chart"));
+  $("table").innerHTML = `<table><thead><tr><th>Ý kiến thức</th><th class="n">Đúng lần đầu</th><th class="n">%</th><th class="n">Số người</th></tr></thead><tbody>` +
+    rows.map((k) => `<tr><td>${esc(k.kc)}</td><td class="n">${k.so_dung_lan_dau}/${k.so_lan_tra_loi_dau}</td><td class="n">${k.ti_le_dung_pct}</td><td class="n">${k.so_nguoi}</td></tr>`).join("") +
+    `</tbody></table>`;
+}
+
+init();
+</script>
+</body>
+</html>

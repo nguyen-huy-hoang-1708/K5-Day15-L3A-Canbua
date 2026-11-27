@@ -16,6 +16,26 @@
 
 **Ngưỡng dùng trong bản chạy thử** (đặt trước khi chạy, trong `codebase/agent.py`): KC cần ≥ 10 người trả lời lần đầu mới được kết luận (G10); "đang hổng" = đúng lần đầu < 75% (75% thấp hơn rõ mức chung 82,9%, xem `evidence/data-mining.md`).
 
+## Dataset 1b · Số tổng hợp xem video — `data/preclass_video_stats.json`
+
+| | |
+|---|---|
+| Dùng để làm gì | Thẻ "Video của ngày: học viên bỏ ngang và tua qua ở đâu" trên giao diện web (`web.py`, `/api/videos`) · bằng chứng ở `evidence/data-mining.md` mục 3. **Không** đưa vào model, không dùng trong `answer()` / eval |
+| Từ đâu | `events.csv` của data BTC: `video_segments_flushed`, `video_seeked`, `video_ended`, `quiz_item_opened` |
+| Xử lý những bước gì | Script `data/build_video_stats.py`: gộp đoạn đã xem của từng học viên theo video → đếm theo khoảng 15 giây: số người còn xem (≥ 50% khoảng), số người tua tới ≥ 15 giây qua khoảng đó; vị trí câu hỏi giữa video. Chỉ giữ số đếm, không giữ mã học viên. Chạy lại: `python data/build_video_stats.py data-btc/preclass` |
+| Số dòng / số đoạn | 79 video (61 video có ≥ 10 người xem) · ~37 KB |
+| Nhãn | thật (số tổng hợp từ log thật) |
+| Giới hạn | "Đã xem" theo log trình phát, có thể lệch khi mất mạng / đổi tab; khoảng cuối video thường thấp vì người xem tắt khi gần hết — giao diện không tính khoảng cuối khi tìm "rơi mạnh nhất"; không biết vì sao người học bỏ ngang |
+
+## Dataset 1c · Bảng thuật ngữ — `data/glossary.json`
+
+| | |
+|---|---|
+| Dùng để làm gì | Công cụ `get_glossary`: đưa nghĩa các cụm thuật ngữ có trong mã ý kiến thức đang hổng vào prompt, để AI giải nghĩa đúng (từ lượt 3) |
+| Từ đâu | Nhóm tự viết từ tên ý kiến thức trong Dataset 1 (47 cụm) |
+| Nhãn | tự viết — **chưa được giảng viên duyệt** (`da_duyet: false`) |
+| Giới hạn | Chỉ phủ các cụm nhóm nghĩ ra; cụm ngoài bảng vẫn có thể bị dịch sai. Cần giảng viên sửa / duyệt trước khi dùng thật |
+
 ## Dataset 2 · Bộ câu thử — `eval/benchmark.csv` + luật chấm `eval/checks.json`
 
 | | |

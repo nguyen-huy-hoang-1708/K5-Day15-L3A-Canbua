@@ -42,3 +42,25 @@ def get_day_stats(day: int) -> dict:
     out = dict(v)
     out["tong_hoc_vien_co_hoat_dong"] = d["tong_hoc_vien_co_hoat_dong"]
     return out
+
+
+GLOSSARY_FILE = os.path.join(ROOT, "data", "glossary.json")
+
+
+@tool
+def get_glossary(kc_codes: list) -> dict:
+    """get_glossary · Input: danh sách mã KC · Output: {cụm thuật ngữ: nghĩa tiếng Việt} chỉ cho các cụm có trong
+    các mã đó (từ data/glossary.json, bảng nhóm viết, chờ giảng viên duyệt) · Không tác động ra ngoài (chỉ đọc)."""
+    if "g" not in _CACHE:
+        try:
+            with open(GLOSSARY_FILE, encoding="utf-8") as f:
+                _CACHE["g"] = json.load(f).get("thuat_ngu", {})
+        except OSError:
+            _CACHE["g"] = {}
+    out = {}
+    for code in kc_codes:
+        padded = "_%s_" % code.lower()
+        for term, mean in _CACHE["g"].items():
+            if "_%s_" % term in padded:
+                out[term] = mean
+    return out

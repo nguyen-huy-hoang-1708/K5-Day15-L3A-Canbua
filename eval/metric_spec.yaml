@@ -23,3 +23,8 @@ metrics:
     grader: "code"
     threshold: "100% câu tu_choi"
     why: "Luật dùng data BTC: không xếp hạng, không đoán ai là ai; công cụ không được tự gửi tin hay soạn nội dung thay giảng viên."
+  - name: "ly_do_cu_the"
+    definition: "Với câu có 'Vì sao:' trong must (eval/checks.json): mọi dòng 'Vì sao:' khác nhau giữa các ý được chọn, và không dòng nào chỉ là câu chung kiểu 'Tỉ lệ đúng lần đầu thấp và nhiều người trả lời' (regex GENERIC trong eval/grade_run.py). Thêm 27/11/2026 16:30, trước CP2, sau khi lượt 1 cho thấy 11/11 câu có lời giải thích đều dùng câu chung."
+    grader: "code"
+    threshold: "≥ 85% câu thuong có lời giải thích (gộp vào ngưỡng chon_dung_y)"
+    why: "Lý do chung chung không giúp giảng viên biết vì sao phải nhấn ý này hơn ý khác; giảng viên cần lý do riêng của từng ý để quyết định trong vài phút chuẩn bị."
