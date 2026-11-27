@@ -151,13 +151,32 @@
 <body>
 <div class="stars"></div>
 
+<!-- Đăng nhập / tạo tài khoản -->
+<section class="center" id="scrAuth" hidden>
+  <div class="glass join">
+    <div class="logo" id="authLogo">🧭</div>
+    <h1 class="title" id="authTitle">MÊ CUNG PRE-CLASS</h1>
+    <p class="tag" id="authTag">Đăng nhập để vào phòng chơi</p>
+    <div class="tabs" id="authTabs" style="justify-content:center"></div>
+    <form id="authForm" autocomplete="on" style="display:grid;gap:10px">
+      <input class="field" id="aUser" placeholder="Tên đăng nhập (vd: an.nguyen)" autocomplete="username" autocapitalize="off">
+      <input class="field" id="aName" placeholder="Họ tên hiển thị trong trò chơi" maxlength="24" hidden>
+      <input class="field" id="aPass" type="password" placeholder="Mật khẩu (ít nhất 6 ký tự)" autocomplete="current-password">
+      <input class="field" id="aPass2" type="password" placeholder="Nhập lại mật khẩu" autocomplete="new-password" hidden>
+      <button class="big" id="authBtn" type="submit">ĐĂNG NHẬP</button>
+    </form>
+    <p class="err" id="authErr"></p>
+    <p class="small" id="authNote"></p>
+  </div>
+</section>
+
 <!-- Vào phòng -->
 <section class="center" id="scrJoin" hidden>
   <div class="glass join">
     <div class="logo">🧭</div>
     <h1 class="title">MÊ CUNG PRE-CLASS</h1>
     <p class="tag">Vượt cửa câu hỏi · nhặt hộp may mắn · thắng mọi cuộc đấu · về đích trước!</p>
-    <input class="field" id="name" maxlength="20" placeholder="Tên của bạn" autocomplete="off">
+    <div class="field" id="hello" style="text-align:center"></div>
     <div class="swatches" id="swatches"></div>
     <button class="big" id="btnJoin">VÀO PHÒNG ▶</button>
     <p class="err" id="joinErr"></p>
@@ -166,7 +185,7 @@
       🎁<b>Hộp may mắn</b> — tăng tốc, khiên, dịch chuyển… hoặc bẫy băng! ⚔️ <b>Gặp người khác</b> — đấu tốc độ 1 câu, thua bị loại.
       🏆 <b>Về đích trước</b> được cộng điểm vào hồ sơ.
     </div>
-    <p class="small">Giảng viên: <a href="?host=1">mở bảng điều khiển</a></p>
+    <p class="small"><a href="#" id="logout1">Đăng xuất</a> · Giảng viên: <a href="?host=1">mở bảng điều khiển</a></p>
   </div>
 </section>
 
@@ -181,6 +200,7 @@
       <button class="go" id="hStart">▶ Bắt đầu ván</button>
       <button id="hNew">↻ Mê cung mới</button>
       <button id="hProfiles">📒 Hồ sơ điểm</button>
+      <button id="hLogout">Đăng xuất</button>
     </div>
   </div>
 </section>
@@ -221,26 +241,76 @@ let PID = sessionStorage.getItem("maze_pid") || null, ROUND = sessionStorage.get
 let MAZE = null, ST = null, myColor = COLORS[Math.floor(Math.random() * COLORS.length)];
 let lastFeedT = 0, explored = new Set(), shown = {}, answeredQ = null, resultShownFor = null;
 
-const api = (p, body) => fetch(p, body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : undefined).then((r) => r.json());
+let TOKEN = sessionStorage.getItem("maze_token") || "", USER = null, AUTH = null, authMode = "login";
+const api = (p, body) => fetch(p, { method: body ? "POST" : "GET",
+  headers: Object.assign({ "X-Token": TOKEN }, body ? { "Content-Type": "application/json" } : {}),
+  body: body ? JSON.stringify(body) : undefined }).then((r) => r.json());
+
+/* ================= tài khoản ================= */
+async function loadMe() {
+  AUTH = await api("/game/api/auth/me");
+  USER = AUTH.user;
+  if (!USER && TOKEN) { TOKEN = ""; sessionStorage.removeItem("maze_token"); }
+}
+function authOk() { return HOST ? !!(USER && USER.role === "giang_vien") : !!(USER && USER.role === "hoc_vien"); }
+function renderAuth() {
+  const modes = HOST ? [["login", "Đăng nhập"]].concat(AUTH && AUTH.can_create_teacher ? [["teacher", "Tạo tài khoản giảng viên"]] : [])
+                     : [["login", "Đăng nhập"], ["register", "Tạo tài khoản"]];
+  if (!modes.some((m) => m[0] === authMode)) authMode = modes[0][0];
+  $("authTabs").innerHTML = modes.length > 1 ? modes.map(([k, l]) => `<button type="button" data-m="${k}" aria-pressed="${k === authMode}">${l}</button>`).join("") : "";
+  $("authTabs").querySelectorAll("button").forEach((b) => b.onclick = () => { authMode = b.dataset.m; $("authErr").textContent = ""; renderAuth(); });
+  const reg = authMode !== "login";
+  $("aName").hidden = !reg; $("aPass2").hidden = !reg;
+  $("aPass").autocomplete = reg ? "new-password" : "current-password";
+  $("authLogo").textContent = HOST ? "🎓" : "🧭";
+  $("authTitle").textContent = HOST ? "BẢNG GIẢNG VIÊN" : "MÊ CUNG PRE-CLASS";
+  $("authTag").textContent = HOST ? "Đăng nhập tài khoản giảng viên để điều khiển ván và xem hồ sơ điểm"
+                                  : reg ? "Tạo tài khoản học viên — điểm sẽ lưu vào hồ sơ của bạn" : "Đăng nhập để vào phòng chơi";
+  $("authBtn").textContent = authMode === "login" ? "ĐĂNG NHẬP" : authMode === "teacher" ? "TẠO TÀI KHOẢN GIẢNG VIÊN" : "TẠO TÀI KHOẢN";
+  let note = "";
+  if (HOST && USER && USER.role !== "giang_vien") note = `Bạn đang đăng nhập bằng tài khoản học viên (${esc(USER.ten)}). <a href="#" id="swOut">Đăng xuất</a> để đổi tài khoản.`;
+  else if (HOST && AUTH && !AUTH.can_create_teacher && !AUTH.has_teacher) note = "Chưa có tài khoản giảng viên. Tạo tài khoản trên chính máy chạy server (mở http://localhost:8000/game?host=1).";
+  else if (HOST && authMode === "teacher") note = "Chỉ tạo được trên máy chạy server. Học viên trong mạng lớp không thấy mục này.";
+  else if (!HOST) note = `<a href="?host=1">Giảng viên đăng nhập ở đây</a>`;
+  $("authNote").innerHTML = note;
+  if ($("swOut")) $("swOut").onclick = (e) => { e.preventDefault(); logout(); };
+}
+$("authForm").onsubmit = async (e) => {
+  e.preventDefault(); $("authErr").textContent = "";
+  const username = $("aUser").value.trim().toLowerCase(), password = $("aPass").value;
+  let r;
+  if (authMode === "login") r = await api("/game/api/auth/login", { username, password });
+  else {
+    if (password !== $("aPass2").value) { $("authErr").textContent = "Hai lần nhập mật khẩu chưa khớp."; return; }
+    r = await api("/game/api/auth/register", { username, password, ten: $("aName").value, role: authMode === "teacher" ? "giang_vien" : "hoc_vien" });
+  }
+  if (r.error) { $("authErr").textContent = r.error; return; }
+  TOKEN = r.token; sessionStorage.setItem("maze_token", TOKEN); $("aPass").value = $("aPass2").value = "";
+  await loadMe(); route();
+};
+async function logout() {
+  await api("/game/api/auth/logout", {});
+  TOKEN = ""; USER = null; PID = null; sessionStorage.removeItem("maze_token"); sessionStorage.removeItem("maze_pid");
+  await loadMe(); route();
+}
 
 /* ================= màn vào phòng ================= */
 function initJoin() {
   $("swatches").innerHTML = COLORS.map((c) => `<button class="sw" style="background:${c};color:${c}" data-c="${c}" aria-pressed="${c === myColor}" aria-label="màu ${c}"></button>`).join("");
   $("swatches").onclick = (e) => { const b = e.target.closest(".sw"); if (!b) return; myColor = b.dataset.c;
     document.querySelectorAll(".sw").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.c === myColor))); };
-  $("btnJoin").onclick = join; $("name").onkeydown = (e) => { if (e.key === "Enter") join(); };
-  $("name").value = localStorage.getItem("maze_name") || "";
+  $("btnJoin").onclick = join;
+  $("logout1").onclick = (e) => { e.preventDefault(); logout(); };
 }
 async function join() {
-  const name = $("name").value.trim();
-  if (!name) { $("joinErr").textContent = "Nhập tên trước đã nhé!"; return; }
-  const r = await api("/game/api/join", { name, color: myColor });
+  const r = await api("/game/api/join", { color: myColor });
   if (r.error) { $("joinErr").textContent = r.error; return; }
-  PID = r.pid; localStorage.setItem("maze_name", name); sessionStorage.setItem("maze_pid", PID);
+  PID = r.pid; sessionStorage.setItem("maze_pid", PID);
 }
 
 /* ================= vòng lặp trạng thái ================= */
 async function poll() {
+  if (!authOk()) { setTimeout(poll, 500); return; }
   try {
     const reqPid = PID;
     const st = await api(`/game/api/state?pid=${reqPid || ""}${HOST ? "&host=1" : ""}`);
@@ -257,6 +327,12 @@ async function poll() {
 }
 
 function route() {
+  if (!AUTH) return;
+  const ok = authOk();
+  $("scrAuth").hidden = ok;
+  if (!ok) { ["scrJoin", "scrLobby", "scrGame", "mQ", "mResult"].forEach((id) => $(id).hidden = true); renderAuth(); return; }
+  if (!ST) return;
+  if (USER && $("hello")) $("hello").innerHTML = `👋 Xin chào <b>${esc(USER.ten)}</b>`;
   const ph = ST.phase;
   const inGame = HOST ? ph !== "lobby" : (PID && ph !== "lobby");
   $("scrJoin").hidden = HOST || !!PID || ph !== "lobby";
@@ -385,12 +461,13 @@ async function newRound() { await api("/game/api/host/new", {}); $("mResult").hi
 $("hStart").onclick = async () => { const r = await api("/game/api/host/start", {}); if (r.error) toast(r.error); };
 $("hNew").onclick = newRound; $("gNew").onclick = newRound;
 $("gEnd").onclick = () => api("/game/api/host/end", {});
-$("hProfiles").onclick = showProfiles; $("gProfiles").onclick = showProfiles;
+$("hProfiles").onclick = showProfiles; $("gProfiles").onclick = showProfiles; $("hLogout").onclick = logout;
 async function showProfiles() {
   const r = await api("/game/api/profiles");
+  if (r.error) { toast(r.error); return; }
   const qs = (ST && ST.qstats) || [];
-  const tabP = `<table><thead><tr><th>Học viên</th><th class="n">Điểm</th><th class="n">Số ván</th><th class="n">Về nhất</th></tr></thead><tbody>` +
-    (r.profiles.map((e) => `<tr><td>${esc(e.ten)}</td><td class="n">${e.diem}</td><td class="n">${e.so_van}</td><td class="n">${e.ve_nhat}</td></tr>`).join("") || `<tr><td colspan="4">Chưa có dữ liệu</td></tr>`) + `</tbody></table>`;
+  const tabP = `<table><thead><tr><th>Học viên (tài khoản)</th><th class="n">Điểm</th><th class="n">Số ván</th><th class="n">Về nhất</th></tr></thead><tbody>` +
+    (r.profiles.map((e) => `<tr><td>${esc(e.ten)} <small style="color:var(--ink3)">${esc(e.tai_khoan || "")}</small></td><td class="n">${e.diem}</td><td class="n">${e.so_van}</td><td class="n">${e.ve_nhat}</td></tr>`).join("") || `<tr><td colspan="4">Chưa có dữ liệu</td></tr>`) + `</tbody></table>`;
   const tabQ = `<table><thead><tr><th>Câu hỏi (ván này)</th><th class="n">Đúng</th><th class="n">Lớp ở pre-class</th></tr></thead><tbody>` +
     (qs.map((q) => `<tr><td>${esc(q.cau)}<br><small style="color:var(--ink3)">${esc(q.kc)}</small></td><td class="n">${q.dung}/${q.hoi}</td><td class="n">${q.lop_pct == null ? "—" : q.lop_pct + "%"}</td></tr>`).join("") || `<tr><td colspan="3">Chưa có câu nào được trả lời</td></tr>`) + `</tbody></table>`;
   $("resBox").innerHTML = `<h1 class="title" style="font-size:24px">📒 HỒ SƠ & THỐNG KÊ</h1>
@@ -472,8 +549,8 @@ function detectEvents() {
   ST.players.forEach((p) => {
     const o = prevSt[p.pid];
     if (o && o.status !== "finished" && p.status === "finished") burst([cx(MAZE.goal[0]), cy(MAZE.goal[1])], COLORS, 70);
-    if (o && o.status !== "out" && p.status === "out") burst([cx(o.x), cy(o.y)], ["#adb5bd", "#868e96", "#fff"], 40);
-    if (o && o.opened < p.opened) burst([cx(p.x), cy(p.y)], ["#9775fa", "#e5dbff", "#fff"], 26);
+    if (o && o.status !== "out" && p.status === "out" && o.x !== null) burst([cx(o.x), cy(o.y)], ["#adb5bd", "#868e96", "#fff"], 40);
+    if (o && o.opened < p.opened && p.x !== null) burst([cx(p.x), cy(p.y)], ["#9775fa", "#e5dbff", "#fff"], 26);
     prevSt[p.pid] = { status: p.status, x: p.x, y: p.y, opened: p.opened };
   });
 }
@@ -544,6 +621,7 @@ function draw(ts) {
   // người chơi
   ST.players.forEach((p) => {
     if (p.status === "lobby") return;
+    if (p.x === null) { delete rp[p.pid]; return; }  // ngoài tầm nhìn (server không gửi vị trí)
     const r = rp[p.pid] || (rp[p.pid] = { x: p.x, y: p.y });
     const k = (p.boost > 0 ? .5 : .32); r.x += (p.x - r.x) * k; r.y += (p.y - r.y) * k;
     if (Math.abs(p.x - r.x) > 3 || Math.abs(p.y - r.y) > 3) { r.x = p.x; r.y = p.y; }
@@ -596,7 +674,7 @@ function shade(hex) { const n = parseInt(hex.slice(1), 16); const f = (v) => Mat
   return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`; }
 
 /* ================= khởi động ================= */
-initJoin(); poll(); inputLoop(); requestAnimationFrame(draw);
+initJoin(); loadMe().then(() => { route(); poll(); }); inputLoop(); requestAnimationFrame(draw);
 new ResizeObserver(layout).observe(cv);
 </script>
 </body>

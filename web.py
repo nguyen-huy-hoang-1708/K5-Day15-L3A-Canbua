@@ -123,6 +123,10 @@ def _run_answer(text):
 
 
 class Handler(BaseHTTPRequestHandler):
+    def _local(self):
+        """Request từ chính máy chạy server (chỉ máy này được tạo tài khoản giảng viên)."""
+        return self.client_address[0] in ("127.0.0.1", "::1")
+
     def _send(self, code, body, ctype="application/json; charset=utf-8"):
         data = body if isinstance(body, bytes) else json.dumps(body, ensure_ascii=False).encode("utf-8")
         self.send_response(code)
@@ -141,7 +145,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self._send(200, f.read(), "text/html; charset=utf-8")
         if u.path.startswith("/game/api/"):
             q = {k: v[0] for k, v in parse_qs(u.query).items()}
-            r = game.handle("GET", u.path, q)
+            r = game.handle("GET", u.path, q, self.headers.get("X-Token"), self._local())
             return self._send(200 if r is not None else 404, r if r is not None else {"error": "không có"})
         if u.path == "/api/days":
             return self._send(200, {"days": list_days(), "min_people": MIN_KC_PEOPLE, "weak_pct": WEAK_PCT})
@@ -166,7 +170,7 @@ class Handler(BaseHTTPRequestHandler):
                 body = json.loads(self.rfile.read(n) or b"{}")
             except ValueError:
                 return self._send(400, {"error": "JSON không hợp lệ"})
-            r = game.handle("POST", path, body if isinstance(body, dict) else {})
+            r = game.handle("POST", path, body if isinstance(body, dict) else {}, self.headers.get("X-Token"), self._local())
             return self._send(200 if r is not None else 404, r if r is not None else {"error": "không có"})
         if path != "/api/ask":
             return self._send(404, {"error": "không có trang này"})

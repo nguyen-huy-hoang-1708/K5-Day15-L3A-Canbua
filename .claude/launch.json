@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["web.py", "8000"],
       "port": 8000
+    },
+    {
+      "name": "radar-web-8001",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["web.py", "8001"],
+      "port": 8001
     }
   ]
 }
