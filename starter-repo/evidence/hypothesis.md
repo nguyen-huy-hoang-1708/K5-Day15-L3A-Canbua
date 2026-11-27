@@ -1,11 +1,10 @@
-# Giả thuyết — viết TRƯỚC khi tìm bằng chứng (5 phút, commit ngay)
+# Giả thuyết
 
-> Điền ở guide bước 1.1. Ôn lại: ngày 2 · lab ngày 2.
-> Viết **trước** khi đọc dòng data đầu tiên hay hỏi người đầu tiên, để không sửa cho khớp kết quả. Kết quả ngược giả thuyết vẫn đủ điểm nếu số là thật.
+> Ghi chú trung thực: giả thuyết này được viết **sau** khi nhóm đã đếm thử vài số trong data pre-class (27/11/2026), không phải trước. Phần cần kiểm bằng phỏng vấn (phía giảng viên) chưa có bằng chứng nào khi viết.
 
-- Ngày giờ viết: __
-- Người dùng chính (một vai cụ thể): __
-- **Mình nghĩ:** [ai] gặp khó khi [việc] vì [lý do], hậu quả là [mất gì].
-- **Có thể còn cách giải thích khác:** __
-- **Mình đúng nếu thấy:** [một con số nhóm tự chọn] — vd "≥2/3 người kể được một lần như thế trong 1 tháng qua" hoặc "≥x/N học viên bỏ ở bước này" *(ví dụ)*
-- **Nguồn sẽ dùng** (≥1 nguồn đạt ngưỡng, guide 1.2): [ ] đào data · [ ] phỏng vấn ≥3 · [ ] khảo sát ≥20 — nguồn chính: __ · nguồn để kiểm lại: __
+- Ngày giờ viết: 27/11/2026
+- Người dùng chính: giảng viên phụ trách buổi LEC lớp L3 (phụ: lab coach buổi LAB)
+- **Mình nghĩ:** giảng viên L3 gặp khó khi chuẩn bị nội dung nhấn mạnh cho buổi học vì không biết lớp đã hổng ý nào ở pre-class, hậu quả là giảng dàn trải hoặc bỏ sót ý đang hổng.
+- **Có thể còn cách giải thích khác:** giảng viên đã xem kết quả pre-class ở chỗ khác (dashboard nội bộ, trợ giảng báo) · hoặc giảng viên không cần vì luôn hỏi nhanh đầu buổi · hoặc vì pre-class chỉ còn ít người làm nên số không có ích.
+- **Mình đúng nếu thấy:** ≥ 2/3 giảng viên / lab coach phỏng vấn kể được một lần trong 1 tháng qua phát hiện lớp hổng một ý mà không biết trước; VÀ trong data có ≥ 5 ý kiến thức (≥ 10 người trả lời) đúng lần đầu < 75%.
+- **Nguồn sẽ dùng:** [x] đào data · [x] phỏng vấn ≥3 · [ ] khảo sát ≥20 — nguồn chính: đào data (`evidence/data-mining.md`) · nguồn để kiểm lại: phỏng vấn giảng viên / lab coach (`evidence/interviews/GUIDE-radar.md`)

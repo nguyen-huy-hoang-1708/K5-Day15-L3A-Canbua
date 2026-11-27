@@ -40,6 +40,6 @@ Khung chỉ dùng thư viện chuẩn của Python. Thêm thư viện thì ghi v
 
 ## Quy ước của nhóm
 
-- Ngôn ngữ trả lời người dùng: __
-- Phong cách code / đặt tên: __
+- Ngôn ngữ trả lời người dùng: tiếng Việt
+- Phong cách code / đặt tên: chỉ thư viện chuẩn; tên biến số liệu tiếng Việt không dấu như trong `data/preclass_day_stats.json`
 - Ai duyệt thay đổi do agent tạo trước khi commit: __

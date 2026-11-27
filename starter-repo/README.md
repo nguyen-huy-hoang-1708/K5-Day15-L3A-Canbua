@@ -1,11 +1,17 @@
 > Đây là khung repo nộp bài. Điền mọi chỗ `____`, giữ nguyên tên các mục. **Mục 0 xoá đi sau khi tạo repo xong.**
 > Giờ, mốc, luật, rubric: xem `README.md`, `02-guide.md`, `03-rubric.md` trong repo đề (bộ đề BTC phát).
 
-# [Tên nhóm] — [Tên lát cắt]
+# Canbua — Radar pre-class trước buổi học
 
 **Thành viên, lớp, track:** xem [TEAMS.md](TEAMS.md). **Điền TEAMS.md đúng format**: khi chấm và đánh giá, BTC quét file này để ghép điểm cho từng người.
 
-*Lát cắt = phần nhỏ nhất làm xong được trong hackathon: một người dùng · một việc · một quyết định AI · một kết quả.*
+**Lát cắt:** giảng viên L3 nhập "Day N" → AI đọc số pre-class theo ý kiến thức của ngày đó → chọn 2–3 ý cần nhấn mạnh kèm x/N, % và lý do → giảng viên nhận bản tóm tắt 1 màn hình (chi tiết: [spec.md](spec.md) §4).
+
+```bash
+python run.py                      # gõ: Day 4 lớp đang hổng ý nào?
+python data/build_aggregate.py ../data/preclass   # (tuỳ chọn) dựng lại số tổng hợp từ data BTC
+python eval/grade_run.py eval/run-1.csv           # chấm bằng code sau khi chạy eval
+```
 
 ---
 
@@ -108,14 +114,16 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Thật** (bắt buộc từ CP3) | Model: ____ |
-|  |  |  |
+| Lời gọi AI ở quyết định trung tâm (chọn ý + lý do) | **Thật** khi `.env` có `MODEL_PROVIDER` (anthropic / openai / gemini / ollama) | Model: ____ |
+| Số liệu pre-class | **Thật** (tổng hợp từ data BTC, `data/preclass_day_stats.json`) | Không tách lớp; Day01–13 khoá 5 |
+| Luật chặn ngoài phạm vi / tấn công | Thật (so khớp từ khoá trong code) | Câu diễn đạt lạ có thể lọt |
+| Gửi tin / sửa dữ liệu | Không có | Ngoài phạm vi |
 
 ## Dùng AI vào việc gì
 
-2–3 dòng (bắt buộc): nhóm dùng công cụ AI nào để làm gì, người kiểm lại phần nào. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
+Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
 
-____
+Nhóm dùng Claude Code để đọc data BTC, viết script đếm, code bản chạy thử, bộ câu thử và bản nháp tài liệu. Nhóm chạy lại mọi script, kiểm số bằng tay và tự phỏng vấn người dùng; chấm `pass` bằng code, không dùng LLM.
 
 ## File mẫu — điền ở bước nào
 

@@ -1,0 +1,1442 @@
+{
+ "nguon": "data/preclass BTC cấp (AI20K khoá 5), 05/11–25/11/2026, Day01–Day13",
+ "tong_hoc_vien_co_hoat_dong": 436,
+ "ngay": {
+  "1": {
+   "ngay": 1,
+   "bai": [
+    "ai-llm-foundation"
+   ],
+   "hoc_vien_co_hoat_dong": 417,
+   "video_mo": 922,
+   "video_xem_het": 244,
+   "luot_hoi_tro_giang_ai": 376,
+   "kc": [
+    {
+     "kc": "chatbot_is_app_around_model",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 41,
+     "so_lan_tra_loi_dau": 41,
+     "so_dung_lan_dau": 25,
+     "ti_le_dung_pct": 61.0
+    },
+    {
+     "kc": "model_tier_selection",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 35,
+     "so_lan_tra_loi_dau": 35,
+     "so_dung_lan_dau": 27,
+     "ti_le_dung_pct": 77.1
+    },
+    {
+     "kc": "ai_boom_data_architecture_hardware",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 40,
+     "so_lan_tra_loi_dau": 40,
+     "so_dung_lan_dau": 32,
+     "ti_le_dung_pct": 80.0
+    },
+    {
+     "kc": "token_generation_loop_count",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 40,
+     "so_lan_tra_loi_dau": 40,
+     "so_dung_lan_dau": 32,
+     "ti_le_dung_pct": 80.0
+    },
+    {
+     "kc": "temperature_stability_not_truth",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 36,
+     "so_lan_tra_loi_dau": 36,
+     "so_dung_lan_dau": 29,
+     "ti_le_dung_pct": 80.6
+    },
+    {
+     "kc": "attention_context_representation",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 36,
+     "so_lan_tra_loi_dau": 36,
+     "so_dung_lan_dau": 29,
+     "ti_le_dung_pct": 80.6
+    },
+    {
+     "kc": "context_keep_table_clean",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 35,
+     "so_lan_tra_loi_dau": 35,
+     "so_dung_lan_dau": 30,
+     "ti_le_dung_pct": 85.7
+    },
+    {
+     "kc": "memory_lives_in_the_app",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 35,
+     "so_lan_tra_loi_dau": 35,
+     "so_dung_lan_dau": 32,
+     "ti_le_dung_pct": 91.4
+    },
+    {
+     "kc": "stop_reason_output_limit",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 36,
+     "so_lan_tra_loi_dau": 36,
+     "so_dung_lan_dau": 33,
+     "ti_le_dung_pct": 91.7
+    },
+    {
+     "kc": "cutoff_and_hallucination",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 35,
+     "so_lan_tra_loi_dau": 35,
+     "so_dung_lan_dau": 33,
+     "ti_le_dung_pct": 94.3
+    },
+    {
+     "kc": "agent_tools_and_loop",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 35,
+     "so_lan_tra_loi_dau": 35,
+     "so_dung_lan_dau": 33,
+     "ti_le_dung_pct": 94.3
+    },
+    {
+     "kc": "token_cost_input_output",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 35,
+     "so_lan_tra_loi_dau": 35,
+     "so_dung_lan_dau": 33,
+     "ti_le_dung_pct": 94.3
+    },
+    {
+     "kc": "token_generation_loop_and_temperature",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 54,
+     "so_lan_tra_loi_dau": 95,
+     "so_dung_lan_dau": 95,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "context_window_budget_and_selection",
+     "bai": "ai-llm-foundation",
+     "so_nguoi": 41,
+     "so_lan_tra_loi_dau": 80,
+     "so_dung_lan_dau": 80,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "2": {
+   "ngay": 2,
+   "bai": [
+    "ai-problem-definition"
+   ],
+   "hoc_vien_co_hoat_dong": 180,
+   "video_mo": 499,
+   "video_xem_het": 189,
+   "luot_hoi_tro_giang_ai": 122,
+   "kc": [
+    {
+     "kc": "complete_ai_problem_statement",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 23,
+     "so_lan_tra_loi_dau": 23,
+     "so_dung_lan_dau": 15,
+     "ti_le_dung_pct": 65.2
+    },
+    {
+     "kc": "construct_eval_plan",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 23,
+     "so_lan_tra_loi_dau": 23,
+     "so_dung_lan_dau": 16,
+     "ti_le_dung_pct": 69.6
+    },
+    {
+     "kc": "select_rule_workflow_agent_level",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 31,
+     "so_lan_tra_loi_dau": 56,
+     "so_dung_lan_dau": 40,
+     "ti_le_dung_pct": 71.4
+    },
+    {
+     "kc": "double_diamond_problem_discovery",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 25,
+     "so_lan_tra_loi_dau": 25,
+     "so_dung_lan_dau": 21,
+     "ti_le_dung_pct": 84.0
+    },
+    {
+     "kc": "output_input_metric_design",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 25,
+     "so_lan_tra_loi_dau": 25,
+     "so_dung_lan_dau": 21,
+     "ti_le_dung_pct": 84.0
+    },
+    {
+     "kc": "evaluate_ai_fit_and_alternatives",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 25,
+     "so_lan_tra_loi_dau": 25,
+     "so_dung_lan_dau": 21,
+     "ti_le_dung_pct": 84.0
+    },
+    {
+     "kc": "make_go_not_yet_no_go_decision",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 24,
+     "so_lan_tra_loi_dau": 46,
+     "so_dung_lan_dau": 39,
+     "ti_le_dung_pct": 84.8
+    },
+    {
+     "kc": "quantify_pain_baseline_target_measurement",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 25,
+     "so_lan_tra_loi_dau": 25,
+     "so_dung_lan_dau": 22,
+     "ti_le_dung_pct": 88.0
+    },
+    {
+     "kc": "design_ai_failure_resilience",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 23,
+     "so_lan_tra_loi_dau": 23,
+     "so_dung_lan_dau": 22,
+     "ti_le_dung_pct": 95.7
+    },
+    {
+     "kc": "problem_first_discovery",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 25,
+     "so_lan_tra_loi_dau": 25,
+     "so_dung_lan_dau": 24,
+     "ti_le_dung_pct": 96.0
+    },
+    {
+     "kc": "define_scope_boundary_and_hitl",
+     "bai": "ai-problem-definition",
+     "so_nguoi": 24,
+     "so_lan_tra_loi_dau": 24,
+     "so_dung_lan_dau": 24,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "3": {
+   "ngay": 3,
+   "bai": [
+    "chatbot-to-agentic-agent"
+   ],
+   "hoc_vien_co_hoat_dong": 154,
+   "video_mo": 387,
+   "video_xem_het": 171,
+   "luot_hoi_tro_giang_ai": 155,
+   "kc": [
+    {
+     "kc": "react_reasoning_acting_pattern",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 18,
+     "so_lan_tra_loi_dau": 18,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "trace_based_agent_evaluation",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 17,
+     "so_lan_tra_loi_dau": 17,
+     "so_dung_lan_dau": 11,
+     "ti_le_dung_pct": 64.7
+    },
+    {
+     "kc": "agentic_fit_scoring_decision",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 31,
+     "so_lan_tra_loi_dau": 45,
+     "so_dung_lan_dau": 33,
+     "ti_le_dung_pct": 73.3
+    },
+    {
+     "kc": "agent_loop_guardrails",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 17,
+     "so_lan_tra_loi_dau": 17,
+     "so_dung_lan_dau": 13,
+     "ti_le_dung_pct": 76.5
+    },
+    {
+     "kc": "agent_architecture_components",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 20,
+     "so_lan_tra_loi_dau": 20,
+     "so_dung_lan_dau": 16,
+     "ti_le_dung_pct": 80.0
+    },
+    {
+     "kc": "agentic_fit_criteria",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 21,
+     "so_lan_tra_loi_dau": 21,
+     "so_dung_lan_dau": 17,
+     "ti_le_dung_pct": 81.0
+    },
+    {
+     "kc": "ai_system_spectrum_classification",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 24,
+     "so_lan_tra_loi_dau": 24,
+     "so_dung_lan_dau": 20,
+     "ti_le_dung_pct": 83.3
+    },
+    {
+     "kc": "well_defined_tool_specification",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 18,
+     "so_lan_tra_loi_dau": 18,
+     "so_dung_lan_dau": 15,
+     "ti_le_dung_pct": 83.3
+    },
+    {
+     "kc": "agent_cost_accuracy_tradeoff",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 17,
+     "so_lan_tra_loi_dau": 17,
+     "so_dung_lan_dau": 15,
+     "ti_le_dung_pct": 88.2
+    },
+    {
+     "kc": "hybrid_chatbot_agent_routing",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 17,
+     "so_lan_tra_loi_dau": 17,
+     "so_dung_lan_dau": 15,
+     "ti_le_dung_pct": 88.2
+    },
+    {
+     "kc": "agent_boundary_condition",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 23,
+     "so_lan_tra_loi_dau": 23,
+     "so_dung_lan_dau": 21,
+     "ti_le_dung_pct": 91.3
+    },
+    {
+     "kc": "react_trace_interpretation",
+     "bai": "chatbot-to-agentic-agent",
+     "so_nguoi": 28,
+     "so_lan_tra_loi_dau": 64,
+     "so_dung_lan_dau": 64,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "4": {
+   "ngay": 4,
+   "bai": [
+    "prompt-engineering-tool-calling"
+   ],
+   "hoc_vien_co_hoat_dong": 145,
+   "video_mo": 434,
+   "video_xem_het": 225,
+   "luot_hoi_tro_giang_ai": 175,
+   "kc": [
+    {
+     "kc": "cot_task_fit",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 27,
+     "so_lan_tra_loi_dau": 27,
+     "so_dung_lan_dau": 16,
+     "ti_le_dung_pct": 59.3
+    },
+    {
+     "kc": "system_prompt_contract",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 27,
+     "so_lan_tra_loi_dau": 27,
+     "so_dung_lan_dau": 18,
+     "ti_le_dung_pct": 66.7
+    },
+    {
+     "kc": "tool_calling_flow",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 26,
+     "so_lan_tra_loi_dau": 26,
+     "so_dung_lan_dau": 20,
+     "ti_le_dung_pct": 76.9
+    },
+    {
+     "kc": "zero_one_few_shot_selection",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 27,
+     "so_lan_tra_loi_dau": 27,
+     "so_dung_lan_dau": 21,
+     "ti_le_dung_pct": 77.8
+    },
+    {
+     "kc": "prompt_scope_types",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 27,
+     "so_lan_tra_loi_dau": 27,
+     "so_dung_lan_dau": 22,
+     "ti_le_dung_pct": 81.5
+    },
+    {
+     "kc": "prompt_evaluation_versioning",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 26,
+     "so_lan_tra_loi_dau": 26,
+     "so_dung_lan_dau": 22,
+     "ti_le_dung_pct": 84.6
+    },
+    {
+     "kc": "reliable_tool_design_principles",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 23,
+     "so_lan_tra_loi_dau": 26,
+     "so_dung_lan_dau": 22,
+     "ti_le_dung_pct": 84.6
+    },
+    {
+     "kc": "tool_granularity",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 25,
+     "so_lan_tra_loi_dau": 25,
+     "so_dung_lan_dau": 22,
+     "ti_le_dung_pct": 88.0
+    },
+    {
+     "kc": "memory_injection",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 26,
+     "so_lan_tra_loi_dau": 26,
+     "so_dung_lan_dau": 23,
+     "ti_le_dung_pct": 88.5
+    },
+    {
+     "kc": "system_prompt_antipatterns",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 38,
+     "so_lan_tra_loi_dau": 66,
+     "so_dung_lan_dau": 59,
+     "ti_le_dung_pct": 89.4
+    },
+    {
+     "kc": "structured_prompting",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 26,
+     "so_lan_tra_loi_dau": 26,
+     "so_dung_lan_dau": 24,
+     "ti_le_dung_pct": 92.3
+    },
+    {
+     "kc": "prompt_quality_specificity",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 27,
+     "so_lan_tra_loi_dau": 27,
+     "so_dung_lan_dau": 26,
+     "ti_le_dung_pct": 96.3
+    },
+    {
+     "kc": "context_window_management",
+     "bai": "prompt-engineering-tool-calling",
+     "so_nguoi": 26,
+     "so_lan_tra_loi_dau": 26,
+     "so_dung_lan_dau": 26,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "5": {
+   "ngay": 5,
+   "bai": [
+    "ai-product-thinking-and-requirement"
+   ],
+   "hoc_vien_co_hoat_dong": 134,
+   "video_mo": 320,
+   "video_xem_het": 144,
+   "luot_hoi_tro_giang_ai": 102,
+   "kc": [
+    {
+     "kc": "ai_product_canvas",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 20.0
+    },
+    {
+     "kc": "feedback_signal_types",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 7,
+     "ti_le_dung_pct": 46.7
+    },
+    {
+     "kc": "ai_uncertainty_layers",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 8,
+     "ti_le_dung_pct": 53.3
+    },
+    {
+     "kc": "human_reviewer_role_design",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 60.0
+    },
+    {
+     "kc": "trust_calibration_levers",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 10,
+     "ti_le_dung_pct": 66.7
+    },
+    {
+     "kc": "threshold_by_error_cost",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 10,
+     "ti_le_dung_pct": 66.7
+    },
+    {
+     "kc": "ai_vs_rule_software_behavior",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 11,
+     "ti_le_dung_pct": 73.3
+    },
+    {
+     "kc": "ai_four_path_behavior",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 12,
+     "ti_le_dung_pct": 80.0
+    },
+    {
+     "kc": "error_distribution_over_aggregate",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 12,
+     "ti_le_dung_pct": 80.0
+    },
+    {
+     "kc": "ai_requirement_outcome_threshold_fallback",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 14,
+     "ti_le_dung_pct": 93.3
+    },
+    {
+     "kc": "confidence_aware_presentation",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 14,
+     "ti_le_dung_pct": 93.3
+    },
+    {
+     "kc": "autonomy_by_confidence_and_error_cost",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 30,
+     "so_lan_tra_loi_dau": 43,
+     "so_dung_lan_dau": 43,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "ai_eval_spec_from_prd",
+     "bai": "ai-product-thinking-and-requirement",
+     "so_nguoi": 15,
+     "so_lan_tra_loi_dau": 15,
+     "so_dung_lan_dau": 15,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "6": {
+   "ngay": 6,
+   "bai": [
+    "data-engineering-for-agents"
+   ],
+   "hoc_vien_co_hoat_dong": 103,
+   "video_mo": 275,
+   "video_xem_het": 137,
+   "luot_hoi_tro_giang_ai": 45,
+   "kc": [
+    {
+     "kc": "label_agreement_beyond_raw_percent",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 1,
+     "ti_le_dung_pct": 14.3
+    },
+    {
+     "kc": "more_data_amplifies_stale_copies",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 8,
+     "so_lan_tra_loi_dau": 8,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 25.0
+    },
+    {
+     "kc": "raw_clean_serve_layers",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 28.6
+    },
+    {
+     "kc": "quasi_identifier_reidentification",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 28.6
+    },
+    {
+     "kc": "batch_rules_beyond_schema",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 42.9
+    },
+    {
+     "kc": "lineage_trace_to_source",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 42.9
+    },
+    {
+     "kc": "storage_by_query_shape",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 57.1
+    },
+    {
+     "kc": "hybrid_search_needs_validity_filter",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 5,
+     "ti_le_dung_pct": 71.4
+    },
+    {
+     "kc": "gate_severity_and_strictness",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 14,
+     "so_dung_lan_dau": 12,
+     "ti_le_dung_pct": 85.7
+    },
+    {
+     "kc": "silent_extraction_failures",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 6,
+     "ti_le_dung_pct": 85.7
+    },
+    {
+     "kc": "fact_ledger_recall_by_doc_type",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 7,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 6,
+     "ti_le_dung_pct": 85.7
+    },
+    {
+     "kc": "silent_data_failure_cascade",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 8,
+     "so_lan_tra_loi_dau": 8,
+     "so_dung_lan_dau": 7,
+     "ti_le_dung_pct": 87.5
+    },
+    {
+     "kc": "document_identity_and_effective_date",
+     "bai": "data-engineering-for-agents",
+     "so_nguoi": 16,
+     "so_lan_tra_loi_dau": 21,
+     "so_dung_lan_dau": 20,
+     "ti_le_dung_pct": 95.2
+    }
+   ]
+  },
+  "7": {
+   "ngay": 7,
+   "bai": [
+    "retrieval-context-engineering"
+   ],
+   "hoc_vien_co_hoat_dong": 86,
+   "video_mo": 222,
+   "video_xem_het": 101,
+   "luot_hoi_tro_giang_ai": 78,
+   "kc": [
+    {
+     "kc": "tool_definition_context_cost",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 40.0
+    },
+    {
+     "kc": "skill_progressive_disclosure",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 5,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "recall_at_k_measurement",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 7,
+     "ti_le_dung_pct": 70.0
+    },
+    {
+     "kc": "memory_supersession_policy",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 7,
+     "ti_le_dung_pct": 70.0
+    },
+    {
+     "kc": "context_window_contents",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 11,
+     "so_lan_tra_loi_dau": 11,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 81.8
+    },
+    {
+     "kc": "chunk_size_tradeoff",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 11,
+     "so_lan_tra_loi_dau": 11,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 81.8
+    },
+    {
+     "kc": "context_packaging_zones",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 90.0
+    },
+    {
+     "kc": "rag_failure_diagnosis_from_log",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 90.0
+    },
+    {
+     "kc": "long_session_context_management",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 90.0
+    },
+    {
+     "kc": "context_budget_allocation",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 12,
+     "so_lan_tra_loi_dau": 16,
+     "so_dung_lan_dau": 15,
+     "ti_le_dung_pct": 93.8
+    },
+    {
+     "kc": "chunk_context_before_indexing",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 11,
+     "so_lan_tra_loi_dau": 19,
+     "so_dung_lan_dau": 18,
+     "ti_le_dung_pct": 94.7
+    },
+    {
+     "kc": "retrieval_pipeline_order",
+     "bai": "retrieval-context-engineering",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 10,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "8": {
+   "ngay": 8,
+   "bai": [
+    "from-workflows-to-agents"
+   ],
+   "hoc_vien_co_hoat_dong": 109,
+   "video_mo": 308,
+   "video_xem_het": 185,
+   "luot_hoi_tro_giang_ai": 106,
+   "kc": [
+    {
+     "kc": "multi_agent_token_cost",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 6,
+     "ti_le_dung_pct": 60.0
+    },
+    {
+     "kc": "workflow_pattern_selection",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 12,
+     "so_lan_tra_loi_dau": 12,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 75.0
+    },
+    {
+     "kc": "workflow_vs_agent_control",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 14,
+     "so_lan_tra_loi_dau": 14,
+     "so_dung_lan_dau": 11,
+     "ti_le_dung_pct": 78.6
+    },
+    {
+     "kc": "gate_before_side_effect",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 12,
+     "so_lan_tra_loi_dau": 12,
+     "so_dung_lan_dau": 10,
+     "ti_le_dung_pct": 83.3
+    },
+    {
+     "kc": "crash_safe_side_effects",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 16,
+     "so_lan_tra_loi_dau": 20,
+     "so_dung_lan_dau": 18,
+     "ti_le_dung_pct": 90.0
+    },
+    {
+     "kc": "multi_agent_task_type_evidence",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 9,
+     "ti_le_dung_pct": 90.0
+    },
+    {
+     "kc": "implicit_decisions_shared_context",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 11,
+     "so_lan_tra_loi_dau": 11,
+     "so_dung_lan_dau": 10,
+     "ti_le_dung_pct": 90.9
+    },
+    {
+     "kc": "multi_agent_fit_signals",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 12,
+     "so_lan_tra_loi_dau": 12,
+     "so_dung_lan_dau": 11,
+     "ti_le_dung_pct": 91.7
+    },
+    {
+     "kc": "simplest_solution_first",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 13,
+     "so_lan_tra_loi_dau": 13,
+     "so_dung_lan_dau": 12,
+     "ti_le_dung_pct": 92.3
+    },
+    {
+     "kc": "agent_shape_selection",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 22,
+     "so_lan_tra_loi_dau": 31,
+     "so_dung_lan_dau": 29,
+     "ti_le_dung_pct": 93.5
+    },
+    {
+     "kc": "task_handoff_contract",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 11,
+     "so_lan_tra_loi_dau": 11,
+     "so_dung_lan_dau": 11,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "checkpoint_resume_semantics",
+     "bai": "from-workflows-to-agents",
+     "so_nguoi": 10,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 10,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "9": {
+   "ngay": 9,
+   "bai": [
+    "evaluation-failure-analysis"
+   ],
+   "hoc_vien_co_hoat_dong": 75,
+   "video_mo": 199,
+   "video_xem_het": 121,
+   "luot_hoi_tro_giang_ai": 64,
+   "kc": [
+    {
+     "kc": "paired_bootstrap_interpretation",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 0,
+     "ti_le_dung_pct": 0.0
+    },
+    {
+     "kc": "pass_at_k_vs_pass_hat_k",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 1,
+     "ti_le_dung_pct": 33.3
+    },
+    {
+     "kc": "behavioral_assertion_over_string",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 66.7
+    },
+    {
+     "kc": "final_state_grading",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 66.7
+    },
+    {
+     "kc": "ci_eval_gate",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 6,
+     "so_dung_lan_dau": 5,
+     "ti_le_dung_pct": 83.3
+    },
+    {
+     "kc": "llm_judge_calibration",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 6,
+     "so_lan_tra_loi_dau": 8,
+     "so_dung_lan_dau": 7,
+     "ti_le_dung_pct": 87.5
+    },
+    {
+     "kc": "eval_number_evidence_checks",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "grader_needs_testing",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "failure_note_first_error",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "failure_taxonomy_process",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "safety_vs_capability_metrics",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "grader_type_selection",
+     "bai": "evaluation-failure-analysis",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "10": {
+   "ngay": 10,
+   "bai": [
+    "poc-to-pilot"
+   ],
+   "hoc_vien_co_hoat_dong": 44,
+   "video_mo": 93,
+   "video_xem_het": 49,
+   "luot_hoi_tro_giang_ai": 5,
+   "kc": [
+    {
+     "kc": "gap_to_gate_condition",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 75.0
+    },
+    {
+     "kc": "gate_components",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 75.0
+    },
+    {
+     "kc": "criteria_signed_before_measuring",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 75.0
+    },
+    {
+     "kc": "pilot_ops_readiness",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 6,
+     "so_dung_lan_dau": 5,
+     "ti_le_dung_pct": 83.3
+    },
+    {
+     "kc": "gate_decision_evidence",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 5,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 6,
+     "ti_le_dung_pct": 85.7
+    },
+    {
+     "kc": "demo_vs_production_gaps",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "confidence_interval_threshold",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "quality_beyond_accuracy",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "red_team_prompt_injection",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "tool_write_permission",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "full_cost_accounting",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "go_no_go_report",
+     "bai": "poc-to-pilot",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "11": {
+   "ngay": 11,
+   "bai": [
+    "guardrails-hitl-responsible-ai"
+   ],
+   "hoc_vien_co_hoat_dong": 43,
+   "video_mo": 100,
+   "video_xem_het": 54,
+   "luot_hoi_tro_giang_ai": 13,
+   "kc": [
+    {
+     "kc": "capability_tags_data_flow",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "asr_utility_approval_metrics",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "obligation_control_evidence",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "falsifiable_control_evidence",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "approval_screen_from_exact_action",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 75.0
+    },
+    {
+     "kc": "idempotent_resume_after_approval",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 75.0
+    },
+    {
+     "kc": "deterministic_decision_procedure",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 5,
+     "so_lan_tra_loi_dau": 7,
+     "so_dung_lan_dau": 6,
+     "ti_le_dung_pct": 85.7
+    },
+    {
+     "kc": "lethal_trifecta",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 6,
+     "so_lan_tra_loi_dau": 10,
+     "so_dung_lan_dau": 10,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "blast_radius_of_agent_actions",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "untrusted_input_channels",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "exfiltration_channels",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "deterministic_security_boundary",
+     "bai": "guardrails-hitl-responsible-ai",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "12": {
+   "ngay": 12,
+   "bai": [
+    "ai-sdlc-coding-agent"
+   ],
+   "hoc_vien_co_hoat_dong": 26,
+   "video_mo": 48,
+   "video_xem_het": 23,
+   "luot_hoi_tro_giang_ai": 0,
+   "kc": [
+    {
+     "kc": "reading_productivity_claims",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 1,
+     "ti_le_dung_pct": 33.3
+    },
+    {
+     "kc": "instructions_vs_enforcement",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "harness_around_model",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 66.7
+    },
+    {
+     "kc": "hook_exit_code_fail_closed",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 66.7
+    },
+    {
+     "kc": "ai_coding_bottleneck_shift",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "spec_as_contract",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "requirement_traceability",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "agent_tests_need_independent_oracle",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "mutation_score_vs_coverage",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "parallel_agents_review_bottleneck",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "software_factory_ci_decides",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "coding_agent_threat_model",
+     "bai": "ai-sdlc-coding-agent",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  },
+  "13": {
+   "ngay": 13,
+   "bai": [
+    "launch-economics"
+   ],
+   "hoc_vien_co_hoat_dong": 50,
+   "video_mo": 93,
+   "video_xem_het": 33,
+   "luot_hoi_tro_giang_ai": 18,
+   "kc": [
+    {
+     "kc": "cost_per_successful_task",
+     "bai": "launch-economics",
+     "so_nguoi": 2,
+     "so_lan_tra_loi_dau": 2,
+     "so_dung_lan_dau": 0,
+     "ti_le_dung_pct": 0.0
+    },
+    {
+     "kc": "event_schema_before_metrics",
+     "bai": "launch-economics",
+     "so_nguoi": 2,
+     "so_lan_tra_loi_dau": 2,
+     "so_dung_lan_dau": 0,
+     "ti_le_dung_pct": 0.0
+    },
+    {
+     "kc": "launch_decision_go_conditions",
+     "bai": "launch-economics",
+     "so_nguoi": 1,
+     "so_lan_tra_loi_dau": 1,
+     "so_dung_lan_dau": 0,
+     "ti_le_dung_pct": 0.0
+    },
+    {
+     "kc": "economic_risk_register_rows",
+     "bai": "launch-economics",
+     "so_nguoi": 1,
+     "so_lan_tra_loi_dau": 1,
+     "so_dung_lan_dau": 0,
+     "ti_le_dung_pct": 0.0
+    },
+    {
+     "kc": "adoption_vs_outcome_metrics",
+     "bai": "launch-economics",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 1,
+     "ti_le_dung_pct": 33.3
+    },
+    {
+     "kc": "bounded_retry_cost",
+     "bai": "launch-economics",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 2,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "cluster_design_effect",
+     "bai": "launch-economics",
+     "so_nguoi": 2,
+     "so_lan_tra_loi_dau": 2,
+     "so_dung_lan_dau": 1,
+     "ti_le_dung_pct": 50.0
+    },
+    {
+     "kc": "cost_lever_sensitivity",
+     "bai": "launch-economics",
+     "so_nguoi": 5,
+     "so_lan_tra_loi_dau": 5,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 80.0
+    },
+    {
+     "kc": "value_case_baseline_pricing",
+     "bai": "launch-economics",
+     "so_nguoi": 4,
+     "so_lan_tra_loi_dau": 4,
+     "so_dung_lan_dau": 4,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "pair_error_taxonomy",
+     "bai": "launch-economics",
+     "so_nguoi": 3,
+     "so_lan_tra_loi_dau": 3,
+     "so_dung_lan_dau": 3,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "graceful_failure_recovery",
+     "bai": "launch-economics",
+     "so_nguoi": 1,
+     "so_lan_tra_loi_dau": 1,
+     "so_dung_lan_dau": 1,
+     "ti_le_dung_pct": 100.0
+    },
+    {
+     "kc": "pilot_with_control_group",
+     "bai": "launch-economics",
+     "so_nguoi": 1,
+     "so_lan_tra_loi_dau": 1,
+     "so_dung_lan_dau": 1,
+     "ti_le_dung_pct": 100.0
+    }
+   ]
+  }
+ }
+}

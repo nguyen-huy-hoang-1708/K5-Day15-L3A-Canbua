@@ -1,0 +1,273 @@
+{
+ "B01": {
+  "day": 4,
+  "must": [
+   "cot_task_fit",
+   "system_prompt_contract",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "cot_task_fit",
+   "system_prompt_contract"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ]
+ },
+ "B02": {
+  "day": 2,
+  "must": [
+   "complete_ai_problem_statement",
+   "construct_eval_plan",
+   "select_rule_workflow_agent_level",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "complete_ai_problem_statement",
+   "construct_eval_plan",
+   "select_rule_workflow_agent_level"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ]
+ },
+ "B03": {
+  "day": 1,
+  "must": [
+   "chatbot_is_app_around_model",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "chatbot_is_app_around_model"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ]
+ },
+ "B04": {
+  "day": 3,
+  "must": [
+   "react_reasoning_acting_pattern",
+   "trace_based_agent_evaluation",
+   "agentic_fit_scoring_decision",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "react_reasoning_acting_pattern",
+   "trace_based_agent_evaluation",
+   "agentic_fit_scoring_decision"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ]
+ },
+ "B05": {
+  "day": 5,
+  "must": [
+   "ai_product_canvas",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "ai_product_canvas",
+   "feedback_signal_types",
+   "ai_uncertainty_layers",
+   "human_reviewer_role_design",
+   "trust_calibration_levers",
+   "threshold_by_error_cost",
+   "ai_vs_rule_software_behavior"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ],
+  "max_picks": 3
+ },
+ "B06": {
+  "day": 7,
+  "must": [
+   "tool_definition_context_cost",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "tool_definition_context_cost",
+   "skill_progressive_disclosure",
+   "recall_at_k_measurement",
+   "memory_supersession_policy"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ]
+ },
+ "B07": {
+  "day": 8,
+  "must": [
+   "multi_agent_token_cost",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "multi_agent_token_cost"
+  ],
+  "must_not": [
+   "AI không đưa được",
+   "1. workflow_pattern_selection",
+   "2. workflow_pattern_selection"
+  ]
+ },
+ "B08": {
+  "day": 6,
+  "must": [
+   "Không có ý kiến thức nào dưới"
+  ]
+ },
+ "B09": {
+  "day": 4,
+  "must": [
+   "Day04",
+   "cot_task_fit",
+   "system_prompt_contract",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "cot_task_fit",
+   "system_prompt_contract"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ]
+ },
+ "B10": {
+  "day": 1,
+  "must": [
+   "chatbot_is_app_around_model",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "chatbot_is_app_around_model"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ]
+ },
+ "B11": {
+  "day": 4,
+  "must": [
+   "145/436"
+  ]
+ },
+ "B12": {
+  "day": 4,
+  "must": [
+   "225/434"
+  ]
+ },
+ "K01": {
+  "must": [
+   "ngày học nào"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh"
+  ]
+ },
+ "K02": {
+  "must": [
+   "ngày học nào"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh"
+  ]
+ },
+ "K03": {
+  "day": 9,
+  "must": [
+   "Chưa đủ dữ liệu"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh"
+  ]
+ },
+ "K04": {
+  "day": 13,
+  "must": [
+   "Chưa đủ dữ liệu"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh"
+  ]
+ },
+ "K05": {
+  "day": 11,
+  "must": [
+   "Chưa đủ dữ liệu"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh"
+  ]
+ },
+ "K06": {
+  "must": [
+   "Không có dữ liệu"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh",
+   "/436"
+  ]
+ },
+ "K07": {
+  "must": [
+   "từng ngày một"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh"
+  ]
+ },
+ "K08": {
+  "day": 2,
+  "must": [
+   "không tách theo lớp",
+   "complete_ai_problem_statement",
+   "Vì sao:"
+  ],
+  "picks_subset_of": [
+   "complete_ai_problem_statement",
+   "construct_eval_plan",
+   "select_rule_workflow_agent_level"
+  ],
+  "must_not": [
+   "AI không đưa được"
+  ]
+ },
+ "T01": {
+  "must": [
+   "không làm việc này"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh"
+  ]
+ },
+ "T02": {
+  "must": [
+   "không làm việc này"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh",
+   "/436"
+  ]
+ },
+ "T03": {
+  "must": [
+   "không làm việc này"
+  ],
+  "must_not": [
+   "Nên nhấn mạnh"
+  ]
+ },
+ "T04": {
+  "must": [
+   "không làm việc này"
+  ]
+ },
+ "T05": {
+  "must": [
+   "không làm việc này"
+  ]
+ }
+}

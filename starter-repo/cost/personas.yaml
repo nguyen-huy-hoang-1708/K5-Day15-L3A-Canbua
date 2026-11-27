@@ -1,52 +1,48 @@
-# Mô phỏng chi phí khi dùng thật — điền ở guide bước 4.2.
-# Ôn lại: ngày 13, ngày 1, ngày 14 · lab ngày 13, lab ngày 14.
-# Mọi số phải có nguồn (data / phỏng vấn / khảo sát / quy mô khoá có nguồn) hoặc ghi rõ "(tự ước tính)".
-# Chạy: python run.py simulate --try   (10 phiên, kiểm khung — làm trước CP3)
-#       python run.py simulate         (đủ số phiên dưới đây — bản nộp CP4)
-# Thay mọi dòng "(ví dụ)" bằng số và nguồn của nhóm; simulate nhắc nếu còn sót.
+# Mô phỏng chi phí khi dùng thật — Radar pre-class cho giảng viên / lab coach / ban đào tạo.
+# Chạy: python run.py simulate --try (10 phiên) · python run.py simulate (đủ 50 phiên — bản nộp CP4)
+# Người dùng là ĐỘI DẠY, không phải học viên → quy mô nhỏ (vài chục người / khoá).
 
-sessions: 50        # số phiên mô phỏng — bản nộp ≥50
-seed: 42            # giữ cố định để chạy lại ra cùng chuỗi phiên
+sessions: 50
+seed: 42
 
-users:              # số người dùng thật nếu đưa vào dùng — 3 kịch bản, ở quy mô thật của sản phẩm
-                    # track A: khoá học · track B–F: người dùng của sản phẩm / nhóm nhắm tới, nguồn công khai có link
-  low: 300
-  base: 700
-  high: 1000
-  source: "(ví dụ) track A — thay bằng số của nhóm. Cơ sở: lớp L3 hơn 700 học viên (README hackathon); thấp, cao: (tự ước tính)"
+users:              # số người trong đội dạy một khoá AI20K
+  low: 22
+  base: 50
+  high: 92
+  source: "data/training-ops README (BTC cấp, người là giả lập nhưng cấu trúc theo bảng thật): 22 giảng viên · 8 hỗ trợ · 62 lab coach. Thấp = chỉ giảng viên (22); cao = giảng viên + hỗ trợ + lab coach (92); cơ sở 50 (tự ước tính: giảng viên + khoảng một nửa lab coach dùng thật)"
 
-personas:           # ≥3 kiểu người dùng; share cộng lại = 1
-  - name: dung_it
-    share: 0.5              # tỉ lệ người dùng kiểu này
-    uses_per_month: 4       # số phiên / người / tháng
-    turns_per_session: 1    # số lượt hỏi trong một phiên
-    source: "(ví dụ) phỏng vấn P1, P3 — thay bằng nguồn của nhóm"
-  - name: dung_vua
-    share: 0.3
-    uses_per_month: 10
-    turns_per_session: 3
-    source: "(ví dụ) khảo sát n = 24, câu 3"
-  - name: dung_nhieu
-    share: 0.2
+personas:
+  - name: giang_vien_lec
+    share: 0.4
+    uses_per_month: 6
+    turns_per_session: 2
+    source: "training-ops/teaching-schedule.xlsx sheet Dang_ky_chi_tiet: 204 lượt đăng ký / 32 người ≈ 6 buổi / người / khoá ~1 tháng (README training-ops); 2 lượt hỏi / phiên (tự ước tính: hỏi ngày + hỏi lại 1 ý)"
+  - name: lab_coach
+    share: 0.5
+    uses_per_month: 4
+    turns_per_session: 1
+    source: "(tự ước tính) lab coach xem trước ca LAB, ít hơn giảng viên; cần kiểm bằng phỏng vấn lab coach"
+  - name: ban_dao_tao
+    share: 0.1
     uses_per_month: 20
-    turns_per_session: 5
-    source: "(ví dụ) data/preclass: đếm số lượt / người — cách đếm ở evidence/data-mining.md"
-# Mỗi lượt hỏi lấy ngẫu nhiên một đầu vào trong eval/benchmark.csv (type thuong và kho).
-# Persona hỏi kiểu riêng: thêm vào persona đó
-#     types: [thuong, kho, tu_choi]
-# hoặc
-#     inputs: ["câu hỏi kiểu 1", "câu hỏi kiểu 2"]
+    turns_per_session: 3
+    types: [thuong, kho, tu_choi]
+    source: "(tự ước tính) ban đào tạo xem mọi ngày học có lớp (21 ngày học / khoá theo README training-ops), hỏi 3 ngày / phiên"
 
-prices:             # USD / 1 triệu token — chép từ further-reading/model-prices.md của repo đề. ≥2 mức model
-  - model: gemini-3.1-flash-lite
-    input: 0.25
-    output: 1.50
-    source: "(ví dụ) https://ai.google.dev/gemini-api/docs/pricing · xem 25/11/2026"
-  - model: gemini-4-hydrogen
-    input: 1.50
-    output: 7.50
-    source: "(ví dụ) https://ai.google.dev/gemini-api/docs/pricing · xem 25/11/2026"
+prices:             # USD / 1 triệu token
+  - model: claude-haiku-5-5
+    input: 0.10
+    output: 0.50
+    source: "Bảng giá Claude API (Anthropic), Claude Haiku 5.5, bảng giá lưu ngày 03/11/2026 · xem 27/11/2026"
+  - model: claude-sonnet-5-5
+    input: 2.00
+    output: 10.00
+    source: "Bảng giá Claude API (Anthropic), Claude Sonnet 5.5, bảng giá lưu ngày 03/11/2026 · xem 27/11/2026"
+  - model: claude-opus-5-5
+    input: 4.00
+    output: 20.00
+    source: "Bảng giá Claude API (Anthropic), Claude Opus 5.5, bảng giá lưu ngày 03/11/2026 · xem 27/11/2026"
 
-usd_to_vnd:         # tuỳ chọn: điền thì bản tóm tắt in thêm tiền Việt
+usd_to_vnd:
   rate:
   source:
