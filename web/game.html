@@ -26,27 +26,26 @@
   @keyframes drift { to { background-position: 420px 840px; } }
 
   /* ---------- màn vào phòng ---------- */
-  .center { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; }
+  .center { position: fixed; inset: 0; display: grid; place-items: center; padding: 18px; overflow-y: auto; }
   .glass { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; backdrop-filter: blur(14px);
            box-shadow: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08); }
-  .join { width: min(460px, 100%); padding: 30px 30px 26px; text-align: center; }
-  .logo { width: 84px; height: 84px; margin: -72px auto 8px; border-radius: 24px; display: grid; place-items: center; font-size: 44px;
+  .join { width: min(560px, 100%); padding: 30px 30px 26px; text-align: center; }
+  .logo { width: 84px; height: 84px; margin: -62px auto 8px; border-radius: 24px; display: grid; place-items: center; font-size: 44px;
           background: linear-gradient(135deg, #845ef7, #22b8cf); box-shadow: 0 12px 40px rgba(132, 94, 247, .6); animation: bob 3s ease-in-out infinite; }
+  .lobby .logo { width: 58px; height: 58px; margin: 0 auto 6px; border-radius: 18px; font-size: 30px; }
   @keyframes bob { 50% { transform: translateY(-6px) rotate(-4deg); } }
   h1.title { margin: 6px 0 2px; font-size: 30px; letter-spacing: .02em;
              background: linear-gradient(90deg, #ffd43b, #ff8787, #cc5de8, #4dabf7); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .tag { color: var(--ink2); margin: 0 0 20px; }
+  .tag { color: var(--ink2); margin: 0 0 18px; }
   .field { width: 100%; padding: 13px 16px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.06);
            color: var(--ink); font: inherit; font-size: 17px; outline: none; text-align: center; }
   .field:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(59, 201, 219, .2); }
   .swatches { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 16px 0 20px; }
   .sw { width: 30px; height: 30px; border-radius: 50%; border: 3px solid transparent; transition: transform .15s; }
   .sw[aria-pressed="true"] { border-color: #fff; transform: scale(1.15); box-shadow: 0 0 14px currentColor; }
-  .big { width: 100%; padding: 14px; border: 0; border-radius: 14px; color: #1a1040; font-weight: 800; font-size: 17px; letter-spacing: .02em;
+  button.big { width: 100%; padding: 14px; border: 0; border-radius: 14px; color: #1a1040; font-weight: 800; font-size: 17px; letter-spacing: .02em;
          background: linear-gradient(90deg, #ffd43b, #ffa94d); box-shadow: 0 10px 30px rgba(255, 169, 77, .35); transition: transform .1s; }
-  .big:active { transform: translateY(2px); }
-  .big.alt { background: linear-gradient(90deg, #63e6be, #3bc9db); box-shadow: 0 10px 30px rgba(59, 201, 219, .3); }
-  .big.danger { background: linear-gradient(90deg, #ff8787, #f06595); color: #fff; }
+  button.big:active { transform: translateY(2px); }
   .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0 6px; }
   .role { display: grid; justify-items: center; gap: 4px; padding: 18px 12px; border-radius: 16px; border: 2px solid var(--line);
           background: rgba(255,255,255,.05); color: var(--ink); transition: transform .12s, border-color .15s, background .15s; }
@@ -57,25 +56,49 @@
   #hvForm { display: grid; gap: 10px; margin-top: 14px; }
   #hvForm .swatches { margin: 4px 0 6px; }
   .err { color: var(--bad); min-height: 22px; margin: 10px 0 0; font-size: 14px; }
-  .rules { text-align: left; margin: 18px 0 0; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.05); color: var(--ink2); font-size: 13px; }
-  .rules b { color: var(--ink); }
+  .rules { text-align: left; margin: 18px 0 0; padding: 14px; border-radius: 16px; background: rgba(255,255,255,.045); border: 1px solid var(--line); }
+  .rules-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .rules-head span { font-size: 11.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--ink3); }
+  .keys-row { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--ink2); }
+  .kbd { display: inline-grid; place-items: center; min-width: 22px; height: 21px; padding: 0 5px; border-radius: 6px;
+         background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-bottom-width: 2px;
+         font-size: 10.5px; font-weight: 700; color: var(--ink); font-family: ui-monospace, Consolas, monospace; }
+  .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media (max-width: 520px) { .rules-grid { grid-template-columns: 1fr; } }
+  .rule-item { display: flex; align-items: flex-start; gap: 9px; padding: 9px 10px; border-radius: 12px;
+               background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); }
+  .rule-ic { width: 32px; height: 32px; border-radius: 9px; flex: none; display: grid; place-items: center; font-size: 16px;
+             background: rgba(255,255,255,.08); }
+  .rule-item.r-gate .rule-ic { background: rgba(204,93,232,.22); }
+  .rule-item.r-fog .rule-ic { background: rgba(59,201,219,.2); }
+  .rule-item.r-box .rule-ic { background: rgba(255,212,59,.2); }
+  .rule-item.r-duel .rule-ic { background: rgba(247,131,172,.22); }
+  .rule-item b { display: block; font-size: 12.8px; color: var(--ink); margin-bottom: 1px; }
+  .rule-item p { margin: 0; font-size: 11.8px; line-height: 1.4; color: var(--ink2); }
   .small { color: var(--ink3); font-size: 12px; margin-top: 12px; }
   .small a { color: var(--cyan); }
 
   /* ---------- sảnh chờ ---------- */
-  .lobby { width: min(620px, 100%); padding: 28px; text-align: center; }
-  .avatars { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 20px 0; min-height: 90px; }
+  .lobby { width: min(640px, 100%); padding: 26px; text-align: center; }
+  .avatars { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 16px 0 18px; min-height: 84px; }
   .av { display: grid; justify-items: center; gap: 6px; animation: pop .35s cubic-bezier(.2,1.6,.4,1); }
   .av .dot { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 22px; color: #fff;
              box-shadow: 0 6px 20px rgba(0,0,0,.35), inset 0 -6px 0 rgba(0,0,0,.18), inset 0 4px 0 rgba(255,255,255,.25); border: 3px solid rgba(255,255,255,.85); }
   .av span { font-size: 13px; color: var(--ink2); max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   @keyframes pop { from { transform: scale(.3); opacity: 0; } }
+  .map-picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0 0 14px; }
+  .map-btn { padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.06);
+             color: var(--ink2); font-size: 12px; font-weight: 650; transition: background .15s, border-color .15s; }
+  .map-btn:hover { background: rgba(255,255,255,.12); color: var(--ink); }
+  .map-btn[aria-pressed="true"] { background: rgba(59,201,219,.2); border-color: rgba(59,201,219,.6); color: #e3fafc; }
+  .map-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px;
+               background: rgba(255,255,255,.07); border: 1px solid var(--line); font-size: 12.5px; color: var(--ink2); font-weight: 600; margin-bottom: 10px; }
   .pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--good); margin-right: 8px; animation: blink 1.2s infinite; }
   @keyframes blink { 50% { opacity: .25; } }
 
   /* ---------- màn chơi ---------- */
-  .game { position: fixed; inset: 0; display: grid; grid-template-columns: 1fr 300px; gap: 14px; padding: 14px; }
-  @media (max-width: 900px) { .game { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } .side { max-height: 30vh; } }
+  .game { position: fixed; inset: 0; display: grid; grid-template-columns: 1fr 310px; gap: 14px; padding: 14px; }
+  @media (max-width: 900px) { .game { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } .side { max-height: 32vh; } }
   .stage { position: relative; min-width: 0; min-height: 0; display: grid; grid-template-rows: auto 1fr; gap: 10px; }
   .hud { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .pill { padding: 7px 12px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); font-weight: 650; font-size: 14px; display: inline-flex; gap: 6px; align-items: center; }
@@ -87,19 +110,67 @@
   .canvasWrap { position: relative; min-height: 0; border-radius: 22px; overflow: hidden; }
   canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .side { display: grid; grid-template-rows: auto auto 1fr; gap: 12px; min-height: 0; }
-  .card { padding: 14px 16px; }
-  .card h3 { margin: 0 0 10px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); }
-  .plist { display: grid; gap: 7px; }
-  .pr { display: flex; align-items: center; gap: 9px; font-size: 14px; }
-  .pr i { width: 18px; height: 18px; border-radius: 50%; flex: none; border: 2px solid rgba(255,255,255,.8); }
-  .pr .n { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .pr.out { opacity: .4; text-decoration: line-through; }
-  .pr .st { font-size: 12px; color: var(--ink3); white-space: nowrap; }
-  .feed { overflow: auto; display: grid; gap: 6px; align-content: start; font-size: 13px; color: var(--ink2); }
-  .feed div { padding: 6px 9px; border-radius: 9px; background: rgba(255,255,255,.04); animation: slide .3s ease-out; }
-  .feed .luck { border-left: 3px solid var(--gold); } .feed .duel { border-left: 3px solid var(--pink); }
-  .feed .big { border-left: 3px solid var(--cyan); color: var(--ink); } .feed .bad { border-left: 3px solid var(--bad); }
-  @keyframes slide { from { transform: translateX(14px); opacity: 0; } }
+  .card { padding: 14px 15px; border-radius: 18px; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .card h3 { margin: 0; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); font-weight: 700; }
+  .card-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(255,255,255,.08); color: var(--ink2); border: 1px solid var(--line); }
+  .card-badge.live { background: rgba(81,207,102,.14); color: #69db7c; border-color: rgba(81,207,102,.32); display: inline-flex; align-items: center; gap: 5px; }
+  .card-badge.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #51cf66; animation: blink 1.3s infinite; }
+
+  .host-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .host-grid button {
+    padding: 8px 10px; border-radius: 11px; border: 1px solid var(--line);
+    background: rgba(255,255,255,.07); color: var(--ink); font-size: 12.8px; font-weight: 650;
+    transition: background .15s, border-color .15s, transform .08s;
+  }
+  .host-grid button:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.24); }
+  .host-grid button:active { transform: translateY(1px); }
+  .host-grid button.btn-end { background: rgba(255,107,107,.14); border-color: rgba(255,107,107,.32); color: #ffc9c9; }
+  .host-grid button.btn-end:hover { background: rgba(255,107,107,.24); }
+  .host-grid button.btn-chart {
+    grid-column: 1 / -1;
+    background: linear-gradient(90deg, rgba(59,201,219,.22), rgba(132,94,247,.26));
+    border-color: rgba(99,230,190,.35); color: #e6fcf5; padding: 9px 12px;
+  }
+  .host-grid button.btn-chart:hover { filter: brightness(1.12); border-color: rgba(99,230,190,.6); }
+
+  .plist { display: grid; gap: 6px; max-height: 22vh; overflow-y: auto; padding-right: 2px; }
+  .pr {
+    display: flex; align-items: center; gap: 9px; font-size: 13.5px;
+    padding: 6px 9px; border-radius: 11px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.06);
+  }
+  .pr .pav {
+    width: 24px; height: 24px; border-radius: 50%; flex: none;
+    display: grid; place-items: center; font-size: 11.5px; font-weight: 800; color: #fff;
+    border: 2px solid rgba(255,255,255,.8); box-shadow: 0 2px 8px rgba(0,0,0,.28);
+  }
+  .pr .n { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; color: var(--ink); }
+  .pr.out { opacity: .45; }
+  .pr.out .n { text-decoration: line-through; }
+  .pr .st {
+    font-size: 11.2px; font-weight: 650; padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    background: rgba(255,255,255,.07); color: var(--ink2); border: 1px solid rgba(255,255,255,.08);
+  }
+  .pr .st.st-playing { background: rgba(81,207,102,.13); color: #8ce99a; border-color: rgba(81,207,102,.28); }
+  .pr .st.st-question { background: rgba(151,117,250,.18); color: #d0bfff; border-color: rgba(151,117,250,.35); }
+  .pr .st.st-duel { background: rgba(247,131,172,.18); color: #fcc2d7; border-color: rgba(247,131,172,.38); }
+  .pr .st.st-finished { background: rgba(255,212,59,.18); color: #ffe066; border-color: rgba(255,212,59,.4); }
+  .pr .st.st-out { background: rgba(255,107,107,.14); color: #ffa8a8; border-color: rgba(255,107,107,.3); }
+  .pr .acc { font-size: 11px; font-weight: 700; color: #63e6be; margin-left: 2px; }
+
+  .feed { overflow-y: auto; display: grid; gap: 6px; align-content: start; font-size: 12.6px; line-height: 1.45; color: var(--ink2); padding-right: 2px; }
+  .feed div {
+    padding: 7px 10px; border-radius: 10px; background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.05); border-left: 3px solid rgba(185,182,230,.35);
+    animation: slide .25s ease-out; font-size: 12.6px; font-weight: 500;
+  }
+  .feed .luck { border-left-color: var(--gold); background: rgba(255,212,59,.07); color: #fff3bf; }
+  .feed .duel { border-left-color: var(--pink); background: rgba(247,131,172,.08); color: #ffdeeb; }
+  .feed .big { border-left-color: var(--cyan); background: rgba(59,201,219,.09); color: var(--ink); font-weight: 600; }
+  .feed .bad { border-left-color: var(--bad); background: rgba(255,107,107,.08); color: #ffc9c9; }
+  .plist::-webkit-scrollbar, .feed::-webkit-scrollbar { width: 5px; }
+  .plist::-webkit-scrollbar-thumb, .feed::-webkit-scrollbar-thumb { background: rgba(255,255,255,.16); border-radius: 99px; }
+  @keyframes slide { from { transform: translateX(10px); opacity: 0; } }
   .hostbar { display: flex; gap: 8px; flex-wrap: wrap; }
   .hostbar button { padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,.08); color: var(--ink); font-weight: 650; }
   .hostbar button.go { background: linear-gradient(90deg, #ffd43b, #ffa94d); color: #1a1040; border: 0; }
@@ -118,7 +189,7 @@
   .qhead .s { font-weight: 700; }
   .timer { height: 8px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; margin: 0 0 18px; }
   .timer > div { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #63e6be, #ffd43b, #ff6b6b); background-size: 300% 100%; transition: width .2s linear; }
-  .qtext { font-size: 21px; font-weight: 700; margin: 0 0 18px; line-height: 1.35; }
+  .qtext { font-size: 17.5px; font-weight: 700; margin: 0 0 16px; line-height: 1.45; white-space: pre-line; max-height: 36vh; overflow-y: auto; }
   .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   @media (max-width: 560px) { .opts { grid-template-columns: 1fr; } }
   .opt { text-align: left; padding: 14px 14px 14px 52px; position: relative; border-radius: 14px; border: 1px solid var(--line); color: var(--ink);
@@ -141,34 +212,62 @@
   .toast div { padding: 10px 16px; border-radius: 14px; background: rgba(20, 24, 64, .92); border: 1px solid var(--line); font-weight: 650; box-shadow: 0 10px 30px rgba(0,0,0,.4); animation: drop .35s cubic-bezier(.2,1.5,.4,1); }
   @keyframes drop { from { transform: translateY(-20px); opacity: 0; } }
 
-  .result { width: min(560px, 100%); padding: 28px; text-align: center; }
-  .result .huge { font-size: 64px; margin: -10px 0 4px; }
-  .podium { display: flex; justify-content: center; align-items: flex-end; gap: 12px; margin: 22px 0 10px; }
+  /* ---------- kết quả & thống kê biểu đồ mức độ ---------- */
+  .result { width: min(740px, 96vw); max-height: 90vh; overflow-y: auto; padding: 26px; text-align: center; }
+  .result .huge { font-size: 56px; margin: -8px 0 4px; }
+  .podium { display: flex; justify-content: center; align-items: flex-end; gap: 12px; margin: 18px 0 10px; }
   .podium .col { display: grid; justify-items: center; gap: 8px; width: 110px; }
   .podium .blk { width: 100%; border-radius: 14px 14px 6px 6px; display: grid; place-items: center; font-size: 28px; font-weight: 900; color: #1a1040; }
-  .podium .p1 .blk { height: 120px; background: linear-gradient(180deg, #ffe066, #fab005); }
-  .podium .p2 .blk { height: 90px; background: linear-gradient(180deg, #e9ecef, #adb5bd); }
-  .podium .p3 .blk { height: 70px; background: linear-gradient(180deg, #ffc078, #e8590c); }
+  .podium .p1 .blk { height: 108px; background: linear-gradient(180deg, #ffe066, #fab005); }
+  .podium .p2 .blk { height: 82px; background: linear-gradient(180deg, #e9ecef, #adb5bd); }
+  .podium .p3 .blk { height: 64px; background: linear-gradient(180deg, #ffc078, #e8590c); }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th, td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+  th, td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: left; }
   td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
-  .tabs { display: flex; gap: 6px; margin-bottom: 10px; }
-  .tabs button { padding: 6px 10px; border-radius: 9px; border: 1px solid var(--line); background: transparent; color: var(--ink2); font-size: 12px; }
-  .tabs button[aria-pressed="true"] { background: rgba(255,255,255,.12); color: var(--ink); }
+  .tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .tabs button { padding: 6px 12px; border-radius: 9px; border: 1px solid var(--line); background: transparent; color: var(--ink2); font-size: 12.5px; font-weight: 600; }
+  .tabs button[aria-pressed="true"] { background: rgba(99,230,190,.18); border-color: rgba(99,230,190,.45); color: var(--ink); }
+
+  .an-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; text-align: center; }
+  .an-kpi { background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 12px; padding: 9px 8px; }
+  .an-kpi small { display: block; font-size: 11px; color: var(--ink3); margin-bottom: 2px; }
+  .an-kpi strong { display: block; font-size: 20px; font-weight: 800; line-height: 1.2; }
+  .an-kpi span { font-size: 11px; color: var(--ink2); }
+  .an-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; text-align: left; }
+  @media (max-width: 680px) { .an-grid { grid-template-columns: 1fr; } }
+  .an-box { background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+  .an-title { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--ink2); margin-bottom: 8px; }
+  .donut-wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .legend { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--ink2); }
+  .legend-item { display: flex; align-items: center; gap: 7px; }
+  .legend-item .dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .qbar-item { margin-top: 8px; text-align: left; font-size: 12.5px; }
+  .qbar-head { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; color: var(--ink2); }
+  .qbar-track { height: 8px; background: rgba(255,255,255,.1); border-radius: 99px; overflow: hidden; }
+  .qbar-fill { height: 100%; border-radius: 99px; }
+  .mini-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; text-align: center; }
+  .mini-kpi { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09); border-radius: 11px; padding: 7px 4px; }
+  .mini-kpi small { display: block; font-size: 10px; color: var(--ink3); margin-bottom: 2px; }
+  .mini-kpi strong { font-size: 14.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .mini-prog { margin-top: 8px; }
+  .mini-prog-head { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--ink3); margin-bottom: 4px; }
+  .mini-prog-track { position: relative; height: 6px; background: rgba(255,255,255,.1); border-radius: 99px; overflow: hidden; }
+  .mini-prog-fill { height: 100%; border-radius: 99px; transition: width .3s ease; }
+  .mini-prog-mark { position: absolute; left: 75%; top: 0; bottom: 0; width: 2px; background: rgba(255,212,59,.85); }
 </style>
 </head>
 <body>
 <div class="stars"></div>
 
-<!-- Chọn vai trò (không cần đăng nhập) -->
+<!-- Chọn vai trò -->
 <section class="center" id="scrAuth" hidden>
-  <div class="glass join" style="width:min(560px,100%)">
+  <div class="glass join">
     <div class="logo">🧭</div>
     <h1 class="title">MÊ CUNG PRE-CLASS</h1>
     <p class="tag">Vượt cửa câu hỏi · nhặt hộp may mắn · thắng mọi cuộc đấu · về đích trước!</p>
     <div class="roles">
       <button class="role" id="roleHv"><span class="ri">🧑‍🎓</span><b>Học viên</b><small>Vào mê cung, vượt câu hỏi, về đích</small></button>
-      <button class="role" id="roleGv"><span class="ri">🎓</span><b>Giảng viên</b><small id="gvNote">Điều khiển ván, xem hồ sơ điểm</small></button>
+      <button class="role" id="roleGv"><span class="ri">🎓</span><b>Giảng viên</b><small id="gvNote">Điều khiển ván, xem biểu đồ &amp; hồ sơ</small></button>
     </div>
     <div id="hvForm" hidden>
       <input class="field" id="aName" maxlength="24" placeholder="Tên của bạn (hiện trong trò chơi)" autocomplete="off">
@@ -177,10 +276,30 @@
     </div>
     <p class="err" id="authErr"></p>
     <div class="rules">
-      <b>Luật chơi:</b> dùng phím mũi tên / WASD để đi. 🚪<b>Cửa "?"</b> — trả lời đúng mới qua, sai bị giữ 3 giây.
-      🎁<b>Hộp may mắn</b> — tăng tốc, khiên, dịch chuyển… hoặc bẫy băng! ⚔️ <b>Gặp người khác</b> — đấu tốc độ 1 câu, thua bị loại.
-      🏆 <b>Về đích trước</b> được cộng điểm vào hồ sơ.
+      <div class="rules-head">
+        <span>Hướng dẫn chơi</span>
+        <div class="keys-row">Di chuyển: <span class="kbd">W</span><span class="kbd">A</span><span class="kbd">S</span><span class="kbd">D</span> hoặc <span class="kbd">↑↓←→</span></div>
+      </div>
+      <div class="rules-grid">
+        <div class="rule-item r-fog">
+          <div class="rule-ic">🔦</div>
+          <div><b>Tầm nhìn bóng tối</b><p>Vùng chưa tới tối đen hoàn toàn — tự dò tìm đích 🏁 ẩn ngẫu nhiên.</p></div>
+        </div>
+        <div class="rule-item r-gate">
+          <div class="rule-ic">🚪</div>
+          <div><b>Cửa câu hỏi (?)</b><p>Trả lời đúng để mở đường; sai hoặc hết giờ bị giữ 4 giây.</p></div>
+        </div>
+        <div class="rule-item r-box">
+          <div class="rule-ic">🎁</div>
+          <div><b>Hộp may mắn</b><p>Nhận ⚡ tăng tốc, 🛡 khiên vượt cửa, 🌀 dịch chuyển hoặc 🧊 bẫy băng.</p></div>
+        </div>
+        <div class="rule-item r-duel">
+          <div class="rule-ic">⚔️</div>
+          <div><b>Đấu tốc độ 1v1</b><p>Chạm mặt người chơi khác sẽ đấu 1 câu — ai đúng trước đi tiếp.</p></div>
+        </div>
+      </div>
     </div>
+    <p class="small"><a href="/">← Về trang chính Canbua</a></p>
   </div>
 </section>
 
@@ -190,11 +309,25 @@
     <div class="logo">⏳</div>
     <h1 class="title" id="lobbyTitle">PHÒNG CHỜ</h1>
     <p class="tag"><span class="pulse"></span><span id="lobbyMsg">Chờ giảng viên bấm bắt đầu…</span></p>
+    <p id="lobbyFocus" hidden style="margin:-8px 0 10px; font-size:13px; color:#63e6be; font-weight:650;"></p>
+    <div id="lobbyMapBadge" class="map-badge" hidden></div>
+    <div id="lobbyMaps" class="map-picker" hidden></div>
+    <div id="lobbyShare" hidden style="display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:0 0 14px; padding:10px 14px; border-radius:14px; background:rgba(255,255,255,.06); border:1px solid var(--line);">
+      <img id="lobbyQr" width="96" height="96" alt="QR Mê cung" style="background:#fff; padding:4px; border-radius:10px; display:block;" />
+      <div style="text-align:left; max-width:340px;">
+        <div style="font-size:11.5px; color:var(--ink3); text-transform:uppercase; letter-spacing:.08em;">Quét QR hoặc gửi link cho học viên</div>
+        <div id="lobbyShareUrl" style="font-size:13px; color:#63e6be; word-break:break-all; margin:4px 0 8px; font-weight:600;"></div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="hCopyGame" style="padding:5px 10px; border-radius:8px; border:1px solid var(--line); background:rgba(255,255,255,.1); color:#fff; font-size:12.5px; font-weight:600;">📋 Copy link Mê cung</button>
+          <a href="/" style="padding:5px 10px; border-radius:8px; border:1px solid var(--line); color:var(--cyan); font-size:12.5px; text-decoration:none;">← Về Canbua</a>
+        </div>
+      </div>
+    </div>
     <div class="avatars" id="avatars"></div>
     <div class="hostbar" id="lobbyHost" hidden style="justify-content:center">
       <button class="go" id="hStart">▶ Bắt đầu ván</button>
       <button id="hNew">↻ Mê cung mới</button>
-      <button id="hProfiles">📒 Hồ sơ điểm</button>
+      <button id="hProfiles">📊 Biểu đồ &amp; Hồ sơ</button>
       <button id="hLogout">⇄ Đổi vai trò</button>
     </div>
   </div>
@@ -215,11 +348,31 @@
   </div>
   <aside class="side">
     <div class="glass card" id="hostCard" hidden>
-      <h3>Giảng viên</h3>
-      <div class="hostbar"><button id="gEnd">⏹ Kết thúc ván</button><button id="gNew">↻ Ván mới</button><button id="gProfiles">📒 Hồ sơ điểm</button></div>
+      <div class="card-head">
+        <h3>Giảng viên</h3>
+        <span class="card-badge live">Trực tiếp</span>
+      </div>
+      <div class="host-grid">
+        <button id="gEnd" class="btn-end">⏹ Kết thúc</button>
+        <button id="gNew">↻ Ván mới</button>
+        <button id="gProfiles" class="btn-chart">📊 Biểu đồ &amp; Hồ sơ</button>
+      </div>
+      <div id="hostMiniStats"></div>
     </div>
-    <div class="glass card"><h3 id="plTitle">Người chơi</h3><div class="plist" id="plist"></div></div>
-    <div class="glass card" style="min-height:0;display:grid;grid-template-rows:auto 1fr"><h3>Diễn biến</h3><div class="feed" id="feed"></div></div>
+    <div class="glass card">
+      <div class="card-head">
+        <h3>Người chơi</h3>
+        <span class="card-badge" id="plCount">0</span>
+      </div>
+      <div class="plist" id="plist"></div>
+    </div>
+    <div class="glass card" style="min-height:0; display:grid; grid-template-rows:auto 1fr;">
+      <div class="card-head">
+        <h3>Diễn biến</h3>
+        <span class="card-badge" id="feedCount">0</span>
+      </div>
+      <div class="feed" id="feed"></div>
+    </div>
   </aside>
 </section>
 
@@ -230,20 +383,23 @@
 <script>
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-let HOST = false;  // giảng viên = người chọn vai trò Giảng viên
+let HOST = false;
 const COLORS = ["#ff6b6b", "#4dabf7", "#51cf66", "#fcc419", "#cc5de8", "#ff922b", "#22b8cf", "#f06595", "#94d82d", "#845ef7", "#20c997", "#fab005"];
 let PID = sessionStorage.getItem("maze_pid") || null, ROUND = sessionStorage.getItem("maze_round") || null;
 let MAZE = null, ST = null, myColor = COLORS[Math.floor(Math.random() * COLORS.length)];
 let lastFeedT = 0, explored = new Set(), shown = {}, answeredQ = null, resultShownFor = null;
 
 let TOKEN = sessionStorage.getItem("maze_token") || "", USER = null, AUTH = null;
+const URL_PARAMS = new URLSearchParams(location.search);
+const HOST_KEY = URL_PARAMS.get("hk") || "";
+const WANT_HOST = URL_PARAMS.get("host") === "1";
 const api = (p, body) => fetch(p, { method: body ? "POST" : "GET",
   headers: Object.assign({ "X-Token": TOKEN }, body ? { "Content-Type": "application/json" } : {}),
   body: body ? JSON.stringify(body) : undefined }).then((r) => r.json());
 
 /* ================= chọn vai trò ================= */
 async function loadMe() {
-  AUTH = await api("/game/api/auth/me");
+  AUTH = await api(`/game/api/auth/me${HOST_KEY ? "?hk=" + encodeURIComponent(HOST_KEY) : ""}`);
   USER = AUTH.user;
   if (!USER && TOKEN) { TOKEN = ""; sessionStorage.removeItem("maze_token"); }
   HOST = !!(USER && USER.role === "giang_vien");
@@ -251,12 +407,12 @@ async function loadMe() {
 function authOk() { return !!USER && (HOST || !!PID); }
 function renderAuth() {
   $("roleGv").disabled = !(AUTH && AUTH.can_teach);
-  $("gvNote").textContent = $("roleGv").disabled ? "Chỉ chọn được trên máy chạy trò chơi" : "Điều khiển ván, xem hồ sơ điểm";
+  $("gvNote").textContent = $("roleGv").disabled ? "Chỉ chọn được trên máy giảng viên (localhost hoặc mở từ Canbua)" : "Điều khiển ván, xem biểu đồ & hồ sơ";
   if (USER && USER.role === "hoc_vien") { showHv(); if (!$("aName").value) $("aName").value = USER.ten; }
 }
 function showHv() { $("hvForm").hidden = false; $("roleHv").setAttribute("aria-pressed", "true"); $("roleGv").setAttribute("aria-pressed", "false"); }
 async function setRole(role, ten) {
-  const r = await api("/game/api/auth/role", { role, ten });
+  const r = await api("/game/api/auth/role", { role, ten, hk: HOST_KEY || undefined });
   if (r.error) { $("authErr").textContent = r.error; return false; }
   TOKEN = r.token; sessionStorage.setItem("maze_token", TOKEN); await loadMe(); return true;
 }
@@ -297,11 +453,11 @@ async function poll() {
       if (ROUND && ROUND !== st.round && !HOST && !st.me) { PID = null; sessionStorage.removeItem("maze_pid"); }
       ROUND = st.round; sessionStorage.setItem("maze_round", ROUND);
     }
-    if (reqPid && reqPid === PID && !st.me) { PID = null; sessionStorage.removeItem("maze_pid"); }  // mã cũ hết hạn
-    if (PID && PID !== reqPid) { setTimeout(poll, 0); return; }  // vừa vào phòng: hỏi lại ngay với mã mới
-    ST = st; route();
-  } catch (e) { /* mất kết nối tạm thời: thử lại */ }
-  setTimeout(poll, 160);
+    if (reqPid && reqPid === PID && !st.me) { PID = null; sessionStorage.removeItem("maze_pid"); }
+    if (PID && PID !== reqPid) { setTimeout(poll, 0); return; }
+    ST = st; syncPredFromServer(); route();
+  } catch (e) {}
+  setTimeout(poll, ST && ST.phase === "playing" ? 280 : 450);
 }
 
 function route() {
@@ -317,10 +473,62 @@ function route() {
 }
 
 /* ================= sảnh chờ ================= */
+let SHARE_GAME_URL = "";
+async function loadGameShareUrl() {
+  try {
+    const st = await fetch("/api/status").then((r) => r.json());
+    const localHost = ["127.0.0.1", "localhost", "0.0.0.0"].includes(location.hostname);
+    const origin = !localHost ? location.origin : (st.public_url || st.lan_url || location.origin);
+    SHARE_GAME_URL = `${origin}/game`;
+    const qr = $("lobbyQr"), uEl = $("lobbyShareUrl");
+    if (qr) qr.src = `/api/qr?text=${encodeURIComponent(SHARE_GAME_URL)}`;
+    if (uEl) uEl.textContent = SHARE_GAME_URL;
+  } catch (_) {}
+}
+if ($("hCopyGame")) $("hCopyGame").onclick = () => {
+  const u = SHARE_GAME_URL || `${location.origin}/game`;
+  navigator.clipboard.writeText(u);
+  toast("Đã copy link Mê cung: " + u);
+};
+
 function renderLobby() {
   $("lobbyHost").hidden = !HOST;
+  $("lobbyShare").hidden = !HOST;
+  if (HOST && !SHARE_GAME_URL) loadGameShareUrl();
   $("lobbyTitle").textContent = HOST ? "PHÒNG CHỜ · GIẢNG VIÊN" : "PHÒNG CHỜ";
-  $("lobbyMsg").textContent = HOST ? `${ST.players.length} người đã vào · học viên mở ${location.host}/game` : "Chờ giảng viên bấm bắt đầu…";
+  const foc = ST.focus;
+  if (foc && foc.approved && foc.kc_code) {
+    $("lobbyFocus").hidden = false;
+    $("lobbyFocus").textContent = `🎯 Chủ đề đã duyệt: ${foc.day ? "Ngày " + foc.day + " · " : ""}${foc.topic || foc.kc_code} (${foc.custom_count} câu hỏi)`;
+  } else {
+    $("lobbyFocus").hidden = true;
+  }
+  if (ST.map_name) {
+    $("lobbyMapBadge").hidden = false;
+    $("lobbyMapBadge").textContent = `🗺 Bản đồ: ${ST.map_name} · Đích ẩn ngẫu nhiên`;
+  } else {
+    $("lobbyMapBadge").hidden = true;
+  }
+  const mapEl = $("lobbyMaps");
+  if (HOST && ST.maps && ST.maps.length) {
+    mapEl.hidden = false;
+    const pref = ST.map_pref || "random";
+    const mHtml = [{ id: "random", name: "🎲 Ngẫu nhiên" }, ...ST.maps].map((m) =>
+      `<button class="map-btn" data-m="${esc(m.id)}" aria-pressed="${m.id === pref}">${esc(m.name)}</button>`
+    ).join("");
+    if (mapEl.dataset.h !== mHtml) {
+      mapEl.innerHTML = mHtml;
+      mapEl.dataset.h = mHtml;
+      mapEl.querySelectorAll(".map-btn").forEach((b) => b.onclick = async () => {
+        const r = await api("/game/api/host/map", { map: b.dataset.m });
+        if (r.error) toast(r.error);
+        else toast("Đã chuyển bản đồ: " + (r.map_name || b.textContent));
+      });
+    }
+  } else {
+    mapEl.hidden = true;
+  }
+  $("lobbyMsg").textContent = HOST ? `${ST.players.length} học viên đã vào phòng` : "Chờ giảng viên bấm bắt đầu…";
   const html = ST.players.map((p) => `<div class="av"><div class="dot" style="background:${p.color}">${esc(p.name[0].toUpperCase())}</div><span>${esc(p.name)}${p.pid === PID ? " (bạn)" : ""}</span></div>`).join("")
     || `<p style="color:var(--ink3)">Chưa có ai…</p>`;
   if ($("avatars").dataset.h !== html) { $("avatars").innerHTML = html; $("avatars").dataset.h = html; }
@@ -332,6 +540,7 @@ function renderGame() {
   const me = ST.me, mine = me && ST.players.find((p) => p.pid === PID);
   const t = Math.floor(ST.elapsed), tm = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
   let hud = `<span class="pill">⏱ ${tm}</span>`;
+  if (ST.map_name) hud += `<span class="pill">🗺 ${esc(ST.map_name)}</span>`;
   if (mine) {
     hud += `<span class="pill me"><i style="background:${mine.color}"></i>${esc(mine.name)}</span><span class="pill">🚪 ${mine.opened} cửa</span>`;
     if (me.shield) hud += `<span class="pill fx">🛡 ${me.shield}</span>`;
@@ -343,15 +552,24 @@ function renderGame() {
   hud += `<span class="grow"></span><span class="pill">🧍 ${alive} còn trong mê cung</span>`;
   if ($("hud").dataset.h !== hud) { $("hud").innerHTML = hud; $("hud").dataset.h = hud; }
   $("hostCard").hidden = !HOST;
+  if (HOST && ST.analytics) renderHostMiniStats(ST.analytics);
 
   const order = [...ST.players].sort((a, b) => (a.rank || 99) - (b.rank || 99) || (a.status === "out") - (b.status === "out"));
-  const pl = order.map((p) => `<div class="pr ${p.status === "out" ? "out" : ""}"><i style="background:${p.color}"></i><span class="n">${esc(p.name)}${p.pid === PID ? " (bạn)" : ""}</span>` +
-    `<span class="st">${p.rank ? `#${p.rank} · +${p.points}` : STATUS[p.status] || ""}</span></div>`).join("");
+  const pl = order.map((p) => {
+    const ans = (p.correct || 0) + (p.wrong || 0);
+    const acc = HOST && ans > 0 ? `<span class="acc">${Math.round((p.correct / ans) * 100)}%</span>` : "";
+    const stCls = p.rank ? "st-finished" : ("st-" + (p.status || "playing"));
+    return `<div class="pr ${p.status === "out" ? "out" : ""}">` +
+      `<span class="pav" style="background:${p.color}">${esc(p.name[0].toUpperCase())}</span>` +
+      `<span class="n">${esc(p.name)}${p.pid === PID ? " (bạn)" : ""}</span>${acc}` +
+      `<span class="st ${stCls}">${p.rank ? `#${p.rank} · +${p.points}` : (STATUS[p.status] || "")}</span></div>`;
+  }).join("");
   if ($("plist").dataset.h !== pl) { $("plist").innerHTML = pl; $("plist").dataset.h = pl; }
-  $("plTitle").textContent = `Người chơi · ${ST.players.length}`;
+  $("plCount").textContent = `${ST.players.length} HV`;
 
   const fd = [...ST.feed].reverse().map((f) => `<div class="${f.kind}">${esc(f.text)}</div>`).join("");
   if ($("feed").dataset.h !== fd) { $("feed").innerHTML = fd; $("feed").dataset.h = fd; }
+  $("feedCount").textContent = `${ST.feed.length}`;
   const first = lastFeedT === 0;
   ST.feed.forEach((f) => { if (f.t > lastFeedT) { if (!first && ["luck", "duel", "big"].includes(f.kind)) toast(f.text); lastFeedT = f.t; } });
   if (first && !ST.feed.length) lastFeedT = ST.now;
@@ -384,7 +602,7 @@ function renderModal() {
       : `<div class="qhead"><div class="ic">🚪</div><div><div class="t">Cửa câu hỏi</div><div class="s">Trả lời đúng để mở cửa</div></div></div>`;
     $("qBox").innerHTML = head + `<div class="timer"><div id="qBar"></div></div><p class="qtext">${esc(q.cau)}</p>` +
       `<div class="opts">${q.lua_chon.map((o, i) => `<button class="opt" data-i="${i}"><b>${"ABCD"[i]}</b>${esc(o)}</button>`).join("")}</div>` +
-      `<p class="note" id="qNote">Phím 1–4 để chọn nhanh · câu hỏi bản nháp, chờ giảng viên duyệt</p>`;
+      `<p class="note" id="qNote">${ST.focus && ST.focus.approved ? "✅ Câu hỏi đã được giảng viên duyệt · Phím 1–4 để chọn nhanh" : "Phím 1–4 để chọn nhanh · câu hỏi ưu tiên KC lớp đang yếu"}</p>`;
     $("qBox").dataset.k = key; $("mQ").hidden = false;
     $("qBox").querySelectorAll(".opt").forEach((b) => b.onclick = () => choose(+b.dataset.i));
   }
@@ -411,6 +629,130 @@ async function choose(i) {
   setTimeout(() => { answeredQ = null; $("qBox").dataset.k = ""; if (!(ST.me && (ST.me.question || ST.me.duel))) $("mQ").hidden = true; }, r.correct ? 1300 : 2600);
 }
 
+/* ---------- biểu đồ mức độ hiểu (thống kê mới cho Giảng viên) ---------- */
+function renderHostMiniStats(a) {
+  const box = $("hostMiniStats");
+  if (!box || !a) return;
+  const gVal = a.game_pct == null ? "—" : a.game_pct + "%";
+  const pVal = a.pre_test_pct == null ? "—" : a.pre_test_pct + "%";
+  const gColor = a.game_pct == null ? "var(--ink2)" : (a.game_pct >= 75 ? "#51cf66" : "#4dabf7");
+  const fillPct = a.game_pct == null ? 0 : Math.min(100, Math.max(0, a.game_pct));
+  const progColor = a.game_pct != null && a.game_pct >= 75 ? "#51cf66" : "#4dabf7";
+  const html = `
+    <div class="mini-kpis">
+      <div class="mini-kpi"><small>Pre-test</small><strong style="color:#fcc419">${pVal}</strong></div>
+      <div class="mini-kpi"><small>Trong game</small><strong style="color:${gColor}">${gVal}</strong></div>
+      <div class="mini-kpi"><small>Hiểu vững</small><strong style="color:#63e6be">${a.mastered_count}/${a.total_players}</strong></div>
+    </div>
+    <div class="mini-prog">
+      <div class="mini-prog-head"><span>Tiến độ đạt chuẩn lớp</span><span>Mốc 75%</span></div>
+      <div class="mini-prog-track"><div class="mini-prog-fill" style="width:${fillPct}%;background:${progColor}"></div><div class="mini-prog-mark"></div></div>
+    </div>`;
+  if (box.dataset.h !== html) { box.innerHTML = html; box.dataset.h = html; }
+}
+
+function buildMasteryChartsHtml(a, qs) {
+  if (!a) return "";
+  const deltaTxt = a.delta_pct == null ? "Chưa có lượt trả lời" : ((a.delta_pct >= 0 ? "+" : "") + a.delta_pct + "% so với trước buổi");
+  const kpis = `
+    <div class="an-kpis">
+      <div class="an-kpi">
+        <small>Trước buổi học</small>
+        <strong style="color:#fcc419">${a.pre_test_pct == null ? "—" : a.pre_test_pct + "%"}</strong>
+        <span>Tỉ lệ đúng Pre-class</span>
+      </div>
+      <div class="an-kpi">
+        <small>Đúng trong Game</small>
+        <strong style="color:${a.game_pct != null && a.game_pct >= 75 ? '#51cf66' : '#4dabf7'}">${a.game_pct == null ? "—" : a.game_pct + "%"}</strong>
+        <span>${a.total_answers ? `${a.total_correct}/${a.total_answers} lượt · ${deltaTxt}` : "Chờ học viên trả lời"}</span>
+      </div>
+      <div class="an-kpi">
+        <small>Hiểu vững (≥75%)</small>
+        <strong style="color:#63e6be">${a.mastered_count}/${a.total_players}</strong>
+        <span>${a.finished_count} học viên về đích</span>
+      </div>
+    </div>`;
+
+  const bw = 320, bh = 160, padL = 34, padR = 14, padT = 22, padB = 28;
+  const plotW = bw - padL - padR, plotH = bh - padT - padB;
+  const y75 = padT + plotH * 0.25;
+  const items = [
+    { label: "Pre-test", val: a.pre_test_pct, color: "#fcc419" },
+    { label: "Trong Game", val: a.game_pct, color: "#4dabf7" },
+    { label: "Hiểu vững", val: a.total_players ? Math.round((a.mastered_count / a.total_players) * 100) : null, color: "#51cf66" },
+  ];
+  const slot = plotW / items.length, barW = 44;
+  const cols = items.map((it, i) => {
+    const cx = padL + slot * i + slot / 2;
+    const pct = it.val == null ? 0 : it.val;
+    const h = Math.max(it.val == null ? 2 : 5, plotH * (pct / 100));
+    const y = padT + plotH - h;
+    return `
+      <rect x="${cx - barW / 2}" y="${y}" width="${barW}" height="${h}" rx="6" fill="${it.val == null ? 'rgba(255,255,255,.15)' : it.color}" />
+      <text x="${cx}" y="${y - 6}" text-anchor="middle" font-size="11.5" font-weight="800" fill="${it.val == null ? '#8e97b8' : it.color}">${it.val == null ? '—' : pct + '%'}</text>
+      <text x="${cx}" y="${bh - 9}" text-anchor="middle" font-size="11" font-weight="600" fill="#b8c0e0">${it.label}</text>`;
+  }).join("");
+  const barSvg = `
+    <svg viewBox="0 0 ${bw} ${bh}" style="width:100%; height:auto; display:block;">
+      <line x1="${padL}" y1="${padT + plotH}" x2="${bw - padR}" y2="${padT + plotH}" stroke="rgba(255,255,255,.22)" />
+      <line x1="${padL}" y1="${y75}" x2="${bw - padR}" y2="${y75}" stroke="#fcc419" stroke-dasharray="4 3" stroke-width="1.2" />
+      <text x="${padL - 5}" y="${y75 + 3}" text-anchor="end" font-size="9.5" fill="#fcc419">75%</text>
+      <text x="${padL - 5}" y="${padT + plotH + 3}" text-anchor="end" font-size="9.5" fill="#8e97b8">0%</text>
+      ${cols}
+    </svg>`;
+
+  const tot = a.total_players || 0;
+  let donutHtml = `<div style="text-align:center; padding:36px 0; font-size:12.5px; color:var(--ink3);">Chưa có học viên trong ván.</div>`;
+  if (tot > 0) {
+    const slices = [
+      { label: "Hiểu vững (≥75%)", val: a.mastered_count || 0, color: "#51cf66" },
+      { label: "Đang nắm (50–74%)", val: a.developing_count || 0, color: "#fcc419" },
+      { label: "Cần ôn thêm (<50%)", val: a.struggling_count || 0, color: "#ff6b6b" },
+      { label: "Chưa trả lời", val: a.unanswered_count || 0, color: "#64748b" },
+    ];
+    const r = 42, circ = 2 * Math.PI * r;
+    let off = 0;
+    const segs = slices.filter((s) => s.val > 0).map((s) => {
+      const len = (s.val / tot) * circ;
+      const svg = `<circle cx="56" cy="56" r="${r}" fill="none" stroke="${s.color}" stroke-width="15" stroke-dasharray="${len.toFixed(2)} ${(circ - len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 56 56)" />`;
+      off += len;
+      return svg;
+    }).join("");
+    donutHtml = `
+      <div class="donut-wrap">
+        <svg width="112" height="112" viewBox="0 0 112 112">
+          <circle cx="56" cy="56" r="${r}" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="15" />
+          ${segs}
+          <text x="56" y="54" text-anchor="middle" font-size="16" font-weight="800" fill="#eef1ff">${tot}</text>
+          <text x="56" y="68" text-anchor="middle" font-size="9.5" fill="#b8c0e0">học viên</text>
+        </svg>
+        <div class="legend">
+          ${slices.map((s) => `<div class="legend-item"><span class="dot" style="background:${s.color}"></span><span>${s.label}: <strong style="color:#eef1ff">${s.val}</strong></span></div>`).join("")}
+        </div>
+      </div>`;
+  }
+
+  const qBars = (qs || []).length ? `
+    <div class="an-box" style="margin-top:10px;">
+      <div class="an-title"><span>Tỉ lệ đúng theo từng câu hỏi trong ván</span><span>Đỏ: &lt;75% · Xanh: ≥75%</span></div>
+      ${qs.map((q, i) => {
+        const pct = q.hoi ? Math.round((q.dung / q.hoi) * 100) : 0;
+        const color = pct >= 75 ? "#51cf66" : (pct >= 50 ? "#fcc419" : "#ff6b6b");
+        const shortQ = q.cau.length > 76 ? q.cau.slice(0, 75) + "…" : q.cau;
+        return `<div class="qbar-item">
+          <div class="qbar-head"><span>Câu ${i + 1}: ${esc(shortQ)}</span><strong style="color:${color};white-space:nowrap">${q.dung}/${q.hoi} (${pct}%)</strong></div>
+          <div class="qbar-track"><div class="qbar-fill" style="width:${pct}%;background:${color}"></div></div>
+        </div>`;
+      }).join("")}
+    </div>` : "";
+
+  return kpis + `
+    <div class="an-grid">
+      <div class="an-box"><div class="an-title"><span>So sánh Trước buổi &amp; Trong Game</span><span>Mốc 75%</span></div>${barSvg}</div>
+      <div class="an-box"><div class="an-title"><span>Phân bố mức hiểu của lớp</span></div>${donutHtml}</div>
+    </div>` + qBars;
+}
+
 /* ---------- kết quả ---------- */
 function showResult(force) {
   if (resultShownFor === ST.round && !force) return;
@@ -420,10 +762,12 @@ function showResult(force) {
   let msg = "🏁", sub = "Ván đã kết thúc";
   if (mine && mine.rank) { msg = mine.rank === 1 ? "🏆" : "🎉"; sub = `Bạn về đích hạng ${mine.rank} · +${mine.points} điểm vào hồ sơ`; }
   else if (mine && mine.status === "out") { msg = "💀"; sub = "Bạn bị loại ở một cuộc đấu — lần sau nhé!"; }
+  const chartsHtml = HOST ? buildMasteryChartsHtml(ST.analytics, ST.qstats) : "";
   $("resBox").innerHTML = `<div class="huge">${msg}</div><h1 class="title">KẾT THÚC</h1><p class="tag">${sub}</p>` +
     `<div class="podium">${col(top[1], "p2", 2)}${col(top[0], "p1", 1)}${col(top[2], "p3", 3)}</div>` +
     (top.length ? "" : `<p class="tag">Chưa ai về đích.</p>`) +
-    (HOST ? `<div class="hostbar" style="justify-content:center;margin-top:16px"><button class="go" id="rNew">↻ Ván mới</button><button id="rProfiles">📒 Hồ sơ điểm</button></div>`
+    chartsHtml +
+    (HOST ? `<div class="hostbar" style="justify-content:center;margin-top:16px"><button class="go" id="rNew">↻ Ván mới</button><button id="rProfiles">📊 Biểu đồ &amp; Hồ sơ</button></div>`
           : `<p class="small">Chờ giảng viên mở ván mới…</p>`);
   $("mResult").hidden = false; resultShownFor = ST.round;
   if (mine && mine.rank) confetti();
@@ -440,25 +784,48 @@ async function showProfiles() {
   const r = await api("/game/api/profiles");
   if (r.error) { toast(r.error); return; }
   const qs = (ST && ST.qstats) || [];
-  const tabP = `<table><thead><tr><th>Học viên (tài khoản)</th><th class="n">Điểm</th><th class="n">Số ván</th><th class="n">Về nhất</th></tr></thead><tbody>` +
-    (r.profiles.map((e) => `<tr><td>${esc(e.ten)} <small style="color:var(--ink3)">${esc(e.tai_khoan || "")}</small></td><td class="n">${e.diem}</td><td class="n">${e.so_van}</td><td class="n">${e.ve_nhat}</td></tr>`).join("") || `<tr><td colspan="4">Chưa có dữ liệu</td></tr>`) + `</tbody></table>`;
-  const tabQ = `<table><thead><tr><th>Câu hỏi (ván này)</th><th class="n">Đúng</th><th class="n">Lớp ở pre-class</th></tr></thead><tbody>` +
-    (qs.map((q) => `<tr><td>${esc(q.cau)}<br><small style="color:var(--ink3)">${esc(q.kc)}</small></td><td class="n">${q.dung}/${q.hoi}</td><td class="n">${q.lop_pct == null ? "—" : q.lop_pct + "%"}</td></tr>`).join("") || `<tr><td colspan="3">Chưa có câu nào được trả lời</td></tr>`) + `</tbody></table>`;
-  $("resBox").innerHTML = `<h1 class="title" style="font-size:24px">📒 HỒ SƠ & THỐNG KÊ</h1>
-    <div class="tabs"><button aria-pressed="true" data-t="p">Hồ sơ điểm</button><button aria-pressed="false" data-t="q">Câu hỏi lớp hay sai</button></div>
-    <div id="tabBody" style="max-height:52vh;overflow:auto;text-align:left">${tabP}</div>
-    <p class="small">Điểm cộng khi về đích (hạng 1: 100, 2: 70, 3: 50, 4: 40, 5: 30, sau đó 20). Câu hỏi là bản nháp chờ giảng viên duyệt.</p>
+  const tabC = buildMasteryChartsHtml(ST && ST.analytics, qs) || `<p style="color:var(--ink3)">Chưa có dữ liệu trong ván này.</p>`;
+  const tabP = `<table><thead><tr><th>Học viên</th><th class="n">Điểm</th><th class="n">Số ván</th><th class="n">Về nhất</th></tr></thead><tbody>` +
+    (r.profiles.map((e) => `<tr><td>${esc(e.ten)}</td><td class="n">${e.diem}</td><td class="n">${e.so_van}</td><td class="n">${e.ve_nhat}</td></tr>`).join("") || `<tr><td colspan="4">Chưa có dữ liệu</td></tr>`) + `</tbody></table>`;
+  const tabQ = `<table><thead><tr><th>Câu hỏi (ván này)</th><th class="n">Đúng</th><th class="n">Trước buổi</th></tr></thead><tbody>` +
+    (qs.map((q) => `<tr><td>${esc(q.cau)}</td><td class="n">${q.dung}/${q.hoi}</td><td class="n">${q.lop_pct == null ? "—" : q.lop_pct + "%"}</td></tr>`).join("") || `<tr><td colspan="3">Chưa có câu nào được trả lời</td></tr>`) + `</tbody></table>`;
+  $("resBox").innerHTML = `<h1 class="title" style="font-size:22px">📊 BIỂU ĐỒ MỨC ĐỘ &amp; HỒ SƠ</h1>
+    <div class="tabs"><button aria-pressed="true" data-t="c">Biểu đồ mức độ</button><button aria-pressed="false" data-t="p">Hồ sơ điểm</button><button aria-pressed="false" data-t="q">Chi tiết câu hỏi</button></div>
+    <div id="tabBody" style="max-height:58vh;overflow:auto;text-align:left">${tabC}</div>
     <div class="hostbar" style="justify-content:center;margin-top:12px"><button id="closeRes">Đóng</button></div>`;
   $("mResult").hidden = false;
   $("resBox").querySelectorAll(".tabs button").forEach((b) => b.onclick = () => {
     $("resBox").querySelectorAll(".tabs button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-    $("tabBody").innerHTML = b.dataset.t === "p" ? tabP : tabQ; });
+    $("tabBody").innerHTML = b.dataset.t === "c" ? tabC : (b.dataset.t === "p" ? tabP : tabQ); });
   $("closeRes").onclick = () => { $("mResult").hidden = true; if (ST.phase === "ended") resultShownFor = ST.round; };
 }
 
-/* ================= điều khiển ================= */
+/* ================= điều khiển (dự đoán tức thì 0ms + gom bước chống lag) ================= */
 const KEYS = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right", w: "up", s: "down", a: "left", d: "right", W: "up", S: "down", A: "left", D: "right" };
-const held = new Set(); let lastSend = 0;
+const DIR_DELTA = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+const held = new Set();
+let lastStepAt = 0, predPos = null, moveQueue = [], moveInFlight = false;
+
+function syncPredFromServer(force) {
+  const mine = ST && ST.players && ST.players.find((p) => p.pid === PID);
+  if (!mine || mine.x === null) { predPos = null; moveQueue = []; return; }
+  if (force || !predPos || (!moveInFlight && !moveQueue.length) || mine.status !== "playing") {
+    predPos = { x: mine.x, y: mine.y };
+  }
+}
+
+function canPredictStep(nx, ny) {
+  if (!MAZE || nx < 0 || ny < 0 || nx >= MAZE.w || ny >= MAZE.h) return false;
+  if (MAZE.tiles[ny][nx] === 1) return false;
+  const isGate = MAZE.gates.some(([gx, gy]) => gx === nx && gy === ny);
+  if (isGate) {
+    const opened = (ST.me && ST.me.opened) || [];
+    const alreadyOpen = opened.some(([ox, oy]) => ox === nx && oy === ny);
+    if (!alreadyOpen && !(ST.me && ST.me.shield > 0)) return "gate";
+  }
+  return true;
+}
+
 addEventListener("keydown", (e) => {
   if (!$("mQ").hidden && /^[1-4]$/.test(e.key)) { choose(+e.key - 1); return; }
   if (document.activeElement && document.activeElement.tagName === "INPUT") return;
@@ -469,12 +836,44 @@ $("dpad").querySelectorAll("button").forEach((b) => {
   b.onpointerdown = (e) => { e.preventDefault(); tryMove(b.dataset.d, true); held.add(b.dataset.d); };
   b.onpointerup = b.onpointerleave = () => held.delete(b.dataset.d);
 });
+
 function tryMove(dir, tap) {
   const me = ST && ST.me;
-  if (!(me && ST.phase === "playing" && me.status === "playing" && $("mQ").hidden)) return;
-  const gap = me.boost > 0 ? 75 : 155, now = performance.now();
-  if (tap || now - lastSend > gap) { lastSend = now; api("/game/api/move", { pid: PID, dir }); }
+  if (!(me && ST.phase === "playing" && me.status === "playing" && me.frozen <= 0 && $("mQ").hidden)) return;
+  const gap = me.boost > 0 ? 75 : 145, now = performance.now();
+  if (!tap && now - lastStepAt < gap) return;
+  if (tap && now - lastStepAt < 65) return;
+  if (!predPos) syncPredFromServer(true);
+  if (!predPos) return;
+  const [dx, dy] = DIR_DELTA[dir];
+  const nx = predPos.x + dx, ny = predPos.y + dy;
+  const check = canPredictStep(nx, ny);
+  if (!check) return;
+  lastStepAt = now;
+  if (check === true) predPos = { x: nx, y: ny };
+  if (moveQueue.length < 4) moveQueue.push(dir);
+  flushMoves();
 }
+
+async function flushMoves() {
+  if (moveInFlight || !moveQueue.length) return;
+  moveInFlight = true;
+  const batch = moveQueue.splice(0, 4);
+  try {
+    const r = await api("/game/api/move", { pid: PID, dirs: batch });
+    if (r && r.state) {
+      ST = r.state;
+      if (!moveQueue.length || (ST.me && ST.me.status !== "playing")) syncPredFromServer(true);
+      route();
+    }
+  } catch (_) {
+    syncPredFromServer(true);
+  } finally {
+    moveInFlight = false;
+    if (moveQueue.length) flushMoves();
+  }
+}
+
 function inputLoop() {
   if (held.size) tryMove([...held].pop(), false);
   setTimeout(inputLoop, 30);
@@ -492,9 +891,9 @@ function sfx(ok) {
 /* ================= vẽ mê cung ================= */
 const cv = $("cv"), ctx = cv.getContext("2d");
 let TS = 32, OX = 0, OY = 0, DPR = 1;
-const rp = {};           // vị trí vẽ mượt của từng người chơi
-const parts = [];        // hạt hiệu ứng
-const prevSt = {};       // trạng thái trước để bắt sự kiện (nhặt hộp, về đích…)
+const rp = {};
+const parts = [];
+const prevSt = {};
 let prevBoxes = new Set();
 
 function layout() {
@@ -539,37 +938,64 @@ function draw(ts) {
   ctx.clearRect(0, 0, cv.width, cv.height);
   const me = ST.players.find((p) => p.pid === PID);
   const opened = new Set(((ST.me && ST.me.opened) || []).map((g) => g.join(",")));
+  const fogOn = !!(me && !HOST && ["playing", "question", "duel"].includes(me.status));
+  const VISR = 2.6;
 
-  // nền sàn
-  ctx.fillStyle = "#151a45"; rr(OX - 6, OY - 6, TS * MAZE.w + 12, TS * MAZE.h + 12, 18); ctx.fill();
-  for (let y = 0; y < MAZE.h; y++) for (let x = 0; x < MAZE.w; x++) if (MAZE.tiles[y][x] === 0) {
-    ctx.fillStyle = (x + y) % 2 ? "#232a66" : "#262e70"; ctx.fillRect(OX + x * TS, OY + y * TS, TS, TS);
+  // Cập nhật vị trí mượt của chính mình trước khi tính tầm nhìn & vùng đã khám phá
+  if (me && me.x !== null) {
+    const tx0 = (predPos && me.status === "playing") ? predPos.x : me.x;
+    const ty0 = (predPos && me.status === "playing") ? predPos.y : me.y;
+    const r0 = rp[me.pid] || (rp[me.pid] = { x: tx0, y: ty0 });
+    r0.x += (tx0 - r0.x) * .48; r0.y += (ty0 - r0.y) * .48;
+    if (Math.abs(tx0 - r0.x) > 3 || Math.abs(ty0 - r0.y) > 3) { r0.x = tx0; r0.y = ty0; }
+    if (fogOn) {
+      const mx = Math.round(r0.x), my = Math.round(r0.y);
+      for (let y = 0; y < MAZE.h; y++) for (let x = 0; x < MAZE.w; x++) {
+        if (Math.hypot(x - mx, y - my) <= VISR) explored.add(x + "," + y);
+      }
+    }
   }
-  // tường nổi khối
+
+  const meR = me ? (rp[me.pid] || me) : null;
+  const inView = (x, y) => !fogOn || (meR && Math.hypot(x - meR.x, y - meR.y) <= VISR);
+  const seenTile = (x, y) => !fogOn || explored.has(x + "," + y) || inView(x, y);
+
+  const th = MAZE.theme || { bg: "#151a45", f1: "#232a66", f2: "#262e70", wS1: "#5f3dc4", wS2: "#3b2a8f", wT1: "#b197fc", wT2: "#7950f2" };
+
+  // Nền khung mê cung: đen kịt khi bật sương mù để vùng chưa tới hoàn toàn không lộ cấu trúc
+  ctx.fillStyle = fogOn ? "#040611" : th.bg;
+  rr(OX - 6, OY - 6, TS * MAZE.w + 12, TS * MAZE.h + 12, 18); ctx.fill();
+
+  // CHỈ vẽ sàn ở các ô đã nhìn thấy / khám phá (ô chưa tới để đen hoàn toàn)
+  for (let y = 0; y < MAZE.h; y++) for (let x = 0; x < MAZE.w; x++) {
+    if (MAZE.tiles[y][x] !== 0 || !seenTile(x, y)) continue;
+    ctx.fillStyle = (x + y) % 2 ? th.f1 : th.f2;
+    ctx.fillRect(OX + x * TS, OY + y * TS, TS, TS);
+  }
+  // CHỈ vẽ tường nổi khối ở các ô đã nhìn thấy / khám phá
   const lift = TS * .22;
-  for (let y = 0; y < MAZE.h; y++) for (let x = 0; x < MAZE.w; x++) if (MAZE.tiles[y][x] === 1) {
+  for (let y = 0; y < MAZE.h; y++) for (let x = 0; x < MAZE.w; x++) {
+    if (MAZE.tiles[y][x] !== 1 || !seenTile(x, y)) continue;
     const X = OX + x * TS, Y = OY + y * TS;
     ctx.fillStyle = "rgba(0,0,0,.35)"; ctx.fillRect(X + 2, Y + 4, TS, TS);
-    const gS = ctx.createLinearGradient(0, Y, 0, Y + TS); gS.addColorStop(0, "#5f3dc4"); gS.addColorStop(1, "#3b2a8f");
+    const gS = ctx.createLinearGradient(0, Y, 0, Y + TS); gS.addColorStop(0, th.wS1); gS.addColorStop(1, th.wS2);
     ctx.fillStyle = gS; rr(X + .5, Y + .5, TS - 1, TS - 1, TS * .18); ctx.fill();
-    const gT = ctx.createLinearGradient(0, Y - lift, 0, Y + TS - lift); gT.addColorStop(0, "#b197fc"); gT.addColorStop(1, "#7950f2");
+    const gT = ctx.createLinearGradient(0, Y - lift, 0, Y + TS - lift); gT.addColorStop(0, th.wT1); gT.addColorStop(1, th.wT2);
     ctx.fillStyle = gT; rr(X + 1, Y - lift + 1, TS - 2, TS - 2, TS * .18); ctx.fill();
     ctx.fillStyle = "rgba(255,255,255,.18)"; rr(X + TS * .18, Y - lift + TS * .14, TS * .64, TS * .12, TS * .06); ctx.fill();
   }
-  // cổng đích
-  const [gx, gy] = [cx(MAZE.goal[0]), cy(MAZE.goal[1])];
-  const glow = ctx.createRadialGradient(gx, gy, 2, gx, gy, TS * 1.6); glow.addColorStop(0, "rgba(255,212,59,.75)"); glow.addColorStop(1, "rgba(255,212,59,0)");
-  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(gx, gy, TS * 1.6, 0, 7); ctx.fill();
-  for (let i = 0; i < 3; i++) { ctx.save(); ctx.translate(gx, gy); ctx.rotate(t * (i % 2 ? -1.2 : .9) + i);
-    ctx.strokeStyle = ["#ffd43b", "#3bc9db", "#f783ac"][i]; ctx.lineWidth = 2.5; ctx.setLineDash([TS * .25, TS * .18]);
-    ctx.beginPath(); ctx.arc(0, 0, TS * (.32 + i * .13), 0, 7); ctx.stroke(); ctx.restore(); }
-  ctx.font = `${TS * .55}px serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText("🏁", gx, gy + Math.sin(t * 3) * 2);
 
-  // tầm nhìn: học viên chỉ thấy hộp quà / người khác trong bán kính VIS, cửa ở vùng đã đi qua
-  const fogOn = me && !HOST && ["playing", "question", "duel"].includes(me.status);
-  const meR = me ? (rp[me.pid] || me) : null, VISR = 4.5;
-  const inView = (x, y) => !fogOn || Math.hypot(x - meR.x, y - meR.y) <= VISR;
-  const seenTile = (x, y) => !fogOn || explored.has(x + "," + y) || inView(x, y);
+  // cổng đích (ẩn hoàn toàn khi học viên chưa khám phá tới)
+  const [gx, gy] = [cx(MAZE.goal[0]), cy(MAZE.goal[1])];
+  if (seenTile(MAZE.goal[0], MAZE.goal[1])) {
+    const glow = ctx.createRadialGradient(gx, gy, 2, gx, gy, TS * 1.6); glow.addColorStop(0, "rgba(255,212,59,.75)"); glow.addColorStop(1, "rgba(255,212,59,0)");
+    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(gx, gy, TS * 1.6, 0, 7); ctx.fill();
+    for (let i = 0; i < 3; i++) { ctx.save(); ctx.translate(gx, gy); ctx.rotate(t * (i % 2 ? -1.2 : .9) + i);
+      ctx.strokeStyle = ["#ffd43b", "#3bc9db", "#f783ac"][i]; ctx.lineWidth = 2.5; ctx.setLineDash([TS * .25, TS * .18]);
+      ctx.beginPath(); ctx.arc(0, 0, TS * (.32 + i * .13), 0, 7); ctx.stroke(); ctx.restore(); }
+    ctx.font = `${TS * .55}px serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText("🏁", gx, gy + Math.sin(t * 3) * 2);
+  }
+
   // cửa câu hỏi
   MAZE.gates.forEach(([x, y]) => {
     if (!seenTile(x, y)) return;
@@ -595,10 +1021,15 @@ function draw(ts) {
   // người chơi
   ST.players.forEach((p) => {
     if (p.status === "lobby") return;
-    if (p.x === null) { delete rp[p.pid]; return; }  // ngoài tầm nhìn (server không gửi vị trí)
-    const r = rp[p.pid] || (rp[p.pid] = { x: p.x, y: p.y });
-    const k = (p.boost > 0 ? .5 : .32); r.x += (p.x - r.x) * k; r.y += (p.y - r.y) * k;
-    if (Math.abs(p.x - r.x) > 3 || Math.abs(p.y - r.y) > 3) { r.x = p.x; r.y = p.y; }
+    if (p.x === null) { delete rp[p.pid]; return; }
+    const tx = (p.pid === PID && predPos && p.status === "playing") ? predPos.x : p.x;
+    const ty = (p.pid === PID && predPos && p.status === "playing") ? predPos.y : p.y;
+    const r = rp[p.pid] || (rp[p.pid] = { x: tx, y: ty });
+    if (p.pid !== PID) {
+      const k = (p.boost > 0 ? .5 : .32);
+      r.x += (tx - r.x) * k; r.y += (ty - r.y) * k;
+      if (Math.abs(tx - r.x) > 3 || Math.abs(ty - r.y) > 3) { r.x = tx; r.y = ty; }
+    }
     if (p.status === "finished" || p.status === "out") return;
     if (p.pid !== PID && !inView(r.x, r.y)) return;
     const X = cx(r.x), Y = cy(r.y), R = TS * .36, mine = p.pid === PID;
@@ -615,23 +1046,31 @@ function draw(ts) {
     if (p.frozen > 0) { ctx.fillStyle = "rgba(165,216,255,.55)"; ctx.beginPath(); ctx.arc(X, Y, R + 2, 0, 7); ctx.fill(); ctx.font = `${TS * .4}px serif`; ctx.fillText("❄", X + R, Y - R); }
     if (p.status === "duel") { ctx.font = `${TS * .5}px serif`; ctx.fillText("⚔️", X, Y - R - TS * .32 + Math.sin(t * 8) * 2); }
     if (p.status === "question") { ctx.font = `${TS * .45}px serif`; ctx.fillText("💭", X + R * .9, Y - R); }
-    // nhãn tên
     ctx.font = `700 ${Math.max(10, TS * .3)}px system-ui`; const w = ctx.measureText(p.name).width + 10, ly = Y - R - TS * .32 - (p.status === "duel" ? TS * .4 : 0);
     ctx.fillStyle = "rgba(10,12,40,.8)"; rr(X - w / 2, ly - TS * .2, w, TS * .38, TS * .19); ctx.fill();
     ctx.fillStyle = mine ? "#ffd43b" : "#fff"; ctx.fillText(p.name, X, ly);
   });
-  // sương mù (học viên chỉ thấy xung quanh mình — chọn đường có phần may rủi)
-  if (me && !HOST && ["playing", "question", "duel"].includes(me.status)) {
-    const r = rp[me.pid] || me, mx = Math.round(r.x), my = Math.round(r.y), VIS = 4.5;
-    for (let y = 0; y < MAZE.h; y++) for (let x = 0; x < MAZE.w; x++) if (Math.hypot(x - mx, y - my) <= VIS) explored.add(x + "," + y);
-    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, cv.width / DPR, cv.height / DPR);
-    ctx.fillStyle = "rgba(8,10,32,.0)";
+  // Phủ tối mềm cho khu vực đã khám phá nhưng nằm ngoài tầm nhìn hiện tại (vùng chưa tới đã không vẽ -> đen 100%)
+  if (fogOn && meR) {
+    ctx.save();
     for (let y = 0; y < MAZE.h; y++) for (let x = 0; x < MAZE.w; x++) {
-      const d = Math.hypot(x - r.x, y - r.y);
-      if (d <= VIS - .5) continue;
-      ctx.fillStyle = explored.has(x + "," + y) ? `rgba(8,10,32,${Math.min(.62, (d - VIS + .5) * .4)})` : `rgba(8,10,32,${Math.min(.96, .55 + (d - VIS) * .25)})`;
-      ctx.fillRect(OX + x * TS, OY + y * TS - (MAZE.tiles[y][x] ? lift : 0), TS + .5, TS + .5 + (MAZE.tiles[y][x] ? lift : 0));
+      if (!seenTile(x, y)) continue;
+      const d = Math.hypot(x - meR.x, y - meR.y);
+      if (d <= VISR - .4) continue;
+      const tileH = TS + 1 + (MAZE.tiles[y][x] ? lift : 0);
+      const tileY = OY + y * TS - (MAZE.tiles[y][x] ? lift : 0);
+      const alpha = Math.min(.72, .24 + (d - VISR + .4) * .35);
+      ctx.fillStyle = `rgba(4, 6, 17, ${alpha.toFixed(2)})`;
+      ctx.fillRect(OX + x * TS - .5, tileY - .5, TS + 1, tileH + 1);
     }
+    // Vòng ánh sáng dịu quanh người chơi
+    const px = cx(meR.x), py = cy(meR.y);
+    const torch = ctx.createRadialGradient(px, py, TS * .35, px, py, TS * (VISR + .25));
+    torch.addColorStop(0, "rgba(255, 224, 102, .08)");
+    torch.addColorStop(.75, "rgba(255, 224, 102, .02)");
+    torch.addColorStop(1, "rgba(4, 6, 17, 0)");
+    ctx.fillStyle = torch;
+    ctx.beginPath(); ctx.arc(px, py, TS * (VISR + .25), 0, 7); ctx.fill();
     ctx.restore();
   }
   // hạt
@@ -648,7 +1087,16 @@ function shade(hex) { const n = parseInt(hex.slice(1), 16); const f = (v) => Mat
   return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`; }
 
 /* ================= khởi động ================= */
-initJoin(); loadMe().then(() => { route(); poll(); }); inputLoop(); requestAnimationFrame(draw);
+initJoin();
+loadMe().then(async () => {
+  if (WANT_HOST && AUTH && AUTH.can_teach && (!USER || USER.role !== "giang_vien")) {
+    PID = null; sessionStorage.removeItem("maze_pid");
+    await setRole("giang_vien");
+  }
+  route();
+  poll();
+});
+inputLoop(); requestAnimationFrame(draw);
 new ResizeObserver(layout).observe(cv);
 </script>
 </body>

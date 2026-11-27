@@ -89,6 +89,11 @@ def main(argv):
     if not argv:
         return run_app()
     cmd, rest = argv[0], argv[1:]
+    if cmd in ("-h", "--help", "help"):
+        print(HELP)
+        return 0
+    if cmd.startswith("-"):
+        return py(os.path.join("codebase", "app.py"), *argv)
     if cmd == "check":
         if rest:
             print("check không nhận thêm tham số: " + " ".join(rest) + "\n" + HELP)

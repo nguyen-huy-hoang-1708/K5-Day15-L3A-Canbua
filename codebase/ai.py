@@ -62,8 +62,10 @@ def call_model(system: str, user: str) -> dict:
         r = call_ollama(system, user)
     elif MODEL_PROVIDER == "cloudflare":
         r = call_cloudflare(system, user)
+    elif MODEL_PROVIDER == "openrouter":
+        r = call_openrouter(system, user)
     else:
-        raise NotImplementedError("MODEL_PROVIDER=%s chưa hỗ trợ — dùng anthropic / openai / gemini / cloudflare / ollama" % MODEL_PROVIDER)
+        raise NotImplementedError("MODEL_PROVIDER=%s chưa hỗ trợ — dùng anthropic / openai / gemini / cloudflare / openrouter / ollama" % MODEL_PROVIDER)
     return {"text": r["text"], "model": MODEL_NAME,
             "tokens_in": int(r["tokens_in"]), "tokens_out": int(r["tokens_out"])}
 
@@ -149,6 +151,52 @@ def call_cloudflare(system, user):
                            "khung cần token thật, không ước lượng")
     return {"text": data["choices"][0]["message"]["content"] or "",
             "tokens_in": u["prompt_tokens"], "tokens_out": u.get("completion_tokens", 0)}
+
+
+def call_openrouter(system, user):
+    messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
+    headers = {
+        "Authorization": "Bearer " + API_KEY,
+        "HTTP-Referer": "http://localhost:8765",
+        "X-Title": "Canbua Radar",
+    }
+    models_to_try = [MODEL_NAME]
+    if MODEL_NAME == "openrouter/free":
+        models_to_try.append("nvidia/nemotron-3.5-lightning:free")
+
+    tot_in, tot_out = 0, 0
+    text = ""
+    last_err = None
+    for idx, mdl in enumerate(models_to_try):
+        body = {
+            "model": mdl,
+            "messages": messages,
+            "max_tokens": 2048,
+            "reasoning": {"enabled": False},
+        }
+        try:
+            data = post_json("https://openrouter.ai/api/v1/chat/completions", headers, body,
+                             retries=1 if idx < len(models_to_try) - 1 else 3)
+        except Exception as e:
+            last_err = e
+            if idx < len(models_to_try) - 1:
+                continue
+            raise
+        if "error" in data and not data.get("choices"):
+            err = data["error"]
+            msg = err.get("message") if isinstance(err, dict) else str(err)
+            last_err = RuntimeError("OpenRouter lỗi: " + str(msg))
+            if idx < len(models_to_try) - 1:
+                continue
+            raise last_err
+        u = data.get("usage") or {}
+        tot_in += int(u.get("prompt_tokens") or 0)
+        tot_out += int(u.get("completion_tokens") or 0)
+        msg = (data.get("choices") or [{}])[0].get("message") or {}
+        text = (msg.get("content") or "").strip()
+        if text:
+            break
+    return {"text": text, "tokens_in": tot_in, "tokens_out": tot_out}
 
 
 def call_ollama(system, user):
