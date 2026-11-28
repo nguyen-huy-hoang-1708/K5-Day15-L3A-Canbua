@@ -16,7 +16,7 @@
 | Lượt 1 → 1 cải tiến → lượt 2, so sánh | ✅ 15/25 → 23/25 (92%, đạt chuẩn); lượt 3 thêm 25/25 | `eval/report.md`, `eval/README.md` |
 | Mô phỏng chi phí ≥ 50 phiên, tỉ lệ đạt từ `run-2` | ✅ 50 phiên, tỉ lệ đạt lấy từ `run-2` (ghi trong bản tóm tắt) · $0,00084 / task thành công · model ghi rõ | `cost/simulate-1.csv`, `cost/simulate-1-summary.md`, `cost/cost-estimate.md` |
 | `demo-slides.pdf` ở gốc repo | ✅ 10 trang, mỗi trang có số + nguồn | `demo-slides.pdf` (nguồn: `slides/demo-slides.html`) |
-| Link video demo dự phòng | ✅ https://youtu.be/Ab38Jddjxc8 | `README.md` mục 7 |
+| Link video demo dự phòng | ✅ https://youtu.be/wnJeQxFjoA8 | `README.md` mục 7 |
 | **Tick 4 điều kiện cứng trên Form 2 → nhánh CP4** | ⬜ **Đội trưởng tick** (đọc đúng 4 điều kiện trên form) | Form 2 |
 
 Lượt mô phỏng `simulate-1` đã tự lấy tỉ lệ đạt từ `eval/run-2.csv` (dòng "Tỉ lệ đạt dùng để tính: 23/25 (92%) — lượt run-2@20261127-162833" trong `cost/simulate-1-summary.md`), tương đương lệnh `python run.py simulate --rate-from eval/run-2.csv`. Không cần chạy lại.

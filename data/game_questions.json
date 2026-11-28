@@ -2,35 +2,447 @@
   "ghi_chu": "Ngân hàng câu hỏi cho trò chơi Mê cung pre-class. BẢN NHÁP do nhóm soạn theo tên ý kiến thức (kc) của khoá — CHƯA được giảng viên duyệt (da_duyet = false). Giảng viên sửa / thay câu rồi đổi da_duyet = true. dap_an là chỉ số (0–3) trong lua_chon; không bao giờ gửi dap_an xuống trình duyệt.",
   "da_duyet": false,
   "cau_hoi": [
-    {"id": "q01", "kc": "chatbot_is_app_around_model", "cau": "Một chatbot như ChatGPT gồm những gì?", "lua_chon": ["Chỉ có model ngôn ngữ", "Ứng dụng bọc quanh model: giao diện, lịch sử hội thoại, công cụ, luật an toàn", "Một cơ sở dữ liệu câu trả lời soạn sẵn", "Một công cụ tìm kiếm web"], "dap_an": 1, "giai_thich": "Model chỉ sinh chữ; chatbot là ứng dụng xây quanh model (lưu hội thoại, gọi công cụ, lọc an toàn…)."},
-    {"id": "q02", "kc": "memory_lives_in_the_app", "cau": "Vì sao chatbot \"nhớ\" được câu bạn nói ở lượt trước?", "lua_chon": ["Model tự học lại sau mỗi câu", "Ứng dụng gửi lại lịch sử hội thoại vào mỗi lần gọi model", "Model lưu câu trả lời trong trọng số", "Nhờ temperature cao"], "dap_an": 1, "giai_thich": "Model không có trí nhớ giữa các lần gọi; ứng dụng gửi lại lịch sử trong ngữ cảnh."},
-    {"id": "q03", "kc": "temperature_stability_not_truth", "cau": "Đặt temperature = 0 thì điều gì đúng?", "lua_chon": ["Câu trả lời chắc chắn đúng sự thật", "Câu trả lời ổn định hơn giữa các lần gọi, nhưng vẫn có thể sai", "Model chạy nhanh gấp đôi", "Model không thể bịa thông tin"], "dap_an": 1, "giai_thich": "Temperature thấp giảm ngẫu nhiên, không đảm bảo đúng sự thật."},
-    {"id": "q04", "kc": "token_cost_input_output", "cau": "Chi phí gọi API model thường được tính theo gì?", "lua_chon": ["Số lần đăng nhập", "Số token vào và token ra", "Số ký tự của câu hỏi, không tính câu trả lời", "Thời gian mở ứng dụng"], "dap_an": 1, "giai_thich": "Hầu hết nhà cung cấp tính tiền theo token vào và token ra, thường token ra đắt hơn."},
-    {"id": "q05", "kc": "cutoff_and_hallucination", "cau": "Hỏi model về sự kiện xảy ra sau mốc dữ liệu huấn luyện (cutoff) mà không cho tra cứu, rủi ro lớn nhất là gì?", "lua_chon": ["Model từ chối mọi câu hỏi", "Model có thể bịa câu trả lời nghe hợp lý (hallucination)", "Model tự động lên mạng tìm", "Model trả lời chậm hơn"], "dap_an": 1, "giai_thich": "Không có thông tin mới, model dễ bịa ra câu trả lời nghe rất thuyết phục."},
-    {"id": "q06", "kc": "context_window_budget_and_selection", "cau": "Cửa sổ ngữ cảnh (context window) là gì?", "lua_chon": ["Số người dùng cùng lúc", "Lượng token tối đa model đọc được trong một lần gọi", "Thời gian model được phép suy nghĩ", "Số ngôn ngữ model hỗ trợ"], "dap_an": 1, "giai_thich": "Mọi thứ đưa vào (prompt, lịch sử, tài liệu) phải vừa cửa sổ ngữ cảnh."},
-    {"id": "q07", "kc": "cot_task_fit", "cau": "Chain-of-thought (suy luận từng bước) hữu ích nhất cho loại việc nào?", "lua_chon": ["Dịch một từ đơn", "Bài toán nhiều bước như tính toán, lập luận logic", "Chào hỏi người dùng", "Trả về đúng một nhãn có sẵn rất đơn giản"], "dap_an": 1, "giai_thich": "CoT giúp với việc cần nhiều bước lập luận; với việc đơn giản chỉ tốn thêm token."},
-    {"id": "q08", "kc": "system_prompt_contract", "cau": "System prompt tốt nên giống điều gì nhất?", "lua_chon": ["Một lời chào thân thiện", "Một \"hợp đồng\": vai trò, phạm vi, định dạng đầu ra, khi nào phải từ chối", "Danh sách tất cả kiến thức của khoá", "Một câu hỏi mở cho model tự đoán việc cần làm"], "dap_an": 1, "giai_thich": "System prompt rõ ràng như hợp đồng giúp hành vi model ổn định và kiểm được."},
-    {"id": "q09", "kc": "zero_one_few_shot_selection", "cau": "Few-shot prompting là gì?", "lua_chon": ["Gọi model vài lần rồi lấy trung bình", "Đưa vài ví dụ mẫu (đầu vào → đầu ra) vào prompt", "Giảm số token xuống mức thấp nhất", "Huấn luyện lại model bằng vài dữ liệu"], "dap_an": 1, "giai_thich": "Few-shot = cho model xem vài ví dụ mẫu ngay trong prompt."},
-    {"id": "q10", "kc": "tool_calling_flow", "cau": "Trong tool calling, ai thực sự chạy hàm (công cụ)?", "lua_chon": ["Model tự chạy hàm trên máy chủ của bạn", "Chương trình của bạn chạy hàm, rồi gửi kết quả lại cho model", "Người dùng chạy hàm bằng tay", "Không ai, model đoán kết quả"], "dap_an": 1, "giai_thich": "Model chỉ đề xuất gọi hàm và tham số; code của ứng dụng chạy hàm rồi trả kết quả."},
-    {"id": "q11", "kc": "tool_granularity", "cau": "Thiết kế công cụ cho model, cách nào thường tốt hơn?", "lua_chon": ["Một công cụ khổng lồ làm mọi việc", "Công cụ vừa phải, mỗi cái một việc rõ, mô tả và tham số rõ ràng", "Không mô tả công cụ để tiết kiệm token", "Đặt tên công cụ ngẫu nhiên"], "dap_an": 1, "giai_thich": "Công cụ rõ việc, mô tả tốt giúp model chọn đúng và gọi đúng tham số."},
-    {"id": "q12", "kc": "react_reasoning_acting_pattern", "cau": "Mẫu ReAct cho tác tử AI là gì?", "lua_chon": ["Chỉ suy luận, không bao giờ gọi công cụ", "Xen kẽ suy luận (reason) và hành động gọi công cụ (act), quan sát kết quả rồi lặp lại", "Phản ứng thật nhanh không cần suy nghĩ", "Một thư viện giao diện web"], "dap_an": 1, "giai_thich": "ReAct = Reason + Act: nghĩ → gọi công cụ → xem kết quả → nghĩ tiếp."},
-    {"id": "q13", "kc": "trace_based_agent_evaluation", "cau": "Đánh giá tác tử AI dựa trên trace nghĩa là gì?", "lua_chon": ["Chỉ xem câu trả lời cuối cùng", "Xem nhật ký từng bước tác tử đã làm (gọi công cụ gì, vì sao) để tìm lỗi", "Đếm số dòng code", "Hỏi người dùng có thích không"], "dap_an": 1, "giai_thich": "Trace cho thấy tác tử sai ở bước nào, không chỉ kết quả cuối."},
-    {"id": "q14", "kc": "agentic_fit_scoring_decision", "cau": "Khi nào nên dùng tác tử AI (agent) thay vì workflow cố định?", "lua_chon": ["Luôn luôn, vì agent hiện đại hơn", "Khi các bước khó biết trước và cần model tự quyết bước tiếp theo", "Khi các bước luôn giống nhau và đã biết rõ", "Khi muốn chi phí thấp nhất"], "dap_an": 1, "giai_thich": "Bước đã rõ → workflow rẻ và dễ kiểm hơn; agent đáng dùng khi bước khó biết trước."},
-    {"id": "q15", "kc": "select_rule_workflow_agent_level", "cau": "Bài toán \"phân loại email theo 3 nhãn cố định\" phù hợp nhất với mức nào?", "lua_chon": ["Hệ nhiều tác tử", "Luật / một lần gọi model trong workflow đơn giản", "Tác tử tự hành chạy nhiều giờ", "Không cần máy tính"], "dap_an": 1, "giai_thich": "Việc đơn giản, đầu ra cố định → chọn giải pháp đơn giản nhất làm được."},
-    {"id": "q16", "kc": "complete_ai_problem_statement", "cau": "Một mô tả bài toán AI đầy đủ nên có gì?", "lua_chon": ["Chỉ tên công nghệ sẽ dùng", "Ai gặp vấn đề, việc họ làm, chỗ vướng, hậu quả và cách đo thành công", "Một câu khẩu hiệu", "Danh sách model muốn thử"], "dap_an": 1, "giai_thich": "Bắt đầu từ người dùng và nỗi đau đo được, không bắt đầu từ công nghệ."},
-    {"id": "q17", "kc": "construct_eval_plan", "cau": "Kế hoạch đánh giá hệ thống AI nên chốt điều gì TRƯỚC khi chạy?", "lua_chon": ["Màu giao diện", "Bộ câu thử, metric và ngưỡng \"đạt\"", "Tên của model", "Số người trong nhóm"], "dap_an": 1, "giai_thich": "Chốt tiêu chí trước để không sửa chuẩn cho khớp kết quả."},
-    {"id": "q18", "kc": "define_scope_boundary_and_hitl", "cau": "Human-in-the-loop (HITL) nghĩa là gì?", "lua_chon": ["Người dùng phải gõ lại mọi câu trả lời", "Có người duyệt ở các bước quan trọng trước khi hệ thống hành động", "AI thay hoàn toàn con người", "Chạy model trên máy của người dùng"], "dap_an": 1, "giai_thich": "Bước rủi ro cao (gửi tin, thanh toán, chấm điểm) cần người duyệt."},
-    {"id": "q19", "kc": "ai_product_canvas", "cau": "AI product canvas giúp nhóm làm gì?", "lua_chon": ["Vẽ logo sản phẩm", "Tóm tắt trên một trang: người dùng, vấn đề, giải pháp AI, dữ liệu, rủi ro, cách đo", "Chọn font chữ", "Viết code nhanh hơn"], "dap_an": 1, "giai_thich": "Canvas là khung một trang để cả nhóm thống nhất bài toán và giải pháp."},
-    {"id": "q20", "kc": "feedback_signal_types", "cau": "Ví dụ nào là tín hiệu phản hồi NGẦM (implicit) từ người dùng?", "lua_chon": ["Người dùng bấm 👎 và viết nhận xét", "Người dùng sửa lại câu trả lời của AI rồi mới dùng", "Người dùng điền khảo sát", "Người dùng gửi email góp ý"], "dap_an": 1, "giai_thich": "Hành vi như sửa lại, bỏ qua, sao chép là tín hiệu ngầm; bấm 👎 là tín hiệu trực tiếp."},
-    {"id": "q21", "kc": "threshold_by_error_cost", "cau": "Đặt ngưỡng tự tin để AI tự động hành động nên dựa vào gì?", "lua_chon": ["Luôn đặt 50%", "Cái giá khi AI sai: sai càng đắt thì ngưỡng càng cao / càng cần người duyệt", "Tốc độ mạng", "Số tính năng của sản phẩm"], "dap_an": 1, "giai_thich": "Chi phí của lỗi quyết định mức tự động hoá."},
-    {"id": "q22", "kc": "ai_uncertainty_layers", "cau": "Khi AI không chắc chắn, sản phẩm nên làm gì?", "lua_chon": ["Vẫn trả lời thật tự tin", "Thu hẹp phạm vi, nói rõ không chắc, hỏi lại hoặc chuyển cho người", "Tắt ứng dụng", "Trả lời ngẫu nhiên"], "dap_an": 1, "giai_thich": "Thiết kế đường đi cho trường hợp không chắc thay vì giả vờ chắc."},
-    {"id": "q23", "kc": "tool_definition_context_cost", "cau": "Vì sao định nghĩa quá nhiều công cụ cho tác tử có thể gây hại?", "lua_chon": ["Vì công cụ làm model chạy chậm hơn CPU", "Vì mô tả công cụ chiếm token ngữ cảnh và làm model dễ chọn nhầm", "Vì model chỉ đọc được 1 công cụ", "Không bao giờ gây hại"], "dap_an": 1, "giai_thich": "Mỗi mô tả công cụ tốn ngữ cảnh; quá nhiều làm loãng và dễ chọn sai."},
-    {"id": "q24", "kc": "skill_progressive_disclosure", "cau": "Progressive disclosure (hé lộ dần) trong skill của tác tử là gì?", "lua_chon": ["Nạp toàn bộ tài liệu vào prompt ngay từ đầu", "Chỉ nạp phần hướng dẫn chi tiết khi tác tử thật sự cần dùng tới", "Ẩn câu trả lời khỏi người dùng", "Hiện từng chữ một trên màn hình"], "dap_an": 1, "giai_thich": "Ban đầu chỉ có mô tả ngắn; phần chi tiết nạp khi cần để tiết kiệm ngữ cảnh."},
-    {"id": "q25", "kc": "recall_at_k_measurement", "cau": "Recall@5 trong hệ thống tra cứu (RAG) đo điều gì?", "lua_chon": ["Tốc độ trả lời trong 5 giây", "Tỉ lệ câu hỏi mà đoạn tài liệu đúng nằm trong 5 kết quả tra cứu đầu tiên", "Số lần người dùng nhớ được câu trả lời", "Độ dài 5 câu trả lời đầu"], "dap_an": 1, "giai_thich": "Recall@k kiểm khâu tìm kiếm: đoạn đúng có nằm trong top k không."},
-    {"id": "q26", "kc": "chunk_size_tradeoff", "cau": "Cắt tài liệu thành đoạn (chunk) quá nhỏ thì dễ gặp vấn đề gì?", "lua_chon": ["Không vừa cửa sổ ngữ cảnh", "Mỗi đoạn thiếu ngữ cảnh, khó hiểu khi đứng riêng", "Model không đọc được tiếng Việt", "Tra cứu luôn chính xác tuyệt đối"], "dap_an": 1, "giai_thich": "Đoạn quá nhỏ mất ngữ cảnh; quá lớn thì nhiễu và tốn token — phải cân bằng."},
-    {"id": "q27", "kc": "multi_agent_token_cost", "cau": "Hệ nhiều tác tử (multi-agent) so với một tác tử thường thế nào về chi phí?", "lua_chon": ["Luôn rẻ hơn", "Thường tốn nhiều token hơn đáng kể vì mỗi tác tử đọc ngữ cảnh riêng", "Không tốn token", "Bằng đúng một tác tử"], "dap_an": 1, "giai_thich": "Nhiều tác tử = nhiều lần gọi và nhiều ngữ cảnh → chỉ đáng khi việc thật sự chia được."},
-    {"id": "q28", "kc": "workflow_vs_agent_control", "cau": "Ưu điểm chính của workflow cố định so với tác tử tự quyết là gì?", "lua_chon": ["Sáng tạo hơn", "Dễ dự đoán, dễ kiểm thử, dễ kiểm soát chi phí", "Không cần code", "Tự sửa được mọi lỗi"], "dap_an": 1, "giai_thich": "Workflow do code điều khiển nên ổn định và dễ kiểm hơn."},
-    {"id": "q29", "kc": "gate_before_side_effect", "cau": "Trước khi tác tử gửi email thật cho khách hàng, nên làm gì?", "lua_chon": ["Gửi ngay cho nhanh", "Đặt cổng kiểm tra / người duyệt trước hành động có tác động ra ngoài", "Gửi hai lần cho chắc", "Tắt nhật ký để tiết kiệm"], "dap_an": 1, "giai_thich": "Hành động có tác động ra ngoài cần cổng chặn hoặc người duyệt."},
-    {"id": "q30", "kc": "simplest_solution_first", "cau": "Nguyên tắc chọn giải pháp AI tốt là gì?", "lua_chon": ["Chọn kiến trúc phức tạp nhất để gây ấn tượng", "Bắt đầu từ giải pháp đơn giản nhất làm được việc, chỉ phức tạp hoá khi cần", "Luôn dùng nhiều tác tử", "Luôn huấn luyện model riêng"], "dap_an": 1, "giai_thich": "Đơn giản trước: rẻ hơn, dễ kiểm hơn; nâng cấp khi có bằng chứng cần."}
+    {
+      "id": "q01",
+      "kc": "chatbot_is_app_around_model",
+      "cau": "Một chatbot như ChatGPT gồm những gì?",
+      "lua_chon": [
+        "Ứng dụng bọc quanh model: giao diện, lịch sử hội thoại, công cụ, luật an toàn",
+        "Một công cụ tìm kiếm web",
+        "Chỉ có model ngôn ngữ",
+        "Một cơ sở dữ liệu câu trả lời soạn sẵn"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Model chỉ sinh chữ; chatbot là ứng dụng xây quanh model (lưu hội thoại, gọi công cụ, lọc an toàn…)."
+    },
+    {
+      "id": "q02",
+      "kc": "memory_lives_in_the_app",
+      "cau": "Vì sao chatbot \"nhớ\" được câu bạn nói ở lượt trước?",
+      "lua_chon": [
+        "Model lưu câu trả lời trong trọng số",
+        "Ứng dụng gửi lại lịch sử hội thoại vào mỗi lần gọi model",
+        "Model tự học lại sau mỗi câu",
+        "Nhờ temperature cao"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Model không có trí nhớ giữa các lần gọi; ứng dụng gửi lại lịch sử trong ngữ cảnh."
+    },
+    {
+      "id": "q03",
+      "kc": "temperature_stability_not_truth",
+      "cau": "Đặt temperature = 0 thì điều gì đúng?",
+      "lua_chon": [
+        "Model không thể bịa thông tin",
+        "Model chạy nhanh gấp đôi",
+        "Câu trả lời ổn định hơn giữa các lần gọi, nhưng vẫn có thể sai",
+        "Câu trả lời chắc chắn đúng sự thật"
+      ],
+      "dap_an": 2,
+      "giai_thich": "Temperature thấp giảm ngẫu nhiên, không đảm bảo đúng sự thật."
+    },
+    {
+      "id": "q04",
+      "kc": "token_cost_input_output",
+      "cau": "Chi phí gọi API model thường được tính theo gì?",
+      "lua_chon": [
+        "Số lần đăng nhập",
+        "Thời gian mở ứng dụng",
+        "Số ký tự của câu hỏi, không tính câu trả lời",
+        "Số token vào và token ra"
+      ],
+      "dap_an": 3,
+      "giai_thich": "Hầu hết nhà cung cấp tính tiền theo token vào và token ra, thường token ra đắt hơn."
+    },
+    {
+      "id": "q05",
+      "kc": "cutoff_and_hallucination",
+      "cau": "Hỏi model về sự kiện xảy ra sau mốc dữ liệu huấn luyện (cutoff) mà không cho tra cứu, rủi ro lớn nhất là gì?",
+      "lua_chon": [
+        "Model có thể bịa câu trả lời nghe hợp lý (hallucination)",
+        "Model tự động lên mạng tìm",
+        "Model từ chối mọi câu hỏi",
+        "Model trả lời chậm hơn"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Không có thông tin mới, model dễ bịa ra câu trả lời nghe rất thuyết phục."
+    },
+    {
+      "id": "q06",
+      "kc": "context_window_budget_and_selection",
+      "cau": "Cửa sổ ngữ cảnh (context window) là gì?",
+      "lua_chon": [
+        "Số ngôn ngữ model hỗ trợ",
+        "Lượng token tối đa model đọc được trong một lần gọi",
+        "Thời gian model được phép suy nghĩ",
+        "Số người dùng cùng lúc"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Mọi thứ đưa vào (prompt, lịch sử, tài liệu) phải vừa cửa sổ ngữ cảnh."
+    },
+    {
+      "id": "q07",
+      "kc": "cot_task_fit",
+      "cau": "Chain-of-thought (suy luận từng bước) hữu ích nhất cho loại việc nào?",
+      "lua_chon": [
+        "Trả về đúng một nhãn có sẵn rất đơn giản",
+        "Chào hỏi người dùng",
+        "Bài toán nhiều bước như tính toán, lập luận logic",
+        "Dịch một từ đơn"
+      ],
+      "dap_an": 2,
+      "giai_thich": "CoT giúp với việc cần nhiều bước lập luận; với việc đơn giản chỉ tốn thêm token."
+    },
+    {
+      "id": "q08",
+      "kc": "system_prompt_contract",
+      "cau": "System prompt tốt nên giống điều gì nhất?",
+      "lua_chon": [
+        "Một câu hỏi mở cho model tự đoán việc cần làm",
+        "Danh sách tất cả kiến thức của khoá",
+        "Một lời chào thân thiện",
+        "Một \"hợp đồng\": vai trò, phạm vi, định dạng đầu ra, khi nào phải từ chối"
+      ],
+      "dap_an": 3,
+      "giai_thich": "System prompt rõ ràng như hợp đồng giúp hành vi model ổn định và kiểm được."
+    },
+    {
+      "id": "q09",
+      "kc": "zero_one_few_shot_selection",
+      "cau": "Few-shot prompting là gì?",
+      "lua_chon": [
+        "Đưa vài ví dụ mẫu (đầu vào → đầu ra) vào prompt",
+        "Gọi model vài lần rồi lấy trung bình",
+        "Huấn luyện lại model bằng vài dữ liệu",
+        "Giảm số token xuống mức thấp nhất"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Few-shot = cho model xem vài ví dụ mẫu ngay trong prompt."
+    },
+    {
+      "id": "q10",
+      "kc": "tool_calling_flow",
+      "cau": "Trong tool calling, ai thực sự chạy hàm (công cụ)?",
+      "lua_chon": [
+        "Người dùng chạy hàm bằng tay",
+        "Chương trình của bạn chạy hàm, rồi gửi kết quả lại cho model",
+        "Model tự chạy hàm trên máy chủ của bạn",
+        "Không ai, model đoán kết quả"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Model chỉ đề xuất gọi hàm và tham số; code của ứng dụng chạy hàm rồi trả kết quả."
+    },
+    {
+      "id": "q11",
+      "kc": "tool_granularity",
+      "cau": "Thiết kế công cụ cho model, cách nào thường tốt hơn?",
+      "lua_chon": [
+        "Không mô tả công cụ để tiết kiệm token",
+        "Một công cụ khổng lồ làm mọi việc",
+        "Công cụ vừa phải, mỗi cái một việc rõ, mô tả và tham số rõ ràng",
+        "Đặt tên công cụ ngẫu nhiên"
+      ],
+      "dap_an": 2,
+      "giai_thich": "Công cụ rõ việc, mô tả tốt giúp model chọn đúng và gọi đúng tham số."
+    },
+    {
+      "id": "q12",
+      "kc": "react_reasoning_acting_pattern",
+      "cau": "Mẫu ReAct cho tác tử AI là gì?",
+      "lua_chon": [
+        "Một thư viện giao diện web",
+        "Phản ứng thật nhanh không cần suy nghĩ",
+        "Chỉ suy luận, không bao giờ gọi công cụ",
+        "Xen kẽ suy luận (reason) và hành động gọi công cụ (act), quan sát kết quả rồi lặp lại"
+      ],
+      "dap_an": 3,
+      "giai_thich": "ReAct = Reason + Act: nghĩ → gọi công cụ → xem kết quả → nghĩ tiếp."
+    },
+    {
+      "id": "q13",
+      "kc": "trace_based_agent_evaluation",
+      "cau": "Đánh giá tác tử AI dựa trên trace nghĩa là gì?",
+      "lua_chon": [
+        "Xem nhật ký từng bước tác tử đã làm (gọi công cụ gì, vì sao) để tìm lỗi",
+        "Chỉ xem câu trả lời cuối cùng",
+        "Hỏi người dùng có thích không",
+        "Đếm số dòng code"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Trace cho thấy tác tử sai ở bước nào, không chỉ kết quả cuối."
+    },
+    {
+      "id": "q14",
+      "kc": "agentic_fit_scoring_decision",
+      "cau": "Khi nào nên dùng tác tử AI (agent) thay vì workflow cố định?",
+      "lua_chon": [
+        "Luôn luôn, vì agent hiện đại hơn",
+        "Khi các bước khó biết trước và cần model tự quyết bước tiếp theo",
+        "Khi các bước luôn giống nhau và đã biết rõ",
+        "Khi muốn chi phí thấp nhất"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Bước đã rõ → workflow rẻ và dễ kiểm hơn; agent đáng dùng khi bước khó biết trước."
+    },
+    {
+      "id": "q15",
+      "kc": "select_rule_workflow_agent_level",
+      "cau": "Bài toán \"phân loại email theo 3 nhãn cố định\" phù hợp nhất với mức nào?",
+      "lua_chon": [
+        "Tác tử tự hành chạy nhiều giờ",
+        "Không cần máy tính",
+        "Luật / một lần gọi model trong workflow đơn giản",
+        "Hệ nhiều tác tử"
+      ],
+      "dap_an": 2,
+      "giai_thich": "Việc đơn giản, đầu ra cố định → chọn giải pháp đơn giản nhất làm được."
+    },
+    {
+      "id": "q16",
+      "kc": "complete_ai_problem_statement",
+      "cau": "Một mô tả bài toán AI đầy đủ nên có gì?",
+      "lua_chon": [
+        "Chỉ tên công nghệ sẽ dùng",
+        "Một câu khẩu hiệu",
+        "Danh sách model muốn thử",
+        "Ai gặp vấn đề, việc họ làm, chỗ vướng, hậu quả và cách đo thành công"
+      ],
+      "dap_an": 3,
+      "giai_thich": "Bắt đầu từ người dùng và nỗi đau đo được, không bắt đầu từ công nghệ."
+    },
+    {
+      "id": "q17",
+      "kc": "construct_eval_plan",
+      "cau": "Kế hoạch đánh giá hệ thống AI nên chốt điều gì TRƯỚC khi chạy?",
+      "lua_chon": [
+        "Bộ câu thử, metric và ngưỡng \"đạt\"",
+        "Tên của model",
+        "Màu giao diện",
+        "Số người trong nhóm"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Chốt tiêu chí trước để không sửa chuẩn cho khớp kết quả."
+    },
+    {
+      "id": "q18",
+      "kc": "define_scope_boundary_and_hitl",
+      "cau": "Human-in-the-loop (HITL) nghĩa là gì?",
+      "lua_chon": [
+        "Chạy model trên máy của người dùng",
+        "Có người duyệt ở các bước quan trọng trước khi hệ thống hành động",
+        "AI thay hoàn toàn con người",
+        "Người dùng phải gõ lại mọi câu trả lời"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Bước rủi ro cao (gửi tin, thanh toán, chấm điểm) cần người duyệt."
+    },
+    {
+      "id": "q19",
+      "kc": "ai_product_canvas",
+      "cau": "AI product canvas giúp nhóm làm gì?",
+      "lua_chon": [
+        "Chọn font chữ",
+        "Viết code nhanh hơn",
+        "Tóm tắt trên một trang: người dùng, vấn đề, giải pháp AI, dữ liệu, rủi ro, cách đo",
+        "Vẽ logo sản phẩm"
+      ],
+      "dap_an": 2,
+      "giai_thich": "Canvas là khung một trang để cả nhóm thống nhất bài toán và giải pháp."
+    },
+    {
+      "id": "q20",
+      "kc": "feedback_signal_types",
+      "cau": "Ví dụ nào là tín hiệu phản hồi NGẦM (implicit) từ người dùng?",
+      "lua_chon": [
+        "Người dùng gửi email góp ý",
+        "Người dùng điền khảo sát",
+        "Người dùng bấm 👎 và viết nhận xét",
+        "Người dùng sửa lại câu trả lời của AI rồi mới dùng"
+      ],
+      "dap_an": 3,
+      "giai_thich": "Hành vi như sửa lại, bỏ qua, sao chép là tín hiệu ngầm; bấm 👎 là tín hiệu trực tiếp."
+    },
+    {
+      "id": "q21",
+      "kc": "threshold_by_error_cost",
+      "cau": "Đặt ngưỡng tự tin để AI tự động hành động nên dựa vào gì?",
+      "lua_chon": [
+        "Cái giá khi AI sai: sai càng đắt thì ngưỡng càng cao / càng cần người duyệt",
+        "Luôn đặt 50%",
+        "Số tính năng của sản phẩm",
+        "Tốc độ mạng"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Chi phí của lỗi quyết định mức tự động hoá."
+    },
+    {
+      "id": "q22",
+      "kc": "ai_uncertainty_layers",
+      "cau": "Khi AI không chắc chắn, sản phẩm nên làm gì?",
+      "lua_chon": [
+        "Trả lời ngẫu nhiên",
+        "Thu hẹp phạm vi, nói rõ không chắc, hỏi lại hoặc chuyển cho người",
+        "Vẫn trả lời thật tự tin",
+        "Tắt ứng dụng"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Thiết kế đường đi cho trường hợp không chắc thay vì giả vờ chắc."
+    },
+    {
+      "id": "q23",
+      "kc": "tool_definition_context_cost",
+      "cau": "Vì sao định nghĩa quá nhiều công cụ cho tác tử có thể gây hại?",
+      "lua_chon": [
+        "Vì model chỉ đọc được 1 công cụ",
+        "Vì công cụ làm model chạy chậm hơn CPU",
+        "Vì mô tả công cụ chiếm token ngữ cảnh và làm model dễ chọn nhầm",
+        "Không bao giờ gây hại"
+      ],
+      "dap_an": 2,
+      "giai_thich": "Mỗi mô tả công cụ tốn ngữ cảnh; quá nhiều làm loãng và dễ chọn sai."
+    },
+    {
+      "id": "q24",
+      "kc": "skill_progressive_disclosure",
+      "cau": "Progressive disclosure (hé lộ dần) trong skill của tác tử là gì?",
+      "lua_chon": [
+        "Nạp toàn bộ tài liệu vào prompt ngay từ đầu",
+        "Ẩn câu trả lời khỏi người dùng",
+        "Hiện từng chữ một trên màn hình",
+        "Chỉ nạp phần hướng dẫn chi tiết khi tác tử thật sự cần dùng tới"
+      ],
+      "dap_an": 3,
+      "giai_thich": "Ban đầu chỉ có mô tả ngắn; phần chi tiết nạp khi cần để tiết kiệm ngữ cảnh."
+    },
+    {
+      "id": "q25",
+      "kc": "recall_at_k_measurement",
+      "cau": "Recall@5 trong hệ thống tra cứu (RAG) đo điều gì?",
+      "lua_chon": [
+        "Tỉ lệ câu hỏi mà đoạn tài liệu đúng nằm trong 5 kết quả tra cứu đầu tiên",
+        "Tốc độ trả lời trong 5 giây",
+        "Độ dài 5 câu trả lời đầu",
+        "Số lần người dùng nhớ được câu trả lời"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Recall@k kiểm khâu tìm kiếm: đoạn đúng có nằm trong top k không."
+    },
+    {
+      "id": "q26",
+      "kc": "chunk_size_tradeoff",
+      "cau": "Cắt tài liệu thành đoạn (chunk) quá nhỏ thì dễ gặp vấn đề gì?",
+      "lua_chon": [
+        "Model không đọc được tiếng Việt",
+        "Mỗi đoạn thiếu ngữ cảnh, khó hiểu khi đứng riêng",
+        "Tra cứu luôn chính xác tuyệt đối",
+        "Không vừa cửa sổ ngữ cảnh"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Đoạn quá nhỏ mất ngữ cảnh; quá lớn thì nhiễu và tốn token — phải cân bằng."
+    },
+    {
+      "id": "q27",
+      "kc": "multi_agent_token_cost",
+      "cau": "Hệ nhiều tác tử (multi-agent) so với một tác tử thường thế nào về chi phí?",
+      "lua_chon": [
+        "Không tốn token",
+        "Bằng đúng một tác tử",
+        "Thường tốn nhiều token hơn đáng kể vì mỗi tác tử đọc ngữ cảnh riêng",
+        "Luôn rẻ hơn"
+      ],
+      "dap_an": 2,
+      "giai_thich": "Nhiều tác tử = nhiều lần gọi và nhiều ngữ cảnh → chỉ đáng khi việc thật sự chia được."
+    },
+    {
+      "id": "q28",
+      "kc": "workflow_vs_agent_control",
+      "cau": "Ưu điểm chính của workflow cố định so với tác tử tự quyết là gì?",
+      "lua_chon": [
+        "Không cần code",
+        "Tự sửa được mọi lỗi",
+        "Sáng tạo hơn",
+        "Dễ dự đoán, dễ kiểm thử, dễ kiểm soát chi phí"
+      ],
+      "dap_an": 3,
+      "giai_thich": "Workflow do code điều khiển nên ổn định và dễ kiểm hơn."
+    },
+    {
+      "id": "q29",
+      "kc": "gate_before_side_effect",
+      "cau": "Trước khi tác tử gửi email thật cho khách hàng, nên làm gì?",
+      "lua_chon": [
+        "Đặt cổng kiểm tra / người duyệt trước hành động có tác động ra ngoài",
+        "Gửi hai lần cho chắc",
+        "Tắt nhật ký để tiết kiệm",
+        "Gửi ngay cho nhanh"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Hành động có tác động ra ngoài cần cổng chặn hoặc người duyệt."
+    },
+    {
+      "id": "q30",
+      "kc": "simplest_solution_first",
+      "cau": "Nguyên tắc chọn giải pháp AI tốt là gì?",
+      "lua_chon": [
+        "Chọn kiến trúc phức tạp nhất để gây ấn tượng",
+        "Bắt đầu từ giải pháp đơn giản nhất làm được việc, chỉ phức tạp hoá khi cần",
+        "Luôn dùng nhiều tác tử",
+        "Luôn huấn luyện model riêng"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Đơn giản trước: rẻ hơn, dễ kiểm hơn; nâng cấp khi có bằng chứng cần."
+    },
+    {
+      "id": "q31",
+      "kc": "ai_vs_rule_software_behavior",
+      "cau": "Điểm khác biệt cốt lõi giữa phần mềm dùng luật (rule-based) và AI tạo sinh (LLM) là gì?",
+      "lua_chon": [
+        "AI tạo sinh luôn chính xác 100% khi dữ liệu đầu vào dài",
+        "Phần mềm luật chỉ hoạt động được khi có kết nối Internet",
+        "Phần mềm luật trả kết quả tất định theo quy tắc; AI tạo sinh mang tính xác suất và có thể trả lời khác nhau",
+        "Phần mềm luật chạy chậm hơn nhưng luôn cần GPU"
+      ],
+      "dap_an": 2,
+      "giai_thich": "Rule-based cho cùng output với cùng input; LLM sinh theo xác suất nên cần kiểm chứng và đặt ranh giới."
+    },
+    {
+      "id": "q32",
+      "kc": "human_reviewer_role_design",
+      "cau": "Thiết kế vai trò người duyệt (Human-in-the-Loop) tốt cần tránh lỗi nào sau đây?",
+      "lua_chon": [
+        "Ghi lại lịch sử những mục đã được người duyệt chỉnh sửa",
+        "Hiện nguồn đối chiếu bên cạnh kết quả AI đề xuất",
+        "Cho phép người duyệt sửa nhanh trước khi phát hành",
+        "Ép người duyệt bấm 'Duyệt tất cả' mà không thấy căn cứ kiểm chứng (rubber-stamping)"
+      ],
+      "dap_an": 3,
+      "giai_thich": "Duyệt hình thức (rubber-stamping) khiến vòng kiểm soát con người mất tác dụng thực chất."
+    },
+    {
+      "id": "q33",
+      "kc": "memory_supersession_policy",
+      "cau": "Khi thông tin mới của người dùng mâu thuẫn với bộ nhớ cũ trong ứng dụng AI, chính sách thay thế bộ nhớ (memory supersession) đúng là gì?",
+      "lua_chon": [
+        "Ghi đè hoặc đánh dấu lỗi thời mục cũ, ưu tiên thông tin mới đã xác nhận có mốc thời gian",
+        "Giữ nguyên cả hai thông tin mâu thuẫn để model tự đoán ngẫu nhiên",
+        "Bỏ qua thông tin mới và luôn giữ thông tin ghi nhận đầu tiên",
+        "Xoá sạch toàn bộ lịch sử hội thoại ngay lập tức mỗi khi có thay đổi nhỏ"
+      ],
+      "dap_an": 0,
+      "giai_thich": "Cần cơ chế cập nhật/vô hiệu hoá thông tin cũ kèm mốc thời gian để AI không hành động theo dữ liệu lỗi thời."
+    },
+    {
+      "id": "q34",
+      "kc": "trust_calibration_levers",
+      "cau": "Cách nào giúp người dùng hiệu chỉnh mức tin cậy (trust calibration) đúng đắn khi dùng công cụ AI?",
+      "lua_chon": [
+        "Ẩn hết độ không chắc chắn để giao diện trông chuyên nghiệp hơn",
+        "Hiển thị nguồn căn cứ, mẫu số/độ phủ dữ liệu và cảnh báo rõ khi thiếu dữ liệu",
+        "Luôn khẳng định AI đạt độ chính xác tuyệt đối trong mọi tình huống",
+        "Chỉ hiển thị câu trả lời ngắn nhất mà không nêu nguồn hay phạm vi giới hạn"
+      ],
+      "dap_an": 1,
+      "giai_thich": "Minh bạch căn cứ, mẫu số và giới hạn giúp người dùng biết lúc nào nên tin và lúc nào cần tự kiểm lại."
+    }
   ]
 }

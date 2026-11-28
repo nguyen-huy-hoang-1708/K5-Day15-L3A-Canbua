@@ -20,6 +20,17 @@ BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8003"
 HERO = sys.argv[2] if len(sys.argv) > 2 else "An"
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BANK = {q["cau"]: q["lua_chon"][q["dap_an"]] for q in json.load(open(os.path.join(ROOT, "data", "game_questions.json"), encoding="utf-8"))["cau_hoi"]}
+_kb_path = os.path.join(ROOT, "data", "kc_knowledge.json")
+if os.path.exists(_kb_path):
+    for _kc, _item in json.load(open(_kb_path, encoding="utf-8")).items():
+        _sc = _item.get("scenario") or {}
+        _opts = _sc.get("options") or []
+        _ci = _sc.get("correct_index")
+        if _sc.get("question") and isinstance(_opts, list) and isinstance(_ci, int) and 0 <= _ci < len(_opts):
+            _ctx = (_sc.get("context") or "").strip()
+            _prompt = f"{_ctx}\n\n{_sc['question']}" if _ctx and len(_ctx) <= 260 else _sc["question"]
+            BANK.setdefault(_prompt, _opts[_ci])
+            BANK.setdefault(_sc["question"], _opts[_ci])
 DIRS = {(1, 0): "right", (-1, 0): "left", (0, 1): "down", (0, -1): "up"}
 STOP = threading.Event()
 
@@ -74,7 +85,8 @@ def learner(name, color, target, step=0.2, think=(1.2, 2.0), wrong_rate=0.0, due
                 time.sleep(0.2)
                 continue
             time.sleep(random.uniform(*(duel_think if me.get("duel") else think)))
-            right = q["lua_chon"].index(BANK[q["cau"]])
+            ans_txt = BANK.get(q["cau"])
+            right = q["lua_chon"].index(ans_txt) if ans_txt in q["lua_chon"] else 0
             choice = right if random.random() >= wrong_rate or me.get("duel") else (right + 1) % len(q["lua_chon"])
             call("/game/api/answer", {"pid": pid, "qid": q["id"], "choice": choice}, tok)
             answered = key

@@ -131,5 +131,5 @@ Nhóm dùng Claude Code để đọc data BTC, viết script đếm, code bản 
 | 4 | Bản chạy thử làm trọn lát cắt | `codebase/` · lệnh ở mục "Lệnh" |
 | 5 | Định nghĩa "tốt" + bộ câu thử | `data/DATA_CARD.md` · `eval/` |
 | 6 | Mô phỏng chi phí khi dùng thật | `cost/` |
-| 7 | Slide + demo + video dự phòng | [`demo-slides.pdf`](demo-slides.pdf) (nguồn `slides/demo-slides.html`) · link video CP3 (bản chạy thử gọi AI thật): https://youtu.be/GWSuMvQU-PU · link video demo dự phòng CP4: https://youtu.be/Ab38Jddjxc8 · kịch bản: [docs/nop-bai-cp3-cp4.md](docs/nop-bai-cp3-cp4.md) |
+| 7 | Slide + demo + video dự phòng | [`demo-slides.pdf`](demo-slides.pdf) (nguồn `slides/demo-slides.html`) · link video CP3 (bản chạy thử gọi AI thật): https://youtu.be/GWSuMvQU-PU · link video demo dự phòng CP4: https://youtu.be/wnJeQxFjoA8 · kịch bản: [docs/nop-bai-cp3-cp4.md](docs/nop-bai-cp3-cp4.md) |
 | + | *Bonus:* người dùng thử | `validation/log.md` |
